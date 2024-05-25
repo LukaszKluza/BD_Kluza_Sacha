@@ -1,0 +1,46 @@
+@page "/statistics"
+@inject HttpClient HttpClient
+@using System.Text.Json
+@using System.Net.Http.Json
+
+<PageTitle>Statistics</PageTitle>
+
+<h1>This is list of top 10 car models.</h1>
+
+@if (topCarModels == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul class="model-list">
+        @foreach (var car in topCarModels.RootElement.EnumerateArray())
+        {
+            var model_id = @car.GetProperty("_id").GetInt32();
+            var make = @car.GetProperty("make").GetString();
+            var model = @car.GetProperty("model").GetString();
+            var count = @car.GetProperty("count").GetInt32();
+            <li>
+                <a href="models/@model_id">@make @model - @count</a>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private JsonDocument topCarModels;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var response = await HttpClient.GetAsync("http://localhost:5000/api/Statistics/Rentals/10");
+            var json = await response.Content.ReadAsStringAsync();
+            topCarModels = JsonDocument.Parse(json);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+}

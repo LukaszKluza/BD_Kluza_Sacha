@@ -1,0 +1,228 @@
+[{
+  "_id": 0,
+  "mark": "Toyota",
+  "model": "Corolla",
+  "type": [
+    "combi",
+    "hatchback"
+  ]
+},
+{
+  "_id": 1,
+  "mark": "Toyota",
+  "model": "Auris",
+  "type": [
+    "sedan",
+    "hatchback"
+  ]
+},
+{
+  "_id": 2,
+  "mark": "Toyota",
+  "model": "Avensis",
+  "type": [
+    "sedan",
+    "combi"
+  ]
+},
+{
+  "_id": 3,
+  "mark": "Toyota",
+  "model": "RAV4",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 4,
+  "mark": "Toyota",
+  "model": "Prius",
+  "type": [
+    "sedan"
+  ]
+},
+{
+  "_id": 5,
+  "mark": "Toyota",
+  "model": "CHR",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 6,
+  "mark": "BMW",
+  "model": "M3",
+  "type": [
+    "coupe"
+  ]
+},
+{
+  "_id": 7,
+  "mark": "BMW",
+  "model": "M5",
+  "type": [
+    "sedan"
+  ]
+},
+{
+  "_id": 8,
+  "mark": "BMW",
+  "model": "X3",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 9,
+  "mark": "BMW",
+  "model": "X5",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 10,
+  "mark": "BMW",
+  "model": "X7",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 11,
+  "mark": "Audi",
+  "model": "A3",
+  "type": [
+    "hatchback"
+  ]
+},
+{
+  "_id": 12,
+  "mark": "Audi",
+  "model": "A4",
+  "type": [
+    "sedan"
+  ]
+},
+{
+  "_id": 13,
+  "mark": "Audi",
+  "model": "A6",
+  "type": [
+    "sedan"
+  ]
+},
+{
+  "_id": 14,
+  "mark": "Audi",
+  "model": "Q3",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 15,
+  "mark": "Audi",
+  "model": "Q5",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 16,
+  "mark": "Opel",
+  "model": "Corsa",
+  "type": [
+    "hatchback"
+  ]
+},
+{
+  "_id": 17,
+  "mark": "Opel",
+  "model": "Astra",
+  "type": [
+    "hatchback"
+  ]
+},
+{
+  "_id": 18,
+  "mark": "Opel",
+  "model": "Insignia",
+  "type": [
+    "sedan"
+  ]
+},
+{
+  "_id": 19,
+  "mark": "Opel",
+  "model": "Grandland X",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 20,
+  "mark": "Mercedes",
+  "model": "C-Class",
+  "type": [
+    "sedan"
+  ]
+},
+{
+  "_id": 21,
+  "mark": "Mercedes",
+  "model": "E-Class",
+  "type": [
+    "sedan",
+    "combi"
+  ]
+},
+{
+  "_id": 22,
+  "mark": "Mercedes",
+  "model": "S-Class",
+  "type": [
+    "sedan"
+  ]
+},
+{
+  "_id": 23,
+  "mark": "Mercedes",
+  "model": "CLA",
+  "type": [
+    "sedan"
+  ]
+},
+{
+  "_id": 24,
+  "mark": "Mercedes",
+  "model": "GLA",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 25,
+  "mark": "Mercedes",
+  "model": "GLC",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 26,
+  "mark": "Mercedes",
+  "model": "GLE",
+  "type": [
+    "SUV"
+  ]
+},
+{
+  "_id": 27,
+  "mark": "Mercedes",
+  "model": "GLS",
+  "type": [
+    "SUV"
+  ]
+}]

@@ -1,0 +1,8 @@
+[{
+  "_id": 0,
+  "type": "Discount",
+  "name": "Discount5",
+  "value": 0.05,
+  "from": 20,
+  "to": 49
+}]

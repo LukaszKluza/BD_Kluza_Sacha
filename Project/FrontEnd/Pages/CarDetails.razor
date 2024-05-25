@@ -1,0 +1,46 @@
+@page "/models/{ModelId}/{CarId}"
+@inject HttpClient HttpClient
+@using System.Text.Json
+@using System.Net.Http.Json
+
+<PageTitle>Car Details</PageTitle>
+
+@if (car == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h1>@model.Mark</h1>
+    <h3>@model.Model</h3>
+    <h4>@car.Type - @car.Color</h4>
+    <p>Seats: @car.Seats</p>
+    <p>Power: @car.Power</p>
+    <p>Current Mileage: @car.Curr_mileage</p>
+    <p>Price per Day: @car.Price_per_day</p>
+    <p>Production Year: @car.Production_year</p>
+}
+
+@code {
+    [Parameter]
+    public string CarId { get; set; }
+
+    [Parameter]
+    public string ModelId { get; set; }
+
+    private Car car;
+    private CarModel model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            car = await HttpClient.GetFromJsonAsync<Car>($"http://localhost:5000/api/car/Cars/{CarId}");
+            model = await HttpClient.GetFromJsonAsync<CarModel>($"http://localhost:5000/api/carmodel/{ModelId}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+}

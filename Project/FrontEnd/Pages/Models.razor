@@ -1,0 +1,62 @@
+@page "/models"
+@inject HttpClient HttpClient
+@using System.Text.Json
+@using System.Net.Http.Json
+
+<PageTitle>Models</PageTitle>
+
+<h1>This is list of car models.</h1>
+
+@if (carModels == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul class="model-list">
+        @foreach (var model in carModels)
+        {
+            <li>
+                <a href="models/@model._id">@model.Mark - @model.Model</a>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<CarModel> carModels;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            carModels = await HttpClient.GetFromJsonAsync<List<CarModel>>("http://localhost:5000/api/carmodel/Models");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+
+}
+
+<style>
+    .model-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .model-list li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+    }
+
+    .model-list li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+    }
+</style>
+
