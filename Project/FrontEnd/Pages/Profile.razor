@@ -1,0 +1,32 @@
+@page "/profile"
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<h3>Your Profile</h3>
+
+<!-- Profile edit form possible -->
+
+<button @onclick="Logout">Log out</button>
+
+@code {
+    private async Task Logout()
+    {
+        await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "token");
+        
+        #if !SERVER
+        NavigationManager.NavigateTo("/login");
+        #else
+        NavigationManager.NavigateTo("/");
+        #endif
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "token");
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+    }
+}
