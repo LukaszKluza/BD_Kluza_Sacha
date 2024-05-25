@@ -45,4 +45,7 @@ public class Client
 
     [BsonElement("total_rental_days")]
     public int? Total_Rental_Days { get; set; }
+
+    [BsonElement("password_hash")]
+    public string Password_Hash { get; set; }
 }
