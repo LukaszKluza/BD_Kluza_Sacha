@@ -1,6 +1,7 @@
 using System;
 
-public class Register {
+public class Register 
+{
     public string First_Name { get; set; }
     public string Last_Name { get; set; }
     public string? Phone_Number { get; set; }
