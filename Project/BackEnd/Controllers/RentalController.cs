@@ -1,11 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using MongoDB.Driver;
-using System.Runtime.CompilerServices;
 using System.Linq.Expressions;
-using System.Data;
 
 
 [Route("api/[controller]")]
@@ -39,6 +34,9 @@ public class RentalController : ControllerBase
     [HttpPost("FinishRental/{id}")]
     public async Task<IActionResult> UpdateRental(int id, [FromBody] Rental rental)
     {
+        if(!CheckRental(rental)){
+            return StatusCode(401, "Some value are invalid");
+        }
         try
         {
             Rental finished_rental = await _rentalService.FinishRentalAsync(id, rental);
@@ -64,7 +62,7 @@ public class RentalController : ControllerBase
         }
         if (rental_Details.Discount >= 1 || rental_Details.Discount < 0 || rental_Details.Price < 0 || rental_Details.Extra_Amount < 0
         || rental_Details.Extra_Fuel_Amount < 0 || rental_Details.Extra_Days_Amount < 0 || rental_Details.Extra_Insurance_Amount < 0
-        || rental_Details.Final_Amount < 0 || rental_Details.Extra_Mileage_Amount < 0)
+        || rental_Details.Final_Amount < 0 || rental_Details.Extra_Mileage_Amount < 0 || rental_Details.Mileage < 0 || rental_Details.Extra_Fuel <0)
         {
             return false;
         }
@@ -144,17 +142,19 @@ public class RentalController : ControllerBase
         int? minValue,
         int? maxValue)
         {
-            if (minValue.HasValue)
-            {
-                filter &= filterBuilder.Gte(field, minValue ?? 0);
-            }
-            if (maxValue.HasValue)
-            {
-                filter &= filterBuilder.Lte(field, maxValue ?? int.MaxValue);
-            }
+            // if (minValue.HasValue)
+            // {
+            //     filter &= filterBuilder.Gte(field, minValue ?? 0);
+            // }
+            // if (maxValue.HasValue)
+            // {
+            //     filter &= filterBuilder.Lte(field, maxValue ?? int.MaxValue);
+            // }
+            filter &= filterBuilder.Gte(field, minValue ?? 0);
+            filter &= filterBuilder.Lte(field, maxValue ?? int.MaxValue);
             return filter;
         }
-     private static FilterDefinition<T> AddDateRangeFilter<T>(
+    private static FilterDefinition<T> AddDateRangeFilter<T>(
         FilterDefinition<T> filter,
         FilterDefinitionBuilder<T> filterBuilder,
         Expression<Func<T, DateTime?>> field,

@@ -1,0 +1,7 @@
+- poprawić dodawanie i kończenie wynajmów (spradzenie warunków, aktualizacje itd)
+- popawić statystkę najpopularnijeszych aut (grupowanie po id modelu a nie id konkretnego auta, lub to i to)
+- TRANSAKCJE!!
+- dokończyć front
+- dokończyć Service Cilenta
+- zmienic id na ObjectID
+- nr telefonu int czy string?

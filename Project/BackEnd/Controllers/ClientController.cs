@@ -1,14 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using BCrypt.Net;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-
+using Newtonsoft.Json;
+using MongoDB.Driver;
+using System.Linq.Expressions;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -21,6 +19,123 @@ public class ClientController : ControllerBase
     {
         _clientService = clientService;
         _configuration = configuration;
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> CreateClient([FromBody] Client client)
+    {
+        try
+        {
+            await _clientService.CreateClientAsync(client);
+            return Ok("Client created successfully.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while creating the client: {ex.Message}");
+        }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateClient(int id, [FromBody] Client client)
+    {
+        Console.WriteLine("Received JSON body:");
+        Console.WriteLine(JsonConvert.SerializeObject(client, Formatting.Indented));
+
+        try
+        {
+            var success = await _clientService.UpdateClientAsync(id, client);
+            if (success)
+            {
+                return Ok($"Client with ID '{id}' updated successfully.");
+            }
+            else
+            {
+                return NotFound("Client not found.");
+            }
+           
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while updating the client: {ex.Message}");
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteClient(int id)
+    {
+        try
+        {
+            var success = await _clientService.DeleteClientAsync(id);
+            if (success)
+            {
+                return Ok("Client deleted successfully.");
+            }
+            else
+            {
+                return NotFound("Client not found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while deleting the client: {ex.Message}");
+        }
+    }
+    [HttpGet("Clients")]
+    public async Task<IActionResult> GetClientsPerFilterAsync(int? id = null, string? first_name = null, string? last_name = null, string? phone_number = null,
+    string? gender = null, string? pesel = null, string? address = null, string? city = null, string? country = null, int? minTotal_rental_days = null, 
+    int? maxTotal_rental_days = null, DateTime? minCustomerSince = null, DateTime? maxCustomerSince = null, DateTime? minBirthday = null, DateTime? maxBirthday = null)
+    {
+        try
+        {
+            var filterDefinitioinBuilder = Builders<Client>.Filter;
+            var filter = Builders<Client>.Filter.Empty;
+
+            if(id.HasValue){
+                filter &= filterDefinitioinBuilder.Eq(client => client._id, id.Value);
+            }
+            if(!string.IsNullOrWhiteSpace(first_name)){
+                filter &= filterDefinitioinBuilder.Eq(client => client.First_Name, first_name);
+            }
+            if(!string.IsNullOrWhiteSpace(last_name)){
+                filter &= filterDefinitioinBuilder.Eq(client => client.Last_Name, last_name);
+            }
+            if(!string.IsNullOrWhiteSpace(phone_number)){
+                filter &= filterDefinitioinBuilder.Eq(client => client.Phone_Number, phone_number);
+            }
+            if(!string.IsNullOrWhiteSpace(gender)){
+                filter &= filterDefinitioinBuilder.Eq(client => client.Gender, gender);
+            }
+            if(!string.IsNullOrWhiteSpace(pesel)){
+                filter &= filterDefinitioinBuilder.Eq(client => client.Pesel, pesel);
+            }
+            if(!string.IsNullOrWhiteSpace(address)){
+                filter &= filterDefinitioinBuilder.Eq(client => client.Address, address);
+            }
+            if(!string.IsNullOrWhiteSpace(city)){
+                filter &= filterDefinitioinBuilder.Eq(client => client.City, city);
+            }
+            if(!string.IsNullOrWhiteSpace(country)){
+                filter &= filterDefinitioinBuilder.Eq(client => client.Country, country);
+            }
+            filter &= filterDefinitioinBuilder.Gte(client => client.Total_Rental_Days, minTotal_rental_days ?? 0);
+            filter &= filterDefinitioinBuilder.Lte(client => client.Total_Rental_Days, maxTotal_rental_days ?? int.MaxValue);
+
+            filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, client => client.Customer_Since, minCustomerSince, maxCustomerSince);
+            filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, Client => Client.Birth_Day, minBirthday, maxBirthday);
+            
+            var result = await _clientService.GetClientsPerFilterAsync(filter);
+            if (result.Any())
+            {
+                return Ok(result);
+            }
+            else{
+                return NotFound("Clients not found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving clients: {ex.Message}");
+        }
     }
 
     [HttpPost("register")]
@@ -108,4 +223,22 @@ public class ClientController : ControllerBase
             return key;
         }
     }
+
+    private static FilterDefinition<T> AddDateRangeFilter<T>(
+        FilterDefinition<T> filter,
+        FilterDefinitionBuilder<T> filterBuilder,
+        Expression<Func<T, DateTime?>> field,
+        DateTime? minValue,
+        DateTime? maxValue)
+        {
+            if (minValue.HasValue)
+            {
+                filter &= filterBuilder.Gte(field, minValue.Value);
+            }
+            if (maxValue.HasValue)
+            {
+                filter &= filterBuilder.Lte(field, maxValue.Value);
+            }
+            return filter;
+        }
 }

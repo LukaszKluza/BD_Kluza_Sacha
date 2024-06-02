@@ -1,22 +1,23 @@
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 public class StatisticsService : IStatisticsService
 {
     private readonly IMongoCollection<Car> _carCollection;
     private readonly IMongoCollection<Client> _clientCollection;
-
+    private readonly IMongoCollection<CarModel> _carModelCollection;
+    private readonly IMongoCollection<Rental> _rentalCollection;
     private readonly ILogger<StatisticsService> _logger;
 
-    public StatisticsService(IMongoCollection<Car> carCollection, IMongoCollection<Client> clientCollection, ILogger<StatisticsService> logger)
+    public StatisticsService(IMongoCollection<Car> carCollection, IMongoCollection<Client> clientCollection, 
+    IMongoCollection<CarModel> carModelCollection, IMongoCollection<Rental> rentalCollection, ILogger<StatisticsService> logger)
     {
         _carCollection = carCollection;
         _clientCollection = clientCollection;
+        _carModelCollection = carModelCollection;
+        _rentalCollection = rentalCollection;
         _logger = logger;
     }
 
@@ -24,32 +25,17 @@ public class StatisticsService : IStatisticsService
     {
         try
         {
-            var pipeline = _carCollection.Aggregate()
-                .Lookup("Rentals", "_id", "rental_car.carId", "rentalCar")
-                .Unwind("rentalCar")
+            var pipeline = _rentalCollection.Aggregate()
+                .Lookup("Cars", "rental_car.carId", "_id", "cars")
+                .Unwind("cars")
                 .Group(new BsonDocument
                 {
-                    { "_id", "$_id" },
+                    { "_id", "$cars._carModelId" },
                     { "count", new BsonDocument("$sum", 1) },
-                    { "car", new BsonDocument("$first", "$$ROOT") }
+                    { "model", new BsonDocument("$first", "$rental_car.model") },
+                    { "make", new BsonDocument("$first", "$rental_car.make") },
                 })
                 .Sort(new BsonDocument("count", -1))
-                .Project(new BsonDocument
-                {
-                    { "_id", "$car._id" },
-                    { "_carModelId", "$car._carModelId" },
-                    { "make", "$car.rentalCar.rental_car.make" },
-                    { "model", "$car.rentalCar.rental_car.model" },
-                    { "seats", "$car.seats" },
-                    { "type", "$car.type" },
-                    { "color", "$car.color" },
-                    { "power", "$car.power" },
-                    { "curr_mileage", "$car.curr_mileage" },
-                    { "price_per_day", "$car.price_per_day" },
-                    { "isAvailable", "$car.isAvailable" },
-                    { "production_year", "$car.production_year" },
-                    { "count", "$count" }
-                })
                 .Limit(n);
 
             var result = await pipeline.ToListAsync();
@@ -117,7 +103,7 @@ public class StatisticsService : IStatisticsService
                 })
                 .Project(new BsonDocument
                 {
-                    { "_id", 0 }, // 0 to wyłączenie pola _id z wyników
+                    { "_id", 0 },
                     { "customer", "$_id" },
                     { "filteredCars", new BsonDocument
                         {
