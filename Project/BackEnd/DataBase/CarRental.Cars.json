@@ -3,24 +3,24 @@
   "_carModelId": 0,
   "seats": 5,
   "type": "combi",
-  "color": "red",
+  "color": "pink",
   "power": 130,
-  "curr_mileage": 10234,
-  "price_per_day": 130,
+  "curr_mileage": 1500,
+  "price_per_day": 120,
   "isAvailable": true,
-  "production_year": 2020
+  "production_year": 2021
 },
 {
   "_id": 1,
-  "_carModelId": 1,
+  "_carModelId": 0,
   "seats": 5,
   "type": "hatchback",
-  "color": "blue",
+  "color": "yellow",
   "power": 110,
-  "curr_mileage": 18900,
-  "price_per_day": 100,
+  "curr_mileage": 23400,
+  "price_per_day": 130,
   "isAvailable": true,
-  "production_year": 2019
+  "production_year": 2022
 },
 {
   "_id": 2,
@@ -31,7 +31,7 @@
   "power": 120,
   "curr_mileage": 12500,
   "price_per_day": 140,
-  "isAvailable": false,
+  "isAvailable": true,
   "production_year": 2018
 },
 {
@@ -67,7 +67,7 @@
   "power": 150,
   "curr_mileage": 10300,
   "price_per_day": 130,
-  "isAvailable": false,
+  "isAvailable": true,
   "production_year": 2019
 },
 {
@@ -103,7 +103,7 @@
   "power": 220,
   "curr_mileage": 7500,
   "price_per_day": 180,
-  "isAvailable": false,
+  "isAvailable": true,
   "production_year": 2019
 },
 {
@@ -115,7 +115,7 @@
   "power": 300,
   "curr_mileage": 8900,
   "price_per_day": 190,
-  "isAvailable": true,
+  "isAvailable": false,
   "production_year": 2021
 },
 {
@@ -151,7 +151,7 @@
   "power": 140,
   "curr_mileage": 8000,
   "price_per_day": 130,
-  "isAvailable": false,
+  "isAvailable": true,
   "production_year": 2019
 },
 {
@@ -223,7 +223,7 @@
   "power": 170,
   "curr_mileage": 19200,
   "price_per_day": 140,
-  "isAvailable": false,
+  "isAvailable": true,
   "production_year": 2021
 },
 {
@@ -425,9 +425,9 @@
   "type": "SUV",
   "color": "silver",
   "power": 200,
-  "curr_mileage": 9400,
+  "curr_mileage": 15400,
   "price_per_day": 160,
-  "isAvailable": false,
+  "isAvailable": true,
   "production_year": 2018
 },
 {
@@ -475,7 +475,7 @@
   "power": 190,
   "curr_mileage": 8000,
   "price_per_day": 150,
-  "isAvailable": true,
+  "isAvailable": false,
   "production_year": 2020
 },
 {

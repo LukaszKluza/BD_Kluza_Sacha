@@ -77,7 +77,7 @@ public class CarController : ControllerBase
     [HttpGet("Cars")]
     public async Task<IActionResult> GetCarsPerFilterAsync(int? modelId = null, int? seats = null, string? type = null, string? color = null, 
     int? minPower = null, int? maxPower = null, int? minCurrMileage = null, int? maxCurrMileage = null,
-    int? minPricePerDay = null, int? maxPricePerDay = null, bool? isAvailable = null, int? minProductionYear = null, int? maxProductionYear = null)
+    double? minPricePerDay = null, double? maxPricePerDay = null, bool? isAvailable = null, int? minProductionYear = null, int? maxProductionYear = null)
     {
         try
         {

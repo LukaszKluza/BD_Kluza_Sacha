@@ -13,12 +13,10 @@ using System.Linq.Expressions;
 public class ClientController : ControllerBase
 {
     private readonly IClientService _clientService;
-    private readonly IConfiguration _configuration;
 
-    public ClientController(IClientService clientService, IConfiguration configuration)
+    public ClientController(IClientService clientService)
     {
         _clientService = clientService;
-        _configuration = configuration;
     }
     
     [HttpPost]
@@ -38,9 +36,6 @@ public class ClientController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateClient(int id, [FromBody] Client client)
     {
-        Console.WriteLine("Received JSON body:");
-        Console.WriteLine(JsonConvert.SerializeObject(client, Formatting.Indented));
-
         try
         {
             var success = await _clientService.UpdateClientAsync(id, client);

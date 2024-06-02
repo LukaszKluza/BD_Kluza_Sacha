@@ -71,4 +71,116 @@
     "extra_amount": 0,
     "final_amount": 780
   }
+},
+{
+  "_id": 3,
+  "rental_car": {
+    "carId": 9,
+    "make": "BMW",
+    "model": "X5",
+    "price_per_day": 300
+  },
+  "customer": {
+    "clientId": 2,
+    "first_name": "Michael",
+    "last_name": "Smith"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-24T12:00:00.000Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-28T12:00:00.000Z"
+    },
+    "end_date": null,
+    "rental_status": "reserved",
+    "insurance_type": "standard",
+    "extra_insurance_amount": 80,
+    "days": 4,
+    "extra_days_amount": 0,
+    "mileage": 600,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 1200,
+    "discount": 0,
+    "extra_amount": 80,
+    "final_amount": 1280
+  }
+},
+{
+  "_id": 4,
+  "rental_car": {
+    "carId": 39,
+    "make": "Opel",
+    "model": "Grandland X",
+    "price_per_day": 150
+  },
+  "customer": {
+    "clientId": 2,
+    "first_name": "Michael",
+    "last_name": "Smith"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-20T12:00:00.000Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-26T12:00:00.000Z"
+    },
+    "end_date": {
+      "$date": "2024-05-26T12:41:03.789Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "basic",
+    "extra_insurance_amount": 50,
+    "days": 7,
+    "extra_days_amount": 75,
+    "mileage": 900,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 900,
+    "discount": 0,
+    "extra_amount": 125,
+    "final_amount": 1025
+  }
+},
+{
+  "_id": 5,
+  "rental_car": {
+    "carId": 35,
+    "make": "Audi",
+    "model": "Q5",
+    "price_per_day": 200
+  },
+  "customer": {
+    "clientId": 2,
+    "first_name": "Michael",
+    "last_name": "Smith"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-22T12:00:00.000Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-30T12:00:00.000Z"
+    },
+    "end_date": {
+      "$date": "2024-06-02T19:52:14.023Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "basic",
+    "extra_insurance_amount": 50,
+    "days": 12,
+    "extra_days_amount": 400,
+    "mileage": 1200,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 1600,
+    "discount": 0,
+    "extra_amount": 450,
+    "final_amount": 2050
+  }
 }]

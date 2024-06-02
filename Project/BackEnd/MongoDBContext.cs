@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
-using MongoDB.Bson;
 
 public class MongoDbContext
 {

@@ -4,7 +4,6 @@ using MongoDB.Bson.Serialization.Attributes;
 public class Client
 {
     [BsonId]
-    // [BsonRepresentation(BsonType.ObjectId)]
     [BsonElement("_id")]
     public int _id { get; set; }
 

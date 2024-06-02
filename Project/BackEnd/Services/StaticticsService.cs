@@ -53,19 +53,23 @@ public class StatisticsService : IStatisticsService
     {
         try
         {
-            var pipeline = _clientCollection.Aggregate()
+            var pipeline = _rentalCollection.Aggregate()
                 .Group(new BsonDocument
                 {
-                    { "_id", "$_id" },
-                    { "sum", new BsonDocument("$sum", "$total_rental_days") },
-                    { "customer", new BsonDocument("$first", "$$ROOT") }
+                    { "_id", "$customer.clientId" },
+                    { "sum", new BsonDocument("$sum", "$rental_details.mileage") },
+                    { "customer", new BsonDocument("$first", "$customer") }
                 })
-                .Sort(new BsonDocument("count", -1))
+                .Sort(new BsonDocument("sum", -1))
                 .Project(new BsonDocument
                 {
+                    { "_id", 0 }, 
                     { "customer", 1 },
+                    { "sum", 1 }
                 })
                 .Limit(n);
+
+
 
             var result = await pipeline.ToListAsync();
             var json = result.ToJson();

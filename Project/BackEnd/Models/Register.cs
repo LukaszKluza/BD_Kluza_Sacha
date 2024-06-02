@@ -1,5 +1,4 @@
 using System;
-
 public class Register 
 {
     public string First_Name { get; set; }

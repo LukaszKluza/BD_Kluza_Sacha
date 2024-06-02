@@ -70,12 +70,12 @@ public class RentalController : ControllerBase
     }
     [HttpGet("Rentals")]
     public async Task<IActionResult> GetRentalsPerFilterAsync(int? clientId = null, int? carId = null, string? make = null, string? model = null, 
-    int? minPricePerDay = null, int? maxPricePerDay = null, DateTime? minStartDate = null, DateTime? maxStartDate = null, DateTime? minExpectedEndDate = null, 
+    double? minPricePerDay = null, double? maxPricePerDay = null, DateTime? minStartDate = null, DateTime? maxStartDate = null, DateTime? minExpectedEndDate = null, 
     DateTime? maxExpectedEndDate = null, DateTime? minEndDate = null, DateTime? maxEndDate = null, string? rentalStatus = null, string? insuranceType = null,
-    int? minExtraInsuranceAmount = null, int? maxExtraInsuranceAmount = null, int? minDays = null, int? maxDays = null, int? minExtraDaysAmount = null, 
-    int? maxExtraDaysAmount = null, int? minMileage = null, int? maxMileage = null, int? minExtraMileageAmount = null, int? maxExtraMileageAmount = null,
-    int? minExtraFuel = null, int? maxExtraFuel = null, int? minExtraFuelAmount = null, int? maxExtraFuelAmount = null, int? minPrice = null, int? maxPrice = null,
-    double? minDiscount = null, double? maxDiscount = null, int? minExtraAmount = null, int? maxExtraAmount = null, int? minFinalAmount = null, int? maxFinalAmount = null)
+    double? minExtraInsuranceAmount = null, double? maxExtraInsuranceAmount = null, int? minDays = null, int? maxDays = null, double? minExtraDaysAmount = null, 
+    double? maxExtraDaysAmount = null, int? minMileage = null, int? maxMileage = null, double? minExtraMileageAmount = null, double? maxExtraMileageAmount = null,
+    int? minExtraFuel = null, int? maxExtraFuel = null, double? minExtraFuelAmount = null, double? maxExtraFuelAmount = null, double? minPrice = null, double? maxPrice = null,
+    double? minDiscount = null, double? maxDiscount = null, double? minExtraAmount = null, double? maxExtraAmount = null, double? minFinalAmount = null, double? maxFinalAmount = null)
     {
         try
         {
@@ -135,6 +135,19 @@ public class RentalController : ControllerBase
             return StatusCode(500, $"An error occurred while retrieving cars:: {ex.Message}");
         }
     }
+
+     private static FilterDefinition<T> AddRangeFilter<T>(
+        FilterDefinition<T> filter,
+        FilterDefinitionBuilder<T> filterBuilder,
+        Expression<Func<T, double?>> field,
+        double? minValue,
+        double? maxValue)
+        {
+            filter &= filterBuilder.Gte(field, minValue ?? 0);
+            filter &= filterBuilder.Lte(field, maxValue ?? double.MaxValue);
+            return filter;
+        }
+
     private static FilterDefinition<T> AddRangeFilter<T>(
         FilterDefinition<T> filter,
         FilterDefinitionBuilder<T> filterBuilder,
@@ -142,14 +155,6 @@ public class RentalController : ControllerBase
         int? minValue,
         int? maxValue)
         {
-            // if (minValue.HasValue)
-            // {
-            //     filter &= filterBuilder.Gte(field, minValue ?? 0);
-            // }
-            // if (maxValue.HasValue)
-            // {
-            //     filter &= filterBuilder.Lte(field, maxValue ?? int.MaxValue);
-            // }
             filter &= filterBuilder.Gte(field, minValue ?? 0);
             filter &= filterBuilder.Lte(field, maxValue ?? int.MaxValue);
             return filter;
