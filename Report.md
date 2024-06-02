@@ -20,6 +20,200 @@
 
 ![alt text](Images/image-11.png)
 ![alt text](Images/image-12.png)
+
+### 2. Opis Serwisów
+
+#### 2.1
+#### 2.2
+#### 2.3
+#### 2.4 Rental Service
+
+##### 2.4.1 New Rental
+Służy do asynchronicnzego tworzenia nowych wypożyczeń, zapytanie to jest stworzene w modelu transakcyjnym co oznacza, że wykonuje się ono albo w całości albo w ogóle.
+Przyjmuje on jako parametr obiekt typu _Rental_ i ralizuje kolejne operacje
+
+- Zarządza transakcjami
+```csharp
+using (var session = await _client.StartSessionAsync())
+{
+  session.StartTransaction();
+  try
+  {
+    await session.CommitTransactionAsync();
+  }
+  catch (Exception ex)
+  {
+    await session.AbortTransactionAsync();
+    throw;
+  }
+}      
+```
+- Sprawda czy obiekt _Rental_ nie jest nulem
+```csharp
+if (rental == null)
+{
+  _logger.LogError("Rental model is null");
+  throw new ArgumentNullException(nameof(rental), "Rental model cannot be null");
+}
+```
+
+- Sprawdza czy auto które chcemy wypozyczyć istnieje i jest dostępne: 
+```csharp
+Car car = await _carService.GetCarByIdAsync(carID);
+if(car == null)
+{
+  _logger.LogWarning($"Car with ID '{carID}' not found.");
+  throw new KeyNotFoundException($"Car does not exist.");
+}
+if(!car.IsAvailable)
+{
+  _logger.LogWarning($"Car with ID '{carID}' is not available.");
+  throw new KeyNotFoundException($"Car does not available.");
+}
+```
+
+- Aktualizuje status dostępności auta:
+```csharp
+var res = await _carService.UpdateCarAvailabilityByIdAsync(carID, false);
+if (!res){
+  _logger.LogWarning($"Error: UpdateCarAvailabilityByIdAsync()");
+  throw new KeyNotFoundException($"Error: UpdateCarAvailabilityByIdAsync()");
+}
+```
+
+- Jeśli żaden wyjątek nie został rzucony i wszystko pobiegło pomyślnie to dodaje obiek _rental_ do bazy:
+```csharp
+await _rentalCollection.InsertOneAsync(rental);
+_logger.LogInformation("Rental model created successfully: {@Rental}", rental);
+```
+
+##### 2.4. Finish Rental
+Służy do asynchronicnzego końcenia obecnych wypożyczeń, zapytanie to jest stworzene w modelu transakcyjnym co oznacza, że wykonuje się ono albo w całości albo w ogóle.
+Przyjmuje on jako parametr _id_ wyporzyczenia które chcemy zakończyć oraz obiekt typu _Rental_ i ralizuje kolejne operacje
+
+- Zarządza transakcjami:
+```csharp
+using (var session = await _client.StartSessionAsync())
+{
+  session.StartTransaction();
+  try
+  {
+    await session.CommitTransactionAsync();
+  }
+  catch (Exception ex)
+  {
+    await session.AbortTransactionAsync();
+    throw;
+  }
+}      
+```
+
+- Spraawdza czy wyporzyczenie, które chcemy zakończyć istnieje:
+```csharp
+var filter = Builders<Rental>.Filter.Eq(rental => rental._id, id);
+var originalRental = await _rentalCollection.Find(filter).FirstOrDefaultAsync();
+
+if (originalRental == null || rental == null)
+{
+  _logger.LogWarning($"Rental with ID '{id}' not found.");
+  throw new KeyNotFoundException($"Rental does not exist.");
+}
+```
+- Tworzy zmienne pomocnicze
+```csharp
+Rental_Details orginal_rental_Details = originalRental.Rental_Details;
+Rental_Details rental_Details = rental.Rental_Details;
+Rental_Car rental_Car = rental.Rental_Car;
+```
+- Ustawia datę zakończenia wypożyczenia na obecną, oblicza liczbę rozpoczętnych dni wypożyczenia, aktualizuje status na _sinished_
+
+```csharp
+rental_Details.End_Date = DateTime.UtcNow;
+rental_Details.Days = (int)Math.Ceiling((rental_Details.End_Date.Value - rental_Details.Start_Date).TotalDays);
+rental_Details.Rental_Status = "finished";
+```
+
+- Oblicza karę umowną za każdy dodatkowy dzień wypożyczenia (doliczane jest dodatkowe 50% dziennej opłaty za dane auto):
+
+```csharp
+if(rental_Details.Days > orginal_rental_Details.Days)
+{
+  rental_Details.Extra_Days_Amount = (int)((rental_Details.Days - orginal_rental_Details.Days) * 0.5 * rental_Car.Price_Per_Day);
+  rental_Details.Extra_Amount += rental_Details.Extra_Days_Amount;
+}
+```
+- Oblicza karę umowną za każdą dodatkowo przejechaną milę (doliczane jest dodatkowe 0.5% dziennej opłaty za dane auto do dodatkowej każdej mili powyżej 150 za dzień):
+
+```csharp
+if(rental_Details.Mileage > orginal_rental_Details.Mileage)
+{
+  rental_Details.Extra_Mileage_Amount = (int)((orginal_rental_Details.Mileage - rental_Details.Mileage) * 0.005 * rental_Car.Price_Per_Day);
+  rental_Details.Extra_Mileage_Amount += rental_Details.Extra_Mileage_Amount;
+}
+```
+- Oblicza karę umowną za każdy brakujący galon paliwa (wymagamy aby przy zwrocie bag był zatankowany do pełna, za każdy brakujący galon doliczamy 5$):
+
+```csharp
+if(rental_Details.Extra_Fuel != null)
+{
+  rental_Details.Extra_Fuel_Amount = rental_Details.Extra_Fuel.Value * 5;
+  rental_Details.Extra_Amount += rental_Details.Extra_Fuel_Amount;
+}
+```
+
+- Oblicza końcowy koszt wypozyczenia z uwzględnieniem rabatu:
+```csharp
+  rental_Details.Final_Amount = (int)(rental_Details.Price * (1-orginal_rental_Details.Discount) + rental_Details.Extra_Amount);
+```
+
+- Aktualizuje dostępność zwrócenego medelu auta oraz sprawdza poprawnośc wykonania się operacji:
+```csharp
+var res = await _carService.UpdateCarAvailabilityByIdAsync(rental_Car.carId, true);
+if (!res)
+{
+  _logger.LogWarning($"Error: UpdateCarAvailabilityByIdAsync()");
+  throw new KeyNotFoundException($"Error: UpdateCarAvailabilityByIdAsync()");
+}
+```
+
+- Aktualizuje przebieg zwrócenego medelu auta oraz sprawdza poprawnośc wykonania się operacji:
+```csharp
+var mileageUpdate = await _carService.UpdateCurrentMileageAsync(rental_Car.carId, rental_Details.Mileage);
+if (!res)
+{
+  _logger.LogWarning($"Error: UpdateCurrentMileageAsync()");
+  throw new KeyNotFoundException($"Error: UpdateCurrentMileageAsync()");
+}
+```
+- Aktulizuje liczbę dni wypożyczeń przez danego klienta:
+```csharp
+  var clientUpdate = await _clientService.UpdateRentalDaysAsync(rental.Customer.ClientId, rental_Details.Days);
+```
+
+- Aktualizuje obiekt _rental_:
+```csharp
+  var result = await _rentalCollection.ReplaceOneAsync(filter, rental);
+```
+
+##### 2.4.3 Get Rentals Per Filter
+Jest to asynchroniczna funckja, która zwraca wypożyczenia pasujące do otrzymanego jako parametr filtra.
+```csharp
+public async Task<IEnumerable<Rental>> GetRentalsPerFilterAsync(FilterDefinition<Rental> filter)
+{
+  try
+  {
+    var result = await _rentalCollection.Find(filter).ToListAsync();
+    return result;
+  }
+  catch (Exception ex)
+  {
+    _logger.LogError($"An error occurred while retrieving rentals: {ex.Message}");
+    throw;
+  }
+}
+```
+
+
 ### Transakcje
 Aby móc korzystać z transakcji musieliśmy odpowiednio skonfugurować nasz serwer bazodanywo.
  
