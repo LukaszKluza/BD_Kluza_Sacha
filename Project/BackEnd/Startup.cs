@@ -5,6 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using BCrypt.Net;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 public class Startup
 {
@@ -18,6 +24,30 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {   
         services.AddControllersWithViews();
+
+        var jwtTokenSettings = new JwtTokenModel
+        {
+            Issuer = "your_issuer",
+            Audience = "your_audience",
+            SecretKey = Convert.ToBase64String(Encoding.UTF8.GetBytes("Twój sekretny klucz")),
+            ExpiryTime = TimeSpan.FromMinutes(15)
+        };
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtTokenSettings.Issuer,
+                    ValidAudience = jwtTokenSettings.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtTokenSettings.SecretKey))
+                };
+            });
+        services.AddAuthorization();
 
         services.AddCors(options =>
         {

@@ -1,0 +1,66 @@
+@page "/register"
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+<h3>Register</h3>
+
+@if (ErrorMessage != null)
+{
+    <p style="color: red;">@ErrorMessage</p>
+}
+
+<form @onsubmit="SubmitRegister">
+    <label for="first_name">First Name:</label>
+    <input type="first_name" id="first_name" @bind="RegisterModel.First_Name" required /><br />
+
+    <label for="last_name">Last Name:</label>
+    <input type="last_name" id="last_name" @bind="RegisterModel.Last_Name" required /><br />
+
+    <label for="phone_number">Phone Number:</label>
+    <input type="phone_number" id="phone_number" @bind="RegisterModel.Phone_Number" /><br />
+
+    <label for="gender">Gender:</label>
+    <input type="gender" id="gender" @bind="RegisterModel.Gender" /><br />
+
+    <label for="birth_day">Birth Day:</label>
+    <input type="birth_day" id="birth_day" @bind="RegisterModel.Birth_Day" /><br />
+
+    <label for="pesel">Pesel:</label>
+    <input type="pesel" id="pesel" @bind="RegisterModel.Pesel" /><br />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" @bind="RegisterModel.Email" required /><br />
+
+    <label for="address">Address:</label>
+    <input type="address" id="address" @bind="RegisterModel.Address" /><br />
+
+    <label for="city">City:</label>
+    <input type="city" id="city" @bind="RegisterModel.City" /><br />
+
+    <label for="country">Country:</label>
+    <input type="country" id="country" @bind="RegisterModel.Country" /><br />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" @bind="RegisterModel.Password" required /><br />
+
+    <button type="submit">Register</button>
+</form>
+
+@code {
+    private RegisterModel RegisterModel = new RegisterModel();
+    private string ErrorMessage;
+
+    private async Task SubmitRegister()
+    {
+        var response = await HttpClient.PostAsJsonAsync("http://localhost:5000/api/Client/register", RegisterModel);
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            ErrorMessage = "Wystąpił błąd podczas rejestracji.";
+        }
+    }
+
+}
