@@ -1,8 +1,106 @@
 [{
-  "_id": 0,
+  "_id": {
+    "$oid": "6653185da27b9b0836010ac7"
+  },
   "type": "Discount",
   "name": "Discount5",
   "value": 0.05,
   "from": 20,
   "to": 49
+},
+{
+  "_id": {
+    "$oid": "66531860a27b9b0836010ac8"
+  },
+  "type": "Discount",
+  "name": "Discount7.5",
+  "value": 0.075,
+  "from": 50,
+  "to": 99
+},
+{
+  "_id": {
+    "$oid": "66531863a27b9b0836010ac9"
+  },
+  "type": "Discount",
+  "name": "Discount10",
+  "value": 0.1,
+  "from": 100,
+  "to": 199
+},
+{
+  "_id": {
+    "$oid": "66531893a27b9b0836010aca"
+  },
+  "type": "Discount",
+  "name": "Discount12.5",
+  "value": 0.125,
+  "from": 200,
+  "to": 399
+},
+{
+  "_id": {
+    "$oid": "665318a4a27b9b0836010acb"
+  },
+  "type": "Discount",
+  "name": "Discount15",
+  "value": 0.15,
+  "from": 400,
+  "to": 999
+},
+{
+  "_id": {
+    "$oid": "66531914a27b9b0836010acd"
+  },
+  "type": "Insurance",
+  "name": "BasicInsurance",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66531914a27b9b0836010ace"
+  },
+  "type": "Insurance",
+  "name": "StandardInsurance",
+  "price": 80
+},
+{
+  "_id": {
+    "$oid": "66531914a27b9b0836010acf"
+  },
+  "type": "Insurance",
+  "name": "FullInsurance",
+  "price": 100
+},
+{
+  "_id": {
+    "$oid": "6653194ba27b9b0836010ad1"
+  },
+  "type": "Mileage",
+  "name": "MileageLimit",
+  "mileage_limit": 150
+},
+{
+  "_id": {
+    "$oid": "66531994a27b9b0836010ad3"
+  },
+  "type": "ExtraAmount",
+  "name": "MileageExtraAmount",
+  "amount": 1
+},
+{
+  "_id": {
+    "$oid": "665319f5a27b9b0836010ad5"
+  },
+  "type": "ExtraAmount",
+  "name": "DayExtraAmount",
+  "value": 0.5
+},
+{
+  "_id": {
+    "$oid": "66531a27a27b9b0836010ad6"
+  },
+  "type": "ExtraAmount",
+  "name": "FuelExtraAmount",
+  "price": 10
 }]

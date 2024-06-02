@@ -1,0 +1,796 @@
+[{
+  "_id": 0,
+  "rental_car": {
+    "carId": 0,
+    "make": "Toyota",
+    "model": "Corolla",
+    "price_per_day": 120
+  },
+  "customer": {
+    "clientId": 0,
+    "first_name": "John",
+    "last_name": "Wick"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-12T12:00:00.000Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-17T12:00:00.000Z"
+    },
+    "end_date": {
+      "$date": "2024-05-18T10:08:55.906Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "full",
+    "extra_insurance_amount": 100,
+    "days": 6,
+    "extra_days_amount": 60,
+    "mileage": 550,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 600,
+    "discount": 0.1,
+    "extra_amount": 160,
+    "final_amount": 700
+  }
+},
+{
+  "_id": 1,
+  "rental_car": {
+    "carId": 1,
+    "make": "Toyota",
+    "model": "Corolla",
+    "price_per_day": 130
+  },
+  "customer": {
+    "clientId": 1,
+    "first_name": "Alice",
+    "last_name": "Johnson"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-14T12:00:00.000Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-20T12:00:00.000Z"
+    },
+    "end_date": null,
+    "rental_status": "ongoing",
+    "insurance_type": "standard",
+    "extra_insurance_amount": 80,
+    "days": 6,
+    "extra_days_amount": 0,
+    "mileage": 900,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 780,
+    "discount": 0,
+    "extra_amount": 0,
+    "final_amount": 780
+  }
+},
+{
+  "_id": 2,
+  "rental_car": {
+    "carId": 3,
+    "make": "Toyota",
+    "model": "RAV4",
+    "price_per_day": 150
+  },
+  "customer": {
+    "clientId": 19,
+    "first_name": "Ella",
+    "last_name": "Carter"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:25:56.332Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-25T08:25:56.332Z"
+    },
+    "end_date": {
+      "$date": "2024-05-28T08:25:56.332Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "standard",
+    "extra_insurance_amount": 0,
+    "days": 9,
+    "extra_days_amount": 480,
+    "mileage:": 1350,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 900,
+    "discount": 0,
+    "extra_amount": 480,
+    "final_amount": 1380
+  }
+},
+{
+  "_id": 3,
+  "rental_car": {
+    "carId": 6,
+    "make": "BMW",
+    "model": "M3",
+    "price_per_day": 300
+  },
+  "customer": {
+    "clientId": 18,
+    "first_name": "Henry",
+    "last_name": "Nelson"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:25:56.345Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-23T08:25:56.345Z"
+    },
+    "end_date": {
+      "$date": "2024-05-24T08:25:56.345Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "none",
+    "extra_insurance_amount": 0,
+    "days": 5,
+    "extra_days_amount": 105,
+    "mileage:": 750,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 380,
+    "discount": 0,
+    "extra_amount": 105,
+    "final_amount": 485
+  }
+},
+{
+  "_id": 4,
+  "rental_car": {
+    "carId": 8,
+    "make": "BMW",
+    "model": "X3",
+    "price_per_day": 180
+  },
+  "customer": {
+    "clientId": 1,
+    "first_name": "Alice",
+    "last_name": "Johnson"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:25:56.357Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-24T08:25:56.357Z"
+    },
+    "end_date": {
+      "$date": "2024-05-25T08:25:56.357Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "partial",
+    "extra_insurance_amount": 0,
+    "days": 6,
+    "extra_days_amount": 190,
+    "mileage:": 900,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 900,
+    "discount": 0,
+    "extra_amount": 190,
+    "final_amount": 1090
+  }
+},
+{
+  "_id": 5,
+  "rental_car": {
+    "carId": 6,
+    "make": "BMW",
+    "model": "M3",
+    "price_per_day": 300
+  },
+  "customer": {
+    "clientId": 18,
+    "first_name": "Henry",
+    "last_name": "Nelson"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:25:56.369Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-27T08:25:56.369Z"
+    },
+    "end_date": {
+      "$date": "2024-05-27T08:25:56.369Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "none",
+    "extra_insurance_amount": 0,
+    "days": 8,
+    "extra_days_amount": 0,
+    "mileage:": 1200,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 2400,
+    "discount": 0,
+    "extra_amount": 0,
+    "final_amount": 2400
+  }
+},
+{
+  "_id": 6,
+  "rental_car": {
+    "carId": 13,
+    "make": "Audi",
+    "model": "A6",
+    "price_per_day": 150
+  },
+  "customer": {
+    "clientId": 0,
+    "first_name": "John",
+    "last_name": "Wick"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:25:56.381Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-23T08:25:56.381Z"
+    },
+    "end_date": {
+      "$date": "2024-05-23T08:25:56.381Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "full",
+    "extra_insurance_amount": 0,
+    "days": 4,
+    "extra_days_amount": 0,
+    "mileage:": 600,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 600,
+    "discount": 0,
+    "extra_amount": 0,
+    "final_amount": 600
+  }
+},
+{
+  "_id": 7,
+  "rental_car": {
+    "carId": 18,
+    "make": "Opel",
+    "model": "Insignia",
+    "price_per_day": 140
+  },
+  "customer": {
+    "clientId": 1,
+    "first_name": "Alice",
+    "last_name": "Johnson"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:25:56.391Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-20T08:25:56.391Z"
+    },
+    "end_date": {
+      "$date": "2024-05-20T08:25:56.391Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "partial",
+    "extra_insurance_amount": 0,
+    "days": 1,
+    "extra_days_amount": 0,
+    "mileage:": 150,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 140,
+    "discount": 0,
+    "extra_amount": 0,
+    "final_amount": 140
+  }
+},
+{
+  "_id": 8,
+  "rental_car": {
+    "carId": 6,
+    "make": "BMW",
+    "model": "M3",
+    "price_per_day": 300
+  },
+  "customer": {
+    "clientId": 5,
+    "first_name": "Emma",
+    "last_name": "Martinez"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:25:56.402Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-25T08:25:56.402Z"
+    },
+    "end_date": {
+      "$date": "2024-05-28T08:25:56.402Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "standard",
+    "extra_insurance_amount": 0,
+    "days": 9,
+    "extra_days_amount": 930,
+    "mileage:": 1350,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 1800,
+    "discount": 0,
+    "extra_amount": 930,
+    "final_amount": 2730
+  }
+},
+{
+  "_id": 9,
+  "rental_car": {
+    "carId": 13,
+    "make": "Audi",
+    "model": "A6",
+    "price_per_day": 150
+  },
+  "customer": {
+    "clientId": 0,
+    "first_name": "John",
+    "last_name": "Wick"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:25:56.413Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-25T08:25:56.413Z"
+    },
+    "end_date": {
+      "$date": "2024-05-27T08:25:56.413Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "partial",
+    "extra_insurance_amount": 0,
+    "days": 8,
+    "extra_days_amount": 320,
+    "mileage:": 1200,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 900,
+    "discount": 0,
+    "extra_amount": 320,
+    "final_amount": 1220
+  }
+},
+{
+  "_id": 10,
+  "rental_car": {
+    "carId": 14,
+    "make": "Audi",
+    "model": "Q3",
+    "price_per_day": 140
+  },
+  "customer": {
+    "clientId": 13,
+    "first_name": "Mia",
+    "last_name": "Lopez"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:25:56.424Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-20T08:25:56.424Z"
+    },
+    "end_date": {
+      "$date": "2024-05-21T08:25:56.424Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "full",
+    "extra_insurance_amount": 0,
+    "days": 2,
+    "extra_days_amount": 150,
+    "mileage:": 300,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 140,
+    "discount": 0,
+    "extra_amount": 150,
+    "final_amount": 290
+  }
+},
+{
+  "_id": 11,
+  "rental_car": {
+    "carId": 12,
+    "make": "Audi",
+    "model": "A4",
+    "price_per_day": 130
+  },
+  "customer": {
+    "clientId": 18,
+    "first_name": "Henry",
+    "last_name": "Nelson"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:25:56.433Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-24T08:25:56.433Z"
+    },
+    "end_date": {
+      "$date": "2024-05-26T08:25:56.433Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "none",
+    "extra_insurance_amount": 0,
+    "days": 7,
+    "extra_days_amount": 280,
+    "mileage:": 1050,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 650,
+    "discount": 0,
+    "extra_amount": 280,
+    "final_amount": 930
+  }
+},
+{
+  "_id": 12,
+  "rental_car": {
+    "carId": 17,
+    "make": "Opel",
+    "model": "Astra",
+    "price_per_day": 120
+  },
+  "customer": {
+    "clientId": 6,
+    "first_name": "James",
+    "last_name": "Anderson"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:27:36.332Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-23T08:27:36.332Z"
+    },
+    "end_date": {
+      "$date": "2024-05-24T08:27:36.332Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "none",
+    "extra_insurance_amount": 0,
+    "days": 5,
+    "extra_days_amount": 130,
+    "mileage:": 750,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 480,
+    "discount": 0,
+    "extra_amount": 130,
+    "final_amount": 610
+  }
+},
+{
+  "_id": 13,
+  "rental_car": {
+    "carId": 13,
+    "make": "Audi",
+    "model": "A6",
+    "price_per_day": 150
+  },
+  "customer": {
+    "clientId": 3,
+    "first_name": "Emily",
+    "last_name": "Brown"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:27:36.345Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-28T08:27:36.345Z"
+    },
+    "end_date": {
+      "$date": "2024-05-29T08:27:36.345Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "standard",
+    "extra_insurance_amount": 0,
+    "days": 10,
+    "extra_days_amount": 160,
+    "mileage:": 1500,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 1350,
+    "discount": 0,
+    "extra_amount": 160,
+    "final_amount": 1510
+  }
+},
+{
+  "_id": 14,
+  "rental_car": {
+    "carId": 16,
+    "make": "Opel",
+    "model": "Corsa",
+    "price_per_day": 95
+  },
+  "customer": {
+    "clientId": 19,
+    "first_name": "Ella",
+    "last_name": "Carter"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:27:36.358Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-21T08:27:36.358Z"
+    },
+    "end_date": {
+      "$date": "2024-05-24T08:27:36.358Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "full",
+    "extra_insurance_amount": 0,
+    "days": 5,
+    "extra_days_amount": 315,
+    "mileage:": 750,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 190,
+    "discount": 0,
+    "extra_amount": 315,
+    "final_amount": 505
+  }
+},
+{
+  "_id": 15,
+  "rental_car": {
+    "carId": 13,
+    "make": "Audi",
+    "model": "A6",
+    "price_per_day": 150
+  },
+  "customer": {
+    "clientId": 5,
+    "first_name": "Emma",
+    "last_name": "Martinez"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:27:36.373Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-27T08:27:36.373Z"
+    },
+    "end_date": {
+      "$date": "2024-05-27T08:27:36.373Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "partial",
+    "extra_insurance_amount": 0,
+    "days": 8,
+    "extra_days_amount": 0,
+    "mileage:": 1200,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 1200,
+    "discount": 0,
+    "extra_amount": 0,
+    "final_amount": 1200
+  }
+},
+{
+  "_id": 16,
+  "rental_car": {
+    "carId": 2,
+    "make": "Toyota",
+    "model": "Avensis",
+    "price_per_day": 140
+  },
+  "customer": {
+    "clientId": 8,
+    "first_name": "William",
+    "last_name": "Jones"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:27:36.387Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-22T08:27:36.387Z"
+    },
+    "end_date": {
+      "$date": "2024-05-23T08:27:36.387Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "standard",
+    "extra_insurance_amount": 0,
+    "days": 4,
+    "extra_days_amount": 150,
+    "mileage:": 600,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 420,
+    "discount": 0,
+    "extra_amount": 150,
+    "final_amount": 570
+  }
+},
+{
+  "_id": 17,
+  "rental_car": {
+    "carId": 13,
+    "make": "Audi",
+    "model": "A6",
+    "price_per_day": 150
+  },
+  "customer": {
+    "clientId": 3,
+    "first_name": "Emily",
+    "last_name": "Brown"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:27:36.401Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-26T08:27:36.401Z"
+    },
+    "end_date": {
+      "$date": "2024-05-28T08:27:36.401Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "full",
+    "extra_insurance_amount": 0,
+    "days": 9,
+    "extra_days_amount": 320,
+    "mileage:": 1350,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 1050,
+    "discount": 0,
+    "extra_amount": 320,
+    "final_amount": 1370
+  }
+},
+{
+  "_id": 18,
+  "rental_car": {
+    "carId": 4,
+    "make": "Toyota",
+    "model": "Prius",
+    "price_per_day": 90
+  },
+  "customer": {
+    "clientId": 9,
+    "first_name": "Sophia",
+    "last_name": "Hernandez"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:27:36.413Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-27T08:27:36.413Z"
+    },
+    "end_date": {
+      "$date": "2024-05-29T08:27:36.413Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "partial",
+    "extra_insurance_amount": 0,
+    "days": 10,
+    "extra_days_amount": 200,
+    "mileage:": 1500,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 720,
+    "discount": 0,
+    "extra_amount": 200,
+    "final_amount": 920
+  }
+},
+{
+  "_id": 19,
+  "rental_car": {
+    "carId": 14,
+    "make": "Audi",
+    "model": "Q3",
+    "price_per_day": 140
+  },
+  "customer": {
+    "clientId": 7,
+    "first_name": "Olivia",
+    "last_name": "Garcia"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:27:36.424Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-27T08:27:36.424Z"
+    },
+    "end_date": {
+      "$date": "2024-05-27T08:27:36.424Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "standard",
+    "extra_insurance_amount": 0,
+    "days": 8,
+    "extra_days_amount": 0,
+    "mileage:": 1200,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 1120,
+    "discount": 0,
+    "extra_amount": 0,
+    "final_amount": 1120
+  }
+},
+{
+  "_id": 20,
+  "rental_car": {
+    "carId": 11,
+    "make": "Audi",
+    "model": "A3",
+    "price_per_day": 110
+  },
+  "customer": {
+    "clientId": 6,
+    "first_name": "James",
+    "last_name": "Anderson"
+  },
+  "rental_details": {
+    "start_date": {
+      "$date": "2024-05-19T08:27:36.432Z"
+    },
+    "expected_end_date": {
+      "$date": "2024-05-28T08:27:36.432Z"
+    },
+    "end_date": {
+      "$date": "2024-05-29T08:27:36.432Z"
+    },
+    "rental_status": "finished",
+    "insurance_type": "standard",
+    "extra_insurance_amount": 0,
+    "days": 10,
+    "extra_days_amount": 120,
+    "mileage:": 1500,
+    "extra_mileage_amount": 0,
+    "extra_fuel": 0,
+    "extra_fuel_amount": 0,
+    "price": 990,
+    "discount": 0,
+    "extra_amount": 120,
+    "final_amount": 1110
+  }
+}]

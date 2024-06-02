@@ -1,8 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MongoDB.Bson.IO;
 using MongoDB.Driver;
-using System.Threading.Tasks;
 using MongoDB.Bson.Serialization;
 
 public class CarService : ICarService
@@ -118,4 +115,49 @@ public class CarService : ICarService
         return car;
     }
 
+    public async Task<bool> UpdateCarAvailabilityByIdAsync(int id, bool availability)
+    {
+        try
+        {
+            var car = await GetCarByIdAsync(id);
+
+            if (car == null)
+            {
+                _logger.LogError($"Car {id} not exist");
+                return false;
+            }
+
+            car.IsAvailable = availability;
+            var updateResult = await UpdateCarAsync(id, car);
+
+            return updateResult;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"An error occurred while uptating car availability: {ex.Message}");
+            return false;
+        }
+    }
+    public async Task<bool> UpdateCurrentMileageAsync(int id, int mileage)
+    {
+        try
+        {
+            Car car = await _carCollection.Find(car => car._id == id).FirstOrDefaultAsync();
+
+            if (car == null)
+            {
+                _logger.LogError($"Car {id} not exist");
+                return false;
+            }
+
+            car.Curr_mileage += mileage;
+            var result = await UpdateCarAsync(id, car);
+            return result;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"An error occurred while uptating car mileage: {ex.Message}");
+            return false;
+        }
+    }
 }

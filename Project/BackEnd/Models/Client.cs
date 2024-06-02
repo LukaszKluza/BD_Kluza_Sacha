@@ -1,12 +1,11 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
 
 public class Client
 {
     [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
+    [BsonElement("_id")]
+    public int _id { get; set; }
 
     [BsonElement("first_name")]
     public string? First_Name { get; set; }
@@ -20,7 +19,7 @@ public class Client
     [BsonElement("gender")]
     public string? Gender { get; set; }
 
-    [BsonElement("birth_day")]
+    [BsonElement("birthday")]
     [BsonDateTimeOptions(DateOnly = true)]
     public DateTime? Birth_Day { get; set; }
 

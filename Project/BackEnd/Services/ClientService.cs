@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MongoDB.Bson.IO;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
-using System.Threading.Tasks;
 
 
 public class ClientService : IClientService
@@ -36,14 +34,43 @@ public class ClientService : IClientService
         }
     }
 
-    public Task<bool> DeleteClientAsync(int id)
+    public async Task<bool> DeleteClientAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await _clientCollection.DeleteOneAsync(client => client._id == id);
+            if (result.DeletedCount > 0)
+            {
+                _logger.LogInformation($"Client with ID '{id}' deleted successfully.");
+                return true;
+            }
+            else
+            {
+                _logger.LogWarning($"Client with ID '{id}' not found.");
+                return false;
+            }
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError($"An error occurred while deleting the car: {ex.Message}");
+            throw;
+        }
     }
 
-    public Task<IEnumerable<Client>> GetClientsPerFilterAsync(FilterDefinition<Client> filter)
+    public async Task<IEnumerable<Client>> GetClientsPerFilterAsync(FilterDefinition<Client> filter)
     {
-        throw new NotImplementedException();
+         try
+        {
+            var jsonFilter = filter.Render(BsonSerializer.SerializerRegistry.GetSerializer<Client>(), BsonSerializer.SerializerRegistry);
+            _logger.LogInformation($"Generated Filter: {jsonFilter}");
+            var result = await _clientCollection.Find(filter).ToListAsync();
+            return result;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"An error occurred while retrieving cars: {ex.Message}");
+            throw;
+        }
     }
 
     public async Task<Client> GetUserByEmailAsync(string email)
@@ -60,8 +87,62 @@ public class ClientService : IClientService
         }
     }
 
-    public Task<bool> UpdateClientAsync(int id, Client client)
+    public async Task<bool> UpdateClientAsync(int id, Client client)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var filter = Builders<Client>.Filter.Eq(client => client._id, id);
+            
+            var originalClient = await _clientCollection.Find(filter).FirstOrDefaultAsync();
+
+            if (originalClient == null)
+            {
+                _logger.LogWarning($"Client with ID '{id}' not found.");
+                return false;
+            }
+
+            client._id = originalClient._id;
+
+            var result = await _clientCollection.ReplaceOneAsync(filter, client);
+
+            if (result.ModifiedCount > 0)
+            {
+                _logger.LogInformation($"Client with ID '{id}' updated successfully.");
+                return true;
+            }
+            else
+            {
+                _logger.LogWarning($"Client with ID '{id}' not found.");
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"An error occurred while updating the client: {ex.Message}");
+            throw;
+        }
+    }
+    public async Task<bool> UpdateRentalDaysAsync(int id, int rental_days)
+    {
+        try
+        {
+            Client client = await _clientCollection.Find(client => client._id == id).FirstOrDefaultAsync();
+
+            if (client == null)
+            {
+                _logger.LogError($"Car {id} not exist");
+                return false;
+            }
+
+            client.Total_Rental_Days += rental_days;
+            Console.WriteLine(client.Total_Rental_Days);
+            var result = await UpdateClientAsync(id, client);
+            return result;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"An error occurred while uptating client rental days: {ex.Message}");
+            return false;
+        }
     }
 }

@@ -2,299 +2,380 @@
   "_id": 0,
   "first_name": "John",
   "last_name": "Wick",
-  "phone_number": 456895236,
+  "phone_number": "456895236",
   "gender": "male",
-  "birth-day": "1970-03-11",
   "pesel": "70031112345",
   "email": "john.wick@example.com",
   "address": "123 Main St, New York",
   "city": "New York",
   "country": "USA",
-  "customer_since": "2020-01-15",
-  "total_rental_days": 52
+  "customer_since": {
+    "$date": "2020-01-15T00:00:00.000Z"
+  },
+  "total_rental_days": 52,
+  "birthday": {
+    "$date": "1970-03-11T00:00:00.000Z"
+  }
 },
 {
   "_id": 1,
   "first_name": "Alice",
   "last_name": "Johnson",
-  "phone_number": 789654123,
+  "phone_number": "789654123",
   "gender": "female",
-  "birth-day": "1985-07-22",
   "pesel": "85072223456",
   "email": "alice.johnson@example.com",
   "address": "456 Elm St, Los Angeles",
   "city": "Los Angeles",
   "country": "USA",
-  "customer_since": "2018-09-30",
-  "total_rental_days": 8
+  "customer_since": {
+    "$date": "2018-09-30T00:00:00.000Z"
+  },
+  "total_rental_days": 8,
+  "birthday": {
+    "$date": "1985-07-22T00:00:00.000Z"
+  }
 },
 {
   "_id": 2,
   "first_name": "Michael",
   "last_name": "Smith",
-  "phone_number": 123456789,
+  "phone_number": "123456789",
   "gender": "male",
-  "birth-day": "1992-05-15",
+  "birthday": {
+    "$date": "1992-05-15T00:00:00.000Z"
+  },
   "pesel": "92051534567",
   "email": "michael.smith@example.com",
   "address": "789 Oak St, Chicago",
   "city": "Chicago",
   "country": "USA",
-  "customer_since": "2019-11-20",
-  "total_rental_days": 5
+  "customer_since": {
+    "$date": "2019-11-20T00:00:00.000Z"
+  },
+  "total_rental_days": 51,
+  "password_hash": null
 },
 {
   "_id": 3,
   "first_name": "Emily",
   "last_name": "Brown",
-  "phone_number": 369258147,
+  "phone_number": "369258147",
   "gender": "female",
-  "birth-day": "1988-12-30",
   "pesel": "88123045678",
   "email": "emily.brown@example.com",
   "address": "101 Pine St, San Francisco",
   "city": "San Francisco",
   "country": "USA",
-  "customer_since": "2021-03-05",
-  "total_rental_days": 30
+  "customer_since": {
+    "$date": "2021-03-05T00:00:00.000Z"
+  },
+  "total_rental_days": 30,
+  "birthday": {
+    "$date": "1988-12-30T00:00:00.000Z"
+  }
 },
 {
   "_id": 4,
   "first_name": "David",
   "last_name": "Wilson",
-  "phone_number": 951753852,
+  "phone_number": "951753852",
   "gender": "male",
-  "birth-day": "1977-09-18",
   "pesel": "77091856789",
   "email": "david.wilson@example.com",
   "address": "202 Maple St, Miami",
   "city": "Miami",
   "country": "USA",
-  "customer_since": "2020-06-10",
-  "total_rental_days": 6
+  "customer_since": {
+    "$date": "2020-06-10T00:00:00.000Z"
+  },
+  "total_rental_days": 6,
+  "birthday": {
+    "$date": "1977-09-18T00:00:00.000Z"
+  }
 },
 {
   "_id": 5,
   "first_name": "Emma",
   "last_name": "Martinez",
-  "phone_number": 258369147,
+  "phone_number": "258369147",
   "gender": "female",
-  "birth-day": "1995-04-25",
   "pesel": "95042567890",
   "email": "emma.martinez@example.com",
   "address": "303 Cedar St, Houston",
   "city": "Houston",
   "country": "USA",
-  "customer_since": "2017-12-28",
-  "total_rental_days": 15
+  "customer_since": {
+    "$date": "2017-12-28T00:00:00.000Z"
+  },
+  "total_rental_days": 15,
+  "birthday": {
+    "$date": "1995-04-25T00:00:00.000Z"
+  }
 },
 {
   "_id": 6,
   "first_name": "James",
   "last_name": "Anderson",
-  "phone_number": 741258963,
+  "phone_number": "741258963",
   "gender": "male",
-  "birth-day": "1980-08-08",
   "pesel": "80080878901",
   "email": "james.anderson@example.com",
   "address": "404 Birch St, Phoenix",
   "city": "Phoenix",
   "country": "USA",
-  "customer_since": "2019-02-14",
-  "total_rental_days": 83
+  "customer_since": {
+    "$date": "2019-02-14T00:00:00.000Z"
+  },
+  "total_rental_days": 83,
+  "birthday": {
+    "$date": "1980-08-08T00:00:00.000Z"
+  }
 },
 {
   "_id": 7,
   "first_name": "Olivia",
   "last_name": "Garcia",
-  "phone_number": 654789321,
+  "phone_number": "654789321",
   "gender": "female",
-  "birth-day": "1990-11-05",
   "pesel": "90110589012",
   "email": "olivia.garcia@example.com",
   "address": "505 Pine St, Philadelphia",
   "city": "Philadelphia",
   "country": "USA",
-  "customer_since": "2022-01-20",
-  "total_rental_days": 15
+  "customer_since": {
+    "$date": "2022-01-20T00:00:00.000Z"
+  },
+  "total_rental_days": 15,
+  "birthday": {
+    "$date": "1990-11-05T00:00:00.000Z"
+  }
 },
 {
   "_id": 8,
   "first_name": "William",
   "last_name": "Jones",
-  "phone_number": 123987654,
+  "phone_number": "123987654",
   "gender": "male",
-  "birth-day": "1983-02-14",
   "pesel": "83021490123",
   "email": "william.jones@example.com",
   "address": "606 Oak St, Boston",
   "city": "Boston",
   "country": "USA",
-  "customer_since": "2019-08-03",
-  "total_rental_days": 70
+  "customer_since": {
+    "$date": "2019-08-03T00:00:00.000Z"
+  },
+  "total_rental_days": 70,
+  "birthday": {
+    "$date": "1983-02-14T00:00:00.000Z"
+  }
 },
 {
   "_id": 9,
   "first_name": "Sophia",
   "last_name": "Hernandez",
-  "phone_number": 789123456,
+  "phone_number": "789123456",
   "gender": "female",
-  "birth-day": "1989-06-29",
   "pesel": "89062901234",
   "email": "sophia.hernandez@example.com",
   "address": "707 Maple St, Atlanta",
   "city": "Atlanta",
   "country": "USA",
-  "customer_since": "2021-09-12",
-  "total_rental_days": 0
+  "customer_since": {
+    "$date": "2021-09-12T00:00:00.000Z"
+  },
+  "total_rental_days": 0,
+  "birthday": {
+    "$date": "1989-06-29T00:00:00.000Z"
+  }
 },
 {
   "_id": 10,
   "first_name": "Daniel",
   "last_name": "Gonzalez",
-  "phone_number": 987456123,
+  "phone_number": "987456123",
   "gender": "male",
-  "birth-day": "1975-11-17",
   "pesel": "75111712345",
   "email": "daniel.gonzalez@example.com",
   "address": "808 Elm St, Dallas",
   "city": "Dallas",
   "country": "USA",
-  "customer_since": "2020-03-28",
-  "total_rental_days": 5
+  "customer_since": {
+    "$date": "2020-03-28T00:00:00.000Z"
+  },
+  "total_rental_days": 5,
+  "birthday": {
+    "$date": "1975-11-17T00:00:00.000Z"
+  }
 },
 {
   "_id": 11,
   "first_name": "Isabella",
   "last_name": "Perez",
-  "phone_number": 654321789,
+  "phone_number": "654321789",
   "gender": "female",
-  "birth-day": "1993-08-03",
   "pesel": "93080323456",
   "email": "isabella.perez@example.com",
   "address": "909 Pine St, Seattle",
   "city": "Seattle",
   "country": "USA",
-  "customer_since": "2018-05-20",
-  "total_rental_days": 95
+  "customer_since": {
+    "$date": "2018-05-20T00:00:00.000Z"
+  },
+  "total_rental_days": 95,
+  "birthday": {
+    "$date": "1993-08-03T00:00:00.000Z"
+  }
 },
 {
   "_id": 12,
   "first_name": "Matthew",
   "last_name": "Rodriguez",
-  "phone_number": 258147369,
+  "phone_number": "258147369",
   "gender": "male",
-  "birth-day": "1986-04-10",
   "pesel": "86041034567",
   "email": "matthew.rodriguez@example.com",
   "address": "1010 Cedar St, Detroit",
   "city": "Detroit",
   "country": "USA",
-  "customer_since": "2019-11-04",
-  "total_rental_days": 68
+  "customer_since": {
+    "$date": "2019-11-04T00:00:00.000Z"
+  },
+  "total_rental_days": 68,
+  "birthday": {
+    "$date": "1986-04-10T00:00:00.000Z"
+  }
 },
 {
   "_id": 13,
   "first_name": "Mia",
   "last_name": "Lopez",
-  "phone_number": 123456789,
+  "phone_number": "123456789",
   "gender": "female",
-  "birth-day": "1997-01-28",
   "pesel": "97012845678",
   "email": "mia.lopez@example.com",
   "address": "1111 Birch St, Minneapolis",
   "city": "Minneapolis",
   "country": "USA",
-  "customer_since": "2020-10-15",
-  "total_rental_days": 25
+  "customer_since": {
+    "$date": "2020-10-15T00:00:00.000Z"
+  },
+  "total_rental_days": 25,
+  "birthday": {
+    "$date": "1997-01-28T00:00:00.000Z"
+  }
 },
 {
   "_id": 14,
   "first_name": "Alexander",
   "last_name": "Hill",
-  "phone_number": 987654321,
+  "phone_number": "987654321",
   "gender": "male",
-  "birth-day": "1982-12-12",
   "pesel": "82121256789",
   "email": "alexander.hill@example.com",
   "address": "1212 Maple St, Denver",
   "city": "Denver",
   "country": "USA",
-  "customer_since": "2017-07-19",
-  "total_rental_days": 11
+  "customer_since": {
+    "$date": "2017-07-19T00:00:00.000Z"
+  },
+  "total_rental_days": 11,
+  "birthday": {
+    "$date": "1982-12-12T00:00:00.000Z"
+  }
 },
 {
   "_id": 15,
   "first_name": "Charlotte",
   "last_name": "Scott",
-  "phone_number": 654123987,
+  "phone_number": "654123987",
   "gender": "female",
-  "birth-day": "1987-05-09",
   "pesel": "87050967890",
   "email": "charlotte.scott@example.com",
   "address": "1313 Oak St, San Diego",
   "city": "San Diego",
   "country": "USA",
-  "customer_since": "2021-05-02",
-  "total_rental_days": 35
+  "customer_since": {
+    "$date": "2021-05-02T00:00:00.000Z"
+  },
+  "total_rental_days": 35,
+  "birthday": {
+    "$date": "1987-05-09T00:00:00.000Z"
+  }
 },
 {
   "_id": 16,
   "first_name": "Benjamin",
   "last_name": "Green",
-  "phone_number": 741852963,
+  "phone_number": "741852963",
   "gender": "male",
-  "birth-day": "1974-02-27",
   "pesel": "74022778901",
   "email": "benjamin.green@example.com",
   "address": "1414 Cedar St, Orlando",
   "city": "Orlando",
   "country": "USA",
-  "customer_since": "2018-03-14",
-  "total_rental_days": 90
+  "customer_since": {
+    "$date": "2018-03-14T00:00:00.000Z"
+  },
+  "total_rental_days": 90,
+  "birthday": {
+    "$date": "1974-02-27T00:00:00.000Z"
+  }
 },
 {
   "_id": 17,
   "first_name": "Amelia",
   "last_name": "Baker",
-  "phone_number": 369258147,
+  "phone_number": "369258147",
   "gender": "female",
-  "birth-day": "1994-09-04",
   "pesel": "94090489012",
   "email": "amelia.baker@example.com",
   "address": "1515 Pine St, Tampa",
   "city": "Tampa",
   "country": "USA",
-  "customer_since": "2019-06-25",
-  "total_rental_days": 7
+  "customer_since": {
+    "$date": "2019-06-25T00:00:00.000Z"
+  },
+  "total_rental_days": 7,
+  "birthday": {
+    "$date": "1994-09-04T00:00:00.000Z"
+  }
 },
 {
   "_id": 18,
   "first_name": "Henry",
   "last_name": "Nelson",
-  "phone_number": 852369741,
+  "phone_number": "852369741",
   "gender": "male",
-  "birth-day": "1981-11-30",
   "pesel": "81113090123",
   "email": "henry.nelson@example.com",
   "address": "1616 Maple St, Austin",
   "city": "Austin",
   "country": "USA",
-  "customer_since": "2020-08-18",
-  "total_rental_days": 6
+  "customer_since": {
+    "$date": "2020-08-18T00:00:00.000Z"
+  },
+  "total_rental_days": 6,
+  "birthday": {
+    "$date": "1981-11-30T00:00:00.000Z"
+  }
 },
 {
   "_id": 19,
   "first_name": "Ella",
   "last_name": "Carter",
-  "phone_number": 147852369,
+  "phone_number": "147852369",
   "gender": "female",
-  "birth-day": "1998-06-15",
   "pesel": "98061501234",
   "email": "ella.carter@example.com",
   "address": "1717 Oak St, Nashville",
   "city": "Nashville",
   "country": "USA",
-  "customer_since": "2021-11-07",
-  "total_rental_days": 2
+  "customer_since": {
+    "$date": "2021-08-21T00:00:00.000Z"
+  },
+  "total_rental_days": 2,
+  "birthday": {
+    "$date": "1998-06-15T00:00:00.000Z"
+  }
 }]

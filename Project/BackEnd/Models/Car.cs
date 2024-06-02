@@ -26,7 +26,7 @@ public class Car
     public int Curr_mileage { get; set; }
 
     [BsonElement("price_per_day")]
-    public int Price_per_day { get; set; }
+    public double Price_per_day { get; set; }
 
     [BsonElement("isAvailable")]
     public bool IsAvailable { get; set; }
