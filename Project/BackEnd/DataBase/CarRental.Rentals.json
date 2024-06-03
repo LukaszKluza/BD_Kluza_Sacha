@@ -1,13 +1,19 @@
 [{
-  "_id": 0,
+  "_id": {
+    "$oid": "000000000000000000000000"
+  },
   "rental_car": {
-    "carId": 0,
+    "carId": {
+      "$oid": "000000000000000000000000"
+    },
     "make": "Toyota",
     "model": "Corolla",
     "price_per_day": 120
   },
   "customer": {
-    "clientId": 0,
+    "clientId": {
+      "$oid": "000000000000000000000000"
+    },
     "first_name": "John",
     "last_name": "Wick"
   },
@@ -37,15 +43,21 @@
   }
 },
 {
-  "_id": 1,
+  "_id": {
+    "$oid": "000000000000000000000001"
+  },
   "rental_car": {
-    "carId": 1,
+    "carId": {
+      "$oid": "000000000000000000000001"
+    },
     "make": "Toyota",
     "model": "Corolla",
     "price_per_day": 130
   },
   "customer": {
-    "clientId": 1,
+    "clientId": {
+      "$oid": "000000000000000000000001"
+    },
     "first_name": "Alice",
     "last_name": "Johnson"
   },
@@ -73,15 +85,21 @@
   }
 },
 {
-  "_id": 3,
+  "_id": {
+    "$oid": "000000000000000000000003"
+  },
   "rental_car": {
-    "carId": 9,
+    "carId": {
+      "$oid": "000000000000000000000009"
+    },
     "make": "BMW",
     "model": "X5",
     "price_per_day": 300
   },
   "customer": {
-    "clientId": 2,
+    "clientId": {
+      "$oid": "000000000000000000000002"
+    },
     "first_name": "Michael",
     "last_name": "Smith"
   },
@@ -109,15 +127,21 @@
   }
 },
 {
-  "_id": 4,
+  "_id": {
+    "$oid": "000000000000000000000004"
+  },
   "rental_car": {
-    "carId": 39,
+    "carId": {
+      "$oid": "000000000000000000000027"
+    },
     "make": "Opel",
     "model": "Grandland X",
     "price_per_day": 150
   },
   "customer": {
-    "clientId": 2,
+    "clientId": {
+      "$oid": "000000000000000000000002"
+    },
     "first_name": "Michael",
     "last_name": "Smith"
   },
@@ -147,15 +171,21 @@
   }
 },
 {
-  "_id": 5,
+  "_id": {
+    "$oid": "665e201b13635eefe1b66587"
+  },
   "rental_car": {
-    "carId": 35,
+    "carId": {
+      "$oid": "000000000000000000000023"
+    },
     "make": "Audi",
     "model": "Q5",
     "price_per_day": 200
   },
   "customer": {
-    "clientId": 2,
+    "clientId": {
+      "$oid": "000000000000000000000002"
+    },
     "first_name": "Michael",
     "last_name": "Smith"
   },
@@ -167,20 +197,20 @@
       "$date": "2024-05-30T12:00:00.000Z"
     },
     "end_date": {
-      "$date": "2024-06-02T19:52:14.023Z"
+      "$date": "2024-06-03T19:58:21.952Z"
     },
     "rental_status": "finished",
     "insurance_type": "basic",
     "extra_insurance_amount": 50,
-    "days": 12,
-    "extra_days_amount": 400,
+    "days": 13,
+    "extra_days_amount": 500,
     "mileage": 1200,
     "extra_mileage_amount": 0,
     "extra_fuel": 0,
     "extra_fuel_amount": 0,
     "price": 1600,
     "discount": 0,
-    "extra_amount": 450,
-    "final_amount": 2050
+    "extra_amount": 550,
+    "final_amount": 2150
   }
 }]

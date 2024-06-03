@@ -1,5 +1,7 @@
 [{
-  "_id": 0,
+  "_id": {
+    "$oid": "000000000000000000000000"
+  },
   "first_name": "John",
   "last_name": "Wick",
   "phone_number": "456895236",
@@ -18,7 +20,9 @@
   }
 },
 {
-  "_id": 1,
+  "_id": {
+    "$oid": "000000000000000000000001"
+  },
   "first_name": "Alice",
   "last_name": "Johnson",
   "phone_number": "789654123",
@@ -37,7 +41,9 @@
   }
 },
 {
-  "_id": 2,
+  "_id": {
+    "$oid": "000000000000000000000002"
+  },
   "first_name": "Michael",
   "last_name": "Smith",
   "phone_number": "123456789",
@@ -53,11 +59,13 @@
   "customer_since": {
     "$date": "2019-11-20T00:00:00.000Z"
   },
-  "total_rental_days": 51,
+  "total_rental_days": 103,
   "password_hash": null
 },
 {
-  "_id": 3,
+  "_id": {
+    "$oid": "000000000000000000000003"
+  },
   "first_name": "Emily",
   "last_name": "Brown",
   "phone_number": "369258147",
@@ -76,7 +84,9 @@
   }
 },
 {
-  "_id": 4,
+  "_id": {
+    "$oid": "000000000000000000000004"
+  },
   "first_name": "David",
   "last_name": "Wilson",
   "phone_number": "951753852",
@@ -95,7 +105,9 @@
   }
 },
 {
-  "_id": 5,
+  "_id": {
+    "$oid": "000000000000000000000005"
+  },
   "first_name": "Emma",
   "last_name": "Martinez",
   "phone_number": "258369147",
@@ -114,7 +126,9 @@
   }
 },
 {
-  "_id": 6,
+  "_id": {
+    "$oid": "000000000000000000000006"
+  },
   "first_name": "James",
   "last_name": "Anderson",
   "phone_number": "741258963",
@@ -133,7 +147,9 @@
   }
 },
 {
-  "_id": 7,
+  "_id": {
+    "$oid": "000000000000000000000007"
+  },
   "first_name": "Olivia",
   "last_name": "Garcia",
   "phone_number": "654789321",
@@ -152,7 +168,9 @@
   }
 },
 {
-  "_id": 8,
+  "_id": {
+    "$oid": "000000000000000000000008"
+  },
   "first_name": "William",
   "last_name": "Jones",
   "phone_number": "123987654",
@@ -171,7 +189,9 @@
   }
 },
 {
-  "_id": 9,
+  "_id": {
+    "$oid": "000000000000000000000009"
+  },
   "first_name": "Sophia",
   "last_name": "Hernandez",
   "phone_number": "789123456",
@@ -190,7 +210,9 @@
   }
 },
 {
-  "_id": 10,
+  "_id": {
+    "$oid": "00000000000000000000000a"
+  },
   "first_name": "Daniel",
   "last_name": "Gonzalez",
   "phone_number": "987456123",
@@ -209,7 +231,9 @@
   }
 },
 {
-  "_id": 11,
+  "_id": {
+    "$oid": "00000000000000000000000b"
+  },
   "first_name": "Isabella",
   "last_name": "Perez",
   "phone_number": "654321789",
@@ -228,7 +252,9 @@
   }
 },
 {
-  "_id": 12,
+  "_id": {
+    "$oid": "00000000000000000000000c"
+  },
   "first_name": "Matthew",
   "last_name": "Rodriguez",
   "phone_number": "258147369",
@@ -247,7 +273,9 @@
   }
 },
 {
-  "_id": 13,
+  "_id": {
+    "$oid": "00000000000000000000000d"
+  },
   "first_name": "Mia",
   "last_name": "Lopez",
   "phone_number": "123456789",
@@ -266,7 +294,9 @@
   }
 },
 {
-  "_id": 14,
+  "_id": {
+    "$oid": "00000000000000000000000e"
+  },
   "first_name": "Alexander",
   "last_name": "Hill",
   "phone_number": "987654321",
@@ -285,7 +315,9 @@
   }
 },
 {
-  "_id": 15,
+  "_id": {
+    "$oid": "00000000000000000000000f"
+  },
   "first_name": "Charlotte",
   "last_name": "Scott",
   "phone_number": "654123987",
@@ -304,7 +336,9 @@
   }
 },
 {
-  "_id": 16,
+  "_id": {
+    "$oid": "000000000000000000000010"
+  },
   "first_name": "Benjamin",
   "last_name": "Green",
   "phone_number": "741852963",
@@ -323,7 +357,9 @@
   }
 },
 {
-  "_id": 17,
+  "_id": {
+    "$oid": "000000000000000000000011"
+  },
   "first_name": "Amelia",
   "last_name": "Baker",
   "phone_number": "369258147",
@@ -342,7 +378,9 @@
   }
 },
 {
-  "_id": 18,
+  "_id": {
+    "$oid": "000000000000000000000012"
+  },
   "first_name": "Henry",
   "last_name": "Nelson",
   "phone_number": "852369741",
@@ -361,7 +399,9 @@
   }
 },
 {
-  "_id": 19,
+  "_id": {
+    "$oid": "000000000000000000000013"
+  },
   "first_name": "Ella",
   "last_name": "Carter",
   "phone_number": "147852369",

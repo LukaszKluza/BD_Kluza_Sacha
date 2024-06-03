@@ -1,6 +1,10 @@
 [{
-  "_id": 0,
-  "_carModelId": 0,
+  "_id": {
+    "$oid": "000000000000000000000000"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000000"
+  },
   "seats": 5,
   "type": "combi",
   "color": "pink",
@@ -11,8 +15,12 @@
   "production_year": 2021
 },
 {
-  "_id": 1,
-  "_carModelId": 0,
+  "_id": {
+    "$oid": "000000000000000000000001"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000000"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "yellow",
@@ -23,8 +31,12 @@
   "production_year": 2022
 },
 {
-  "_id": 2,
-  "_carModelId": 2,
+  "_id": {
+    "$oid": "000000000000000000000002"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000002"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "black",
@@ -35,8 +47,12 @@
   "production_year": 2018
 },
 {
-  "_id": 3,
-  "_carModelId": 3,
+  "_id": {
+    "$oid": "000000000000000000000003"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000003"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "silver",
@@ -47,8 +63,12 @@
   "production_year": 2021
 },
 {
-  "_id": 4,
-  "_carModelId": 4,
+  "_id": {
+    "$oid": "000000000000000000000004"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000004"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "white",
@@ -59,8 +79,12 @@
   "production_year": 2020
 },
 {
-  "_id": 5,
-  "_carModelId": 5,
+  "_id": {
+    "$oid": "000000000000000000000005"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000005"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "gray",
@@ -71,8 +95,12 @@
   "production_year": 2019
 },
 {
-  "_id": 6,
-  "_carModelId": 6,
+  "_id": {
+    "$oid": "000000000000000000000006"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000006"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "red",
@@ -83,8 +111,12 @@
   "production_year": 2021
 },
 {
-  "_id": 7,
-  "_carModelId": 7,
+  "_id": {
+    "$oid": "000000000000000000000007"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000007"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "blue",
@@ -95,8 +127,12 @@
   "production_year": 2020
 },
 {
-  "_id": 8,
-  "_carModelId": 8,
+  "_id": {
+    "$oid": "000000000000000000000008"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000008"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "black",
@@ -107,8 +143,12 @@
   "production_year": 2019
 },
 {
-  "_id": 9,
-  "_carModelId": 9,
+  "_id": {
+    "$oid": "000000000000000000000009"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000009"
+  },
   "seats": 7,
   "type": "SUV",
   "color": "silver",
@@ -119,8 +159,12 @@
   "production_year": 2021
 },
 {
-  "_id": 10,
-  "_carModelId": 10,
+  "_id": {
+    "$oid": "00000000000000000000000a"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000a"
+  },
   "seats": 7,
   "type": "SUV",
   "color": "white",
@@ -131,8 +175,12 @@
   "production_year": 2018
 },
 {
-  "_id": 11,
-  "_carModelId": 11,
+  "_id": {
+    "$oid": "00000000000000000000000b"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000b"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "gray",
@@ -143,8 +191,12 @@
   "production_year": 2020
 },
 {
-  "_id": 12,
-  "_carModelId": 12,
+  "_id": {
+    "$oid": "00000000000000000000000c"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000c"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "red",
@@ -155,8 +207,12 @@
   "production_year": 2019
 },
 {
-  "_id": 13,
-  "_carModelId": 13,
+  "_id": {
+    "$oid": "00000000000000000000000d"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000d"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "blue",
@@ -167,8 +223,12 @@
   "production_year": 2018
 },
 {
-  "_id": 14,
-  "_carModelId": 14,
+  "_id": {
+    "$oid": "00000000000000000000000e"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000e"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "black",
@@ -179,8 +239,12 @@
   "production_year": 2021
 },
 {
-  "_id": 15,
-  "_carModelId": 15,
+  "_id": {
+    "$oid": "00000000000000000000000f"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000f"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "silver",
@@ -191,8 +255,12 @@
   "production_year": 2020
 },
 {
-  "_id": 16,
-  "_carModelId": 16,
+  "_id": {
+    "$oid": "000000000000000000000010"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000010"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "white",
@@ -203,8 +271,12 @@
   "production_year": 2019
 },
 {
-  "_id": 17,
-  "_carModelId": 17,
+  "_id": {
+    "$oid": "000000000000000000000011"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000011"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "gray",
@@ -215,8 +287,12 @@
   "production_year": 2018
 },
 {
-  "_id": 18,
-  "_carModelId": 18,
+  "_id": {
+    "$oid": "000000000000000000000012"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000012"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "red",
@@ -227,8 +303,12 @@
   "production_year": 2021
 },
 {
-  "_id": 19,
-  "_carModelId": 19,
+  "_id": {
+    "$oid": "000000000000000000000013"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000013"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "blue",
@@ -239,8 +319,12 @@
   "production_year": 2020
 },
 {
-  "_id": 20,
-  "_carModelId": 0,
+  "_id": {
+    "$oid": "000000000000000000000014"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000000"
+  },
   "seats": 5,
   "type": "combi",
   "color": "red",
@@ -251,8 +335,12 @@
   "production_year": 2019
 },
 {
-  "_id": 21,
-  "_carModelId": 1,
+  "_id": {
+    "$oid": "000000000000000000000015"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000001"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "blue",
@@ -263,8 +351,12 @@
   "production_year": 2021
 },
 {
-  "_id": 22,
-  "_carModelId": 2,
+  "_id": {
+    "$oid": "000000000000000000000016"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000002"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "black",
@@ -275,8 +367,12 @@
   "production_year": 2020
 },
 {
-  "_id": 23,
-  "_carModelId": 3,
+  "_id": {
+    "$oid": "000000000000000000000017"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000003"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "silver",
@@ -287,8 +383,12 @@
   "production_year": 2019
 },
 {
-  "_id": 24,
-  "_carModelId": 4,
+  "_id": {
+    "$oid": "000000000000000000000018"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000004"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "white",
@@ -299,8 +399,12 @@
   "production_year": 2018
 },
 {
-  "_id": 25,
-  "_carModelId": 5,
+  "_id": {
+    "$oid": "000000000000000000000019"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000005"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "gray",
@@ -311,8 +415,12 @@
   "production_year": 2021
 },
 {
-  "_id": 26,
-  "_carModelId": 6,
+  "_id": {
+    "$oid": "00000000000000000000001a"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000006"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "red",
@@ -323,8 +431,12 @@
   "production_year": 2020
 },
 {
-  "_id": 27,
-  "_carModelId": 7,
+  "_id": {
+    "$oid": "00000000000000000000001b"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000007"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "blue",
@@ -335,8 +447,12 @@
   "production_year": 2019
 },
 {
-  "_id": 28,
-  "_carModelId": 8,
+  "_id": {
+    "$oid": "00000000000000000000001c"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000008"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "black",
@@ -347,8 +463,12 @@
   "production_year": 2020
 },
 {
-  "_id": 29,
-  "_carModelId": 9,
+  "_id": {
+    "$oid": "00000000000000000000001d"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000009"
+  },
   "seats": 7,
   "type": "SUV",
   "color": "silver",
@@ -359,8 +479,12 @@
   "production_year": 2018
 },
 {
-  "_id": 30,
-  "_carModelId": 10,
+  "_id": {
+    "$oid": "00000000000000000000001e"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000a"
+  },
   "seats": 7,
   "type": "SUV",
   "color": "white",
@@ -371,8 +495,12 @@
   "production_year": 2021
 },
 {
-  "_id": 31,
-  "_carModelId": 11,
+  "_id": {
+    "$oid": "00000000000000000000001f"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000b"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "gray",
@@ -383,8 +511,12 @@
   "production_year": 2020
 },
 {
-  "_id": 32,
-  "_carModelId": 12,
+  "_id": {
+    "$oid": "000000000000000000000020"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000c"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "red",
@@ -395,8 +527,12 @@
   "production_year": 2019
 },
 {
-  "_id": 33,
-  "_carModelId": 13,
+  "_id": {
+    "$oid": "000000000000000000000021"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000d"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "blue",
@@ -407,8 +543,12 @@
   "production_year": 2018
 },
 {
-  "_id": 34,
-  "_carModelId": 14,
+  "_id": {
+    "$oid": "000000000000000000000022"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000e"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "black",
@@ -419,20 +559,28 @@
   "production_year": 2021
 },
 {
-  "_id": 35,
-  "_carModelId": 15,
+  "_id": {
+    "$oid": "000000000000000000000023"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000f"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "silver",
   "power": 200,
-  "curr_mileage": 15400,
+  "curr_mileage": 17800,
   "price_per_day": 160,
   "isAvailable": true,
   "production_year": 2018
 },
 {
-  "_id": 36,
-  "_carModelId": 16,
+  "_id": {
+    "$oid": "000000000000000000000024"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000010"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "white",
@@ -443,8 +591,12 @@
   "production_year": 2019
 },
 {
-  "_id": 37,
-  "_carModelId": 17,
+  "_id": {
+    "$oid": "000000000000000000000025"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000011"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "gray",
@@ -455,8 +607,12 @@
   "production_year": 2020
 },
 {
-  "_id": 38,
-  "_carModelId": 18,
+  "_id": {
+    "$oid": "000000000000000000000026"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000012"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "red",
@@ -467,8 +623,12 @@
   "production_year": 2021
 },
 {
-  "_id": 39,
-  "_carModelId": 19,
+  "_id": {
+    "$oid": "000000000000000000000027"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000013"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "blue",
@@ -479,8 +639,12 @@
   "production_year": 2020
 },
 {
-  "_id": 40,
-  "_carModelId": 0,
+  "_id": {
+    "$oid": "000000000000000000000028"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000000"
+  },
   "seats": 5,
   "type": "combi",
   "color": "red",
@@ -491,8 +655,12 @@
   "production_year": 2018
 },
 {
-  "_id": 41,
-  "_carModelId": 1,
+  "_id": {
+    "$oid": "000000000000000000000029"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000001"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "blue",
@@ -503,8 +671,12 @@
   "production_year": 2020
 },
 {
-  "_id": 42,
-  "_carModelId": 2,
+  "_id": {
+    "$oid": "00000000000000000000002a"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000002"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "black",
@@ -515,8 +687,12 @@
   "production_year": 2019
 },
 {
-  "_id": 43,
-  "_carModelId": 3,
+  "_id": {
+    "$oid": "00000000000000000000002b"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000003"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "silver",
@@ -527,8 +703,12 @@
   "production_year": 2018
 },
 {
-  "_id": 44,
-  "_carModelId": 4,
+  "_id": {
+    "$oid": "00000000000000000000002c"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000004"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "white",
@@ -539,8 +719,12 @@
   "production_year": 2021
 },
 {
-  "_id": 45,
-  "_carModelId": 5,
+  "_id": {
+    "$oid": "00000000000000000000002d"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000005"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "gray",
@@ -551,8 +735,12 @@
   "production_year": 2019
 },
 {
-  "_id": 46,
-  "_carModelId": 6,
+  "_id": {
+    "$oid": "00000000000000000000002e"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000006"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "red",
@@ -563,8 +751,12 @@
   "production_year": 2018
 },
 {
-  "_id": 47,
-  "_carModelId": 7,
+  "_id": {
+    "$oid": "00000000000000000000002f"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000007"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "blue",
@@ -575,8 +767,12 @@
   "production_year": 2020
 },
 {
-  "_id": 48,
-  "_carModelId": 8,
+  "_id": {
+    "$oid": "000000000000000000000030"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000008"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "black",
@@ -587,8 +783,12 @@
   "production_year": 2019
 },
 {
-  "_id": 49,
-  "_carModelId": 9,
+  "_id": {
+    "$oid": "000000000000000000000031"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000009"
+  },
   "seats": 7,
   "type": "SUV",
   "color": "silver",
@@ -599,8 +799,12 @@
   "production_year": 2021
 },
 {
-  "_id": 50,
-  "_carModelId": 10,
+  "_id": {
+    "$oid": "000000000000000000000032"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000a"
+  },
   "seats": 7,
   "type": "SUV",
   "color": "white",
@@ -611,8 +815,12 @@
   "production_year": 2018
 },
 {
-  "_id": 51,
-  "_carModelId": 11,
+  "_id": {
+    "$oid": "000000000000000000000033"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000b"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "gray",
@@ -623,8 +831,12 @@
   "production_year": 2021
 },
 {
-  "_id": 52,
-  "_carModelId": 12,
+  "_id": {
+    "$oid": "000000000000000000000034"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000c"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "red",
@@ -635,20 +847,28 @@
   "production_year": 2020
 },
 {
-  "_id": 53,
-  "_carModelId": 13,
+  "_id": {
+    "$oid": "000000000000000000000035"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000d"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "blue",
   "power": 180,
-  "curr_mileage": 9200,
+  "curr_mileage": 11600,
   "price_per_day": 150,
   "isAvailable": true,
   "production_year": 2019
 },
 {
-  "_id": 54,
-  "_carModelId": 14,
+  "_id": {
+    "$oid": "000000000000000000000036"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000e"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "black",
@@ -659,8 +879,12 @@
   "production_year": 2018
 },
 {
-  "_id": 55,
-  "_carModelId": 15,
+  "_id": {
+    "$oid": "000000000000000000000037"
+  },
+  "_carModelId": {
+    "$oid": "00000000000000000000000f"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "silver",
@@ -671,8 +895,12 @@
   "production_year": 2021
 },
 {
-  "_id": 56,
-  "_carModelId": 16,
+  "_id": {
+    "$oid": "000000000000000000000038"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000010"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "white",
@@ -683,8 +911,12 @@
   "production_year": 2020
 },
 {
-  "_id": 57,
-  "_carModelId": 17,
+  "_id": {
+    "$oid": "000000000000000000000039"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000011"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "gray",
@@ -695,8 +927,12 @@
   "production_year": 2019
 },
 {
-  "_id": 58,
-  "_carModelId": 18,
+  "_id": {
+    "$oid": "00000000000000000000003a"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000012"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "red",
@@ -707,8 +943,12 @@
   "production_year": 2018
 },
 {
-  "_id": 59,
-  "_carModelId": 19,
+  "_id": {
+    "$oid": "00000000000000000000003b"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000013"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "blue",
@@ -719,8 +959,12 @@
   "production_year": 2021
 },
 {
-  "_id": 60,
-  "_carModelId": 0,
+  "_id": {
+    "$oid": "00000000000000000000003c"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000000"
+  },
   "seats": 5,
   "type": "combi",
   "color": "red",
@@ -731,8 +975,12 @@
   "production_year": 2018
 },
 {
-  "_id": 61,
-  "_carModelId": 1,
+  "_id": {
+    "$oid": "00000000000000000000003d"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000001"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "blue",
@@ -743,8 +991,12 @@
   "production_year": 2020
 },
 {
-  "_id": 62,
-  "_carModelId": 2,
+  "_id": {
+    "$oid": "00000000000000000000003e"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000002"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "black",
@@ -755,8 +1007,12 @@
   "production_year": 2019
 },
 {
-  "_id": 63,
-  "_carModelId": 3,
+  "_id": {
+    "$oid": "00000000000000000000003f"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000003"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "silver",
@@ -767,8 +1023,12 @@
   "production_year": 2018
 },
 {
-  "_id": 64,
-  "_carModelId": 4,
+  "_id": {
+    "$oid": "000000000000000000000040"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000004"
+  },
   "seats": 5,
   "type": "hatchback",
   "color": "white",
@@ -779,8 +1039,12 @@
   "production_year": 2021
 },
 {
-  "_id": 65,
-  "_carModelId": 5,
+  "_id": {
+    "$oid": "000000000000000000000041"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000005"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "gray",
@@ -791,8 +1055,12 @@
   "production_year": 2019
 },
 {
-  "_id": 66,
-  "_carModelId": 6,
+  "_id": {
+    "$oid": "000000000000000000000042"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000006"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "red",
@@ -803,8 +1071,12 @@
   "production_year": 2018
 },
 {
-  "_id": 67,
-  "_carModelId": 7,
+  "_id": {
+    "$oid": "000000000000000000000043"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000007"
+  },
   "seats": 5,
   "type": "sedan",
   "color": "blue",
@@ -815,8 +1087,12 @@
   "production_year": 2020
 },
 {
-  "_id": 68,
-  "_carModelId": 8,
+  "_id": {
+    "$oid": "000000000000000000000044"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000008"
+  },
   "seats": 5,
   "type": "SUV",
   "color": "black",
@@ -827,8 +1103,12 @@
   "production_year": 2019
 },
 {
-  "_id": 69,
-  "_carModelId": 9,
+  "_id": {
+    "$oid": "000000000000000000000045"
+  },
+  "_carModelId": {
+    "$oid": "000000000000000000000009"
+  },
   "seats": 7,
   "type": "SUV",
   "color": "silver",
