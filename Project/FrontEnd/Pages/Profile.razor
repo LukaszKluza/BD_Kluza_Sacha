@@ -2,14 +2,30 @@
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+@using System.Text.Json;
 
 <h3>Your Profile</h3>
 
-<!-- Profile edit form possible -->
+<div>
+    <p><strong>First Name:</strong> @Client?.First_Name</p>
+    <p><strong>Last Name:</strong> @Client?.Last_Name</p>
+    <p><strong>Phone Number:</strong> @Client?.Phone_Number</p>
+    <p><strong>Gender:</strong> @Client?.Gender</p>
+    <p><strong>Birthday:</strong> @Client?.Birth_Day?.ToString("yyyy-MM-dd")</p>
+    <p><strong>Pesel:</strong> @Client?.Pesel</p>
+    <p><strong>Email:</strong> @Client?.Email</p>
+    <p><strong>Address:</strong> @Client?.Address</p>
+    <p><strong>City:</strong> @Client?.City</p>
+    <p><strong>Country:</strong> @Client?.Country</p>
+    <p><strong>Customer Since:</strong> @Client?.Customer_Since?.ToString("yyyy-MM-dd")</p>
+    <p><strong>Total Rental Days:</strong> @Client?.Total_Rental_Days</p>
+</div>
 
 <button @onclick="Logout">Log out</button>
 
 @code {
+    private Client Client;
+
     private async Task Logout()
     {
         await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "token");
@@ -25,6 +41,21 @@
     {
         var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "token");
         if (string.IsNullOrWhiteSpace(token))
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+
+        var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:5000/api/Client/profile");
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        var response = await HttpClient.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            if(content!=null)Console.WriteLine(content);
+            Client = JsonSerializer.Deserialize<Client>(content);
+        }
+        else
         {
             NavigationManager.NavigateTo("/login");
         }
