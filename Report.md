@@ -2385,16 +2385,16 @@ http://localhost:5000/api/Statistics/Customers/10
 http://localhost:5000/api/Statistics/Customers/Cars
 ```
 
-![alt text](Images/image-9 .png)
+![alt text](Images/image-9.png)
 
 
 
 ### FrontEnd
 Frontend został napisany w Blazerze, który jest frameworkiem do budowania aplikacji internetowych w języku C#. Blazer umożliwia pisanie kodu aplikacji webowej w języku C# i wykorzystanie go do renderowania interfejsu użytkownika w przeglądarce. W naszym przypadku, frontend polega na systemie logowania użytkowników, wyświetlaniu wszystkich modeli i aut, a także w prezentowaniu statystyk.
 
-![alt text](/Images/image-20.png)
+![alt text](Images/image-20.png)
 
-![alt text](/Images/image-21.png)
+![alt text](Images/image-21.png)
 
 ![alt text](Images/image-13.png)
 
