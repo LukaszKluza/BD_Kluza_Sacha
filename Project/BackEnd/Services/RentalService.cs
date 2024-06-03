@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 
@@ -8,7 +9,6 @@ public class RentalService : IRentalService
     private readonly ICarService _carService;
     private readonly IClientService _clientService;
     private readonly ILogger<RentalService> _logger;
-    // private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1,1);
     private readonly IMongoClient _client;
 
     public RentalService(IMongoCollection<Rental> rentalCollection, ICarService carService, 
@@ -37,7 +37,6 @@ public class RentalService : IRentalService
                 var clientID = rental.Customer.ClientId;
                 var carID = rental.Rental_Car.carId;
                 Car car = await _carService.GetCarByIdAsync(carID);
-
                 if(car == null){
                     _logger.LogWarning($"Car with ID '{carID}' not found.");
                     throw new KeyNotFoundException($"Car does not exist.");
@@ -62,16 +61,11 @@ public class RentalService : IRentalService
                 _logger.LogError(ex, "An error occured while creating the rental");
                 throw;
             }
-            // finally
-            // {
-            //     _semaphore.Release();
-            // }
         }
     }
 
-    public async Task<Rental> FinishRentalAsync(int id, Rental rental)
+    public async Task<Rental> FinishRentalAsync(ObjectId id, Rental rental)
     {
-        // await _semaphore.WaitAsync();
         using (var session = await _client.StartSessionAsync())
         {
             session.StartTransaction();

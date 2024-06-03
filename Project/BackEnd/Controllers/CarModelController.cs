@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 
@@ -32,11 +30,15 @@ public class CarModelController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateCarModel(int id, [FromBody] CarModel carModel)
+    public async Task<IActionResult> UpdateCarModel(string id, [FromBody] CarModel carModel)
     {
         try
         {
-            var success = await _carsModelsService.UpdateCarModelAsync(id, carModel);
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            var success = await _carsModelsService.UpdateCarModelAsync(objectId, carModel);
             if (success)
             {
                 return Ok($"Car model with ID '{id}' updated successfully.");
@@ -54,11 +56,15 @@ public class CarModelController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCarModel(int id)
+    public async Task<IActionResult> DeleteCarModel(string id)
     {
         try
         {
-            var success = await _carsModelsService.DeleteCarModelAsync(id);
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            var success = await _carsModelsService.DeleteCarModelAsync(objectId);
             if (success)
             {
                 return Ok("Car model deleted successfully.");
@@ -99,16 +105,20 @@ public class CarModelController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while retrieving cars models:: {ex.Message}");
+            return StatusCode(500, $"An error occurred while retrieving cars models: {ex.Message}");
         }
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetCarByIdAsync(int id)
+    public async Task<IActionResult> GetCarByIdAsync(string id)
     {
         try
         {
-            var carModel = await _carsModelsService.GetCarModelByIdAsync(id);
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            var carModel = await _carsModelsService.GetCarModelByIdAsync(objectId);
             if (carModel != null)
             {
                 return Ok(carModel);

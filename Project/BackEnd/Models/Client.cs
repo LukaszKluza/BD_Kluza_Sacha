@@ -5,7 +5,7 @@ public class Client
 {
     [BsonId]
     [BsonElement("_id")]
-    public int _id { get; set; }
+    public ObjectId _id { get; set; }
 
     [BsonElement("first_name")]
     public string? First_Name { get; set; }

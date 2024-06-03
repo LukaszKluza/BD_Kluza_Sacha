@@ -4,8 +4,9 @@ using MongoDB.Bson.Serialization.Attributes;
 public class CarModel
 {
     [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
     [BsonElement("_id")]
-    public int _id { get; set; }
+    public ObjectId _id { get; set; }
 
     [BsonElement("mark")]
     public string Mark { get; set; }

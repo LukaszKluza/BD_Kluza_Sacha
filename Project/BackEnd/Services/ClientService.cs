@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
@@ -34,11 +35,12 @@ public class ClientService : IClientService
         }
     }
 
-    public async Task<bool> DeleteClientAsync(int id)
+    public async Task<bool> DeleteClientAsync(ObjectId id)
     {
         try
         {
-            var result = await _clientCollection.DeleteOneAsync(client => client._id == id);
+            var filter = Builders<Client>.Filter.Eq(client => client._id, id);
+            var result = await _clientCollection.DeleteOneAsync(filter);
             if (result.DeletedCount > 0)
             {
                 _logger.LogInformation($"Client with ID '{id}' deleted successfully.");
@@ -87,7 +89,7 @@ public class ClientService : IClientService
         }
     }
 
-    public async Task<bool> UpdateClientAsync(int id, Client client)
+    public async Task<bool> UpdateClientAsync(ObjectId id, Client client)
     {
         try
         {
@@ -122,11 +124,12 @@ public class ClientService : IClientService
             throw;
         }
     }
-    public async Task<bool> UpdateRentalDaysAsync(int id, int rental_days)
+    public async Task<bool> UpdateRentalDaysAsync(ObjectId id, int rental_days)
     {
         try
         {
-            Client client = await _clientCollection.Find(client => client._id == id).FirstOrDefaultAsync();
+            var filter = Builders<Client>.Filter.Eq(client => client._id, id);
+            Client client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
 
             if (client == null)
             {

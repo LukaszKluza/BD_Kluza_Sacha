@@ -5,10 +5,10 @@ public class Car
 {
     [BsonId]
     [BsonElement("_id")]
-    public int _id { get; set; } 
+    public ObjectId  _id { get; set; } 
 
     [BsonElement("_carModelId")]
-    public int _CarModelId { get; set; }
+    public ObjectId _CarModelId { get; set; }
 
     [BsonElement("seats")]
     public int Seats { get; set; }

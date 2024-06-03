@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using MongoDB.Driver;
 using System.Linq.Expressions;
+using MongoDB.Bson;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -34,11 +33,15 @@ public class ClientController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateClient(int id, [FromBody] Client client)
+    public async Task<IActionResult> UpdateClient(string id, [FromBody] Client client)
     {
         try
         {
-            var success = await _clientService.UpdateClientAsync(id, client);
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            var success = await _clientService.UpdateClientAsync(objectId, client);
             if (success)
             {
                 return Ok($"Client with ID '{id}' updated successfully.");
@@ -56,11 +59,15 @@ public class ClientController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteClient(int id)
+    public async Task<IActionResult> DeleteClient(string id)
     {
         try
         {
-            var success = await _clientService.DeleteClientAsync(id);
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            var success = await _clientService.DeleteClientAsync(objectId);
             if (success)
             {
                 return Ok("Client deleted successfully.");
@@ -77,7 +84,7 @@ public class ClientController : ControllerBase
     }
     
     [HttpGet("Clients")]
-    public async Task<IActionResult> GetClientsPerFilterAsync(int? id = null, string? first_name = null, string? last_name = null, string? phone_number = null,
+    public async Task<IActionResult> GetClientsPerFilterAsync(string? id = null, string? first_name = null, string? last_name = null, string? phone_number = null,
     string? gender = null, string? pesel = null, string? address = null, string? city = null, string? country = null, int? minTotal_rental_days = null, 
     int? maxTotal_rental_days = null, DateTime? minCustomerSince = null, DateTime? maxCustomerSince = null, DateTime? minBirthday = null, DateTime? maxBirthday = null)
     {
@@ -86,8 +93,16 @@ public class ClientController : ControllerBase
             var filterDefinitioinBuilder = Builders<Client>.Filter;
             var filter = Builders<Client>.Filter.Empty;
 
-            if(id.HasValue){
-                filter &= filterDefinitioinBuilder.Eq(client => client._id, id.Value);
+            if (!string.IsNullOrEmpty(id))
+            {
+                if (!ObjectId.TryParse(id, out ObjectId objectId))
+                {
+                    return BadRequest("Invalid ObjectId format.");
+                }
+                else
+                {
+                    filter &= filterDefinitioinBuilder.Eq("_id", objectId);
+                } 
             }
             if(!string.IsNullOrWhiteSpace(first_name)){
                 filter &= filterDefinitioinBuilder.Eq(client => client.First_Name, first_name);

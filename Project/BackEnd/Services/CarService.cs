@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson;
 
 public class CarService : ICarService
 {
@@ -33,7 +34,7 @@ public class CarService : ICarService
         }
     }
 
-    public async Task<bool> UpdateCarAsync(int id, Car car)
+    public async Task<bool> UpdateCarAsync(ObjectId id, Car car)
     {
         try
         {
@@ -69,11 +70,12 @@ public class CarService : ICarService
         }
     }
 
-    public async Task<bool> DeleteCarAsync(int id)
+    public async Task<bool> DeleteCarAsync(ObjectId id)
     {
         try
         {
-            var result = await _carCollection.DeleteOneAsync(car => car._id == id);
+            var filter = Builders<Car>.Filter.Eq(car => car._id, id);
+            var result = await _carCollection.DeleteOneAsync(filter);
             if (result.DeletedCount > 0)
             {
                 _logger.LogInformation($"Car with ID '{id}' deleted successfully.");
@@ -108,14 +110,14 @@ public class CarService : ICarService
         }
     }
 
-    public async Task<Car> GetCarByIdAsync(int id)
+    public async Task<Car> GetCarByIdAsync(ObjectId id)
     {
-        var filter = Builders<Car>.Filter.Eq(car => car._id, id);
+        var filter = Builders<Car>.Filter.Eq("_id", id);
         var car = await _carCollection.Find(filter).FirstOrDefaultAsync();
         return car;
     }
 
-    public async Task<bool> UpdateCarAvailabilityByIdAsync(int id, bool availability)
+    public async Task<bool> UpdateCarAvailabilityByIdAsync(ObjectId id, bool availability)
     {
         try
         {
@@ -138,11 +140,12 @@ public class CarService : ICarService
             return false;
         }
     }
-    public async Task<bool> UpdateCurrentMileageAsync(int id, int mileage)
+    public async Task<bool> UpdateCurrentMileageAsync(ObjectId id, int mileage)
     {
         try
         {
-            Car car = await _carCollection.Find(car => car._id == id).FirstOrDefaultAsync();
+            var filter = Builders<Car>.Filter.Eq(car => car._id, id);
+            var car = await _carCollection.Find(filter).FirstOrDefaultAsync();
 
             if (car == null)
             {

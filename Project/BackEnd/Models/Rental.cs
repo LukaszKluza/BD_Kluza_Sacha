@@ -4,8 +4,9 @@ using System;
 
 public class Rental_Car
 {
+    // [BsonId] ?
     [BsonElement("carId")]
-    public int carId { get; set; }
+    public ObjectId carId { get; set; }
 
     [BsonElement("make")]
     public string Make { get; set; }
@@ -19,8 +20,9 @@ public class Rental_Car
 
 public class Customer
 {
+    // [BsonId] ?
     [BsonElement("clientId")]
-    public int ClientId { get; set; }
+    public ObjectId ClientId { get; set; }
 
     [BsonElement("first_name")]
     public string First_Name { get; set; }
@@ -86,8 +88,9 @@ public class Rental_Details
 public class Rental
 {
     [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
     [BsonElement("_id")]
-    public int _id { get; set; } 
+    public ObjectId _id { get; set; } 
 
     [BsonElement("rental_car")]
     public Rental_Car Rental_Car { get; set; }
