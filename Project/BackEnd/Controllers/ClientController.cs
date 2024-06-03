@@ -75,6 +75,7 @@ public class ClientController : ControllerBase
             return StatusCode(500, $"An error occurred while deleting the client: {ex.Message}");
         }
     }
+    
     [HttpGet("Clients")]
     public async Task<IActionResult> GetClientsPerFilterAsync(int? id = null, string? first_name = null, string? last_name = null, string? phone_number = null,
     string? gender = null, string? pesel = null, string? address = null, string? city = null, string? country = null, int? minTotal_rental_days = null, 
