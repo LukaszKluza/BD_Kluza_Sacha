@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Threading.Tasks;
 
 public class CarsModelsService : ICarsModelsService
 {
@@ -33,7 +33,7 @@ public class CarsModelsService : ICarsModelsService
         }
     }
 
-    public async Task<bool> UpdateCarModelAsync(int id, CarModel carModel)
+    public async Task<bool> UpdateCarModelAsync(ObjectId id, CarModel carModel)
     {
         try
         {
@@ -69,11 +69,12 @@ public class CarsModelsService : ICarsModelsService
         }
     }
 
-    public async Task<bool> DeleteCarModelAsync(int id)
+    public async Task<bool> DeleteCarModelAsync(ObjectId id)
     {
        try
        {
-            var result = await _carModelCollection.DeleteOneAsync(carModel => carModel._id == id);
+            var filter = Builders<CarModel>.Filter.Eq(carModel => carModel._id, id);
+            var result = await _carModelCollection.DeleteOneAsync(filter);
             if (result.DeletedCount > 0)
             {
                 _logger.LogInformation($"Car model with ID '{id}' deleted successfully.");
@@ -106,7 +107,7 @@ public class CarsModelsService : ICarsModelsService
         }
     }
 
-    public async Task<CarModel> GetCarModelByIdAsync(int id)
+    public async Task<CarModel> GetCarModelByIdAsync(ObjectId id)
     {
         var filter = Builders<CarModel>.Filter.Eq(carModel => carModel._id, id);
         var carModel = await _carModelCollection.Find(filter).FirstOrDefaultAsync();

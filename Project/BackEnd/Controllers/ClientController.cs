@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+
 
 [Route("api/[controller]")]
 [ApiController]
@@ -42,7 +41,11 @@ public class ClientController : ControllerBase
     {
         try
         {
-            var success = await _clientService.UpdateClientAsync(id, client);
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            var success = await _clientService.UpdateClientAsync(objectId, client);
             if (success)
             {
                 return Ok($"Client with ID '{id}' updated successfully.");
@@ -64,7 +67,11 @@ public class ClientController : ControllerBase
     {
         try
         {
-            var success = await _clientService.DeleteClientAsync(id);
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            var success = await _clientService.DeleteClientAsync(objectId);
             if (success)
             {
                 return Ok("Client deleted successfully.");
@@ -90,8 +97,18 @@ public class ClientController : ControllerBase
             var filterDefinitioinBuilder = Builders<Client>.Filter;
             var filter = Builders<Client>.Filter.Empty;
 
-            if(!string.IsNullOrWhiteSpace(id)){
-                filter &= filterDefinitioinBuilder.Eq(client => client._id, id);
+
+            if (!string.IsNullOrEmpty(id))
+            {
+                if (!ObjectId.TryParse(id, out ObjectId objectId))
+                {
+                    return BadRequest("Invalid ObjectId format.");
+                }
+                else
+                {
+                    filter &= filterDefinitioinBuilder.Eq("_id", objectId);
+                } 
+
             }
             if(!string.IsNullOrWhiteSpace(first_name)){
                 filter &= filterDefinitioinBuilder.Eq(client => client.First_Name, first_name);

@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Text.Json;
 
 public class StatisticsService : IStatisticsService
 {
@@ -21,7 +21,7 @@ public class StatisticsService : IStatisticsService
         _logger = logger;
     }
 
-    public async Task<JsonDocument> TopNCars(int n)
+    public async Task<IActionResult> TopNCars(int n)
     {
         try
         {
@@ -39,9 +39,13 @@ public class StatisticsService : IStatisticsService
                 .Limit(n);
 
             var result = await pipeline.ToListAsync();
-            var json = result.ToJson();
-            var jsonDocument = JsonDocument.Parse(json);
-            return jsonDocument;
+
+            var formattedResult = result.Select(doc => doc.ToDictionary(
+                element => element.Name,
+                element => BsonTypeMapper.MapToDotNetValue(element.Value)
+            )).ToList();
+
+            return new JsonResult(formattedResult);
         }
         catch (Exception ex)
         {
@@ -49,7 +53,9 @@ public class StatisticsService : IStatisticsService
             throw;
         }
     }
-    public async Task<JsonDocument> TopNClientsPerMileage(int n)
+
+
+    public async Task<IActionResult> TopNClientsPerMileage(int n)
     {
         try
         {
@@ -69,20 +75,22 @@ public class StatisticsService : IStatisticsService
                 })
                 .Limit(n);
 
-
-
             var result = await pipeline.ToListAsync();
-            var json = result.ToJson();
-            var jsonDocument = JsonDocument.Parse(json);
-            return jsonDocument;
+
+            var formattedResult = result.Select(doc => doc.ToDictionary(
+                element => element.Name,
+                element => BsonTypeMapper.MapToDotNetValue(element.Value)
+            )).ToList();
+
+            return new JsonResult(formattedResult);
         }
         catch (Exception ex)
         {
-            _logger.LogError($"An error occurred while retrieving top cars: {ex.Message}");
+            _logger.LogError($"An error occurred while retrieving top clients per mileage: {ex.Message}");
             throw;
         }
     }
-    public async Task<JsonDocument> FavCarPerClient()
+    public async Task<IActionResult> FavCarPerClient()
     {
         try
         {
@@ -123,13 +131,16 @@ public class StatisticsService : IStatisticsService
                 });
 
             var result = await pipeline.ToListAsync();
-            var json = result.ToJson();
-            var jsonDocument = JsonDocument.Parse(json);
-            return jsonDocument;
+            var formattedResult = result.Select(doc => doc.ToDictionary(
+                element => element.Name,
+                element => BsonTypeMapper.MapToDotNetValue(element.Value)
+            )).ToList();
+
+            return new JsonResult(formattedResult);
         }
         catch (Exception ex)
         {
-            _logger.LogError($"An error occurred while retrieving top cars: {ex.Message}");
+            _logger.LogError($"An error occurred while retrieving favorite car per customer: {ex.Message}");
             throw;
         }
     }

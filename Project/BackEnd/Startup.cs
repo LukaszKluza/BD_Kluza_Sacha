@@ -7,6 +7,9 @@ using MongoDB.Driver;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 
 public class Startup
@@ -20,7 +23,15 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {   
-         var jwtSettings = Configuration.GetSection("Jwt");
+
+        services.AddControllersWithViews()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new ObjectIdJsonConverter());
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
+
+        var jwtSettings = Configuration.GetSection("Jwt");
         var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
         services.AddAuthentication(options =>

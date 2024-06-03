@@ -1,25 +1,24 @@
-# Projekt systemu do wypożyczania aut
+#v Projekt systemu do wypożyczania aut
 ## Kluza Łukasz i Mateusz Sacha
 
 ### 1. Schemat Bazy Danych
 
 #### 1.1 CarsModels
 
-![alt text](Images/image-8.png)
+![alt text](Images/image.png)
 
 #### 1.2 Cars
 
-![alt text](Images/image-7.png)
+![alt text](Images/image-1.png)
 
 #### 1.3 Clients
 
-![alt text](Images/image-9.png)
-![alt text](Images/image-10.png)
+![alt text](Images/image-2.png)
 
 #### 1.4 Rentals
 
-![alt text](Images/image-11.png)
-![alt text](Images/image-12.png)
+![alt text](Images/image-3.png)
+![alt text](Images/image-17.png)
 
 ### 2. Opis Serwisów
 Serwisy w C# to klasy, które wykonują różnorodne operacje na danych w aplikacji. Ich główną rolą jest oddzielenie tych operacji od pozostałych części aplikacji, co przynosi korzyści w zarządzaniu, testowaniu i ponownym wykorzystaniu kodu.
@@ -62,7 +61,7 @@ Parametry:
 - Car car - obiekt typu Car z nowymi danymi.
 
 ```csharp
-public async Task<bool> UpdateCarAsync(int id, Car car)
+public async Task<bool> UpdateCarAsync(ObjectId id, Car car)
 {
     try
     {
@@ -106,11 +105,12 @@ Parametry:
 - int id - identyfikator samochodu do usunięcia.
 
 ```csharp
-public async Task<bool> DeleteCarAsync(int id)
+public async Task<bool> DeleteCarAsync(ObjectId id)
 {
     try
     {
-        var result = await _carCollection.DeleteOneAsync(car => car._id == id);
+        var filter = Builders<Car>.Filter.Eq(car => car._id, id);
+        var result = await _carCollection.DeleteOneAsync(filter);
         if (result.DeletedCount > 0)
         {
             _logger.LogInformation($"Car with ID '{id}' deleted successfully.");
@@ -161,7 +161,7 @@ Parametry:
 - int id - identyfikator samochodu do pobrania.
 
 ```csharp
-public async Task<Car> GetCarByIdAsync(int id)
+public async Task<Car> GetCarByIdAsync(ObjectId id)
 {
     var filter = Builders<Car>.Filter.Eq(car => car._id, id);
     var car = await _carCollection.Find(filter).FirstOrDefaultAsync();
@@ -177,7 +177,7 @@ Parametry:
 - bool availability - nowy status dostępności samochodu.
 
 ```csharp
-public async Task<bool> UpdateCarAvailabilityByIdAsync(int id, bool availability)
+public async Task<bool> UpdateCarAvailabilityByIdAsync(ObjectId id, bool availability)
 {
     try
     {
@@ -210,11 +210,12 @@ Parametry:
 - int mileage - nowy przebieg samochodu.
 
 ```csharp
-public async Task<bool> UpdateCurrentMileageAsync(int id, int mileage)
+public async Task<bool> UpdateCurrentMileageAsync(ObjectId id, int mileage)
 {
     try
     {
-        Car car = await _carCollection.Find(car => car._id == id).FirstOrDefaultAsync();
+        var filter = Builders<Car>.Filter.Eq(car => car._id, id);
+        var car = await _carCollection.Find(filter).FirstOrDefaultAsync();
 
         if (car == null)
         {
@@ -272,7 +273,7 @@ Parametry:
 - CarModel carModel - obiekt typu CarModel z nowymi danymi.
 
 ```csharp
-public async Task<bool> UpdateCarModelAsync(int id, CarModel carModel)
+public async Task<bool> UpdateCarModelAsync(ObjectId id, CarModel carModel)
 {
     try
     {
@@ -316,11 +317,12 @@ Parametry:
 - int id - identyfikator modelu samochodu do usunięcia.
 
 ```csharp
-public async Task<bool> DeleteCarModelAsync(int id)
+public async Task<bool> DeleteCarModelAsync(ObjectId id)
 {
    try
    {
-        var result = await _carModelCollection.DeleteOneAsync(carModel => carModel._id == id);
+        var filter = Builders<CarModel>.Filter.Eq(carModel => carModel._id, id);
+        var result = await _carModelCollection.DeleteOneAsync(filter);
         if (result.DeletedCount > 0)
         {
             _logger.LogInformation($"Car model with ID '{id}' deleted successfully.");
@@ -369,7 +371,7 @@ Parametry:
 - int id - identyfikator modelu samochodu do pobrania.
 
 ```csharp
-public async Task<CarModel> GetCarModelByIdAsync(int id)
+public async Task<CarModel> GetCarModelByIdAsync(ObjectId id)
 {
     var filter = Builders<CarModel>.Filter.Eq(carModel => carModel._id, id);
     var carModel = await _carModelCollection.Find(filter).FirstOrDefaultAsync();
@@ -414,11 +416,12 @@ Parametry:
 - int id - identyfikator klienta do usunięcia.
 
 ```csharp
-public async Task<bool> DeleteClientAsync(int id)
+public async Task<bool> DeleteClientAsync(ObjectId id)
 {
     try
     {
-        var result = await _clientCollection.DeleteOneAsync(client => client._id == id);
+        var filter = Builders<Client>.Filter.Eq(client => client._id, id);
+        var result = await _clientCollection.DeleteOneAsync(filter);
         if (result.DeletedCount > 0)
         {
             _logger.LogInformation($"Client with ID '{id}' deleted successfully.");
@@ -492,7 +495,7 @@ Parametry:
 Client client - obiekt typu Client z nowymi danymi.
 
 ```csharp
-public async Task<bool> UpdateClientAsync(int id, Client client)
+public async Task<bool> UpdateClientAsync(ObjectId id, Client client)
 {
     try
     {
@@ -537,11 +540,12 @@ Parametry:
 - int rental_days - liczba dni wypożyczeń do dodania.
 
 ```csharp
-public async Task<bool> UpdateRentalDaysAsync(int id, int rental_days)
+public async Task<bool> UpdateRentalDaysAsync(ObjectId id, int rental_days)
 {
     try
     {
-        Client client = await _clientCollection.Find(client => client._id == id).FirstOrDefaultAsync();
+        var filter = Builders<Client>.Filter.Eq(client => client._id, id);
+        Client client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
 
         if (client == null)
         {
@@ -758,10 +762,10 @@ Parametry:
 
 Opis:
 - Tworzy pipeline agregacyjny, który łączy kolekcje wypożyczeń i samochodów, grupuje dane według modelu samochodu, liczy wypożyczenia każdego modelu i sortuje je w kolejności malejącej.
-- Zwraca wynik w postaci dokumentu JSON.
+- Zwraca wynik w postaci _Task < IActionResult >_
 
 ```csharp
-public async Task<JsonDocument> TopNCars(int n)
+public async Task<IActionResult> TopNCars(int n)
 {
     try
     {
@@ -779,9 +783,13 @@ public async Task<JsonDocument> TopNCars(int n)
             .Limit(n);
 
         var result = await pipeline.ToListAsync();
-        var json = result.ToJson();
-        var jsonDocument = JsonDocument.Parse(json);
-        return jsonDocument;
+
+        var formattedResult = result.Select(doc => doc.ToDictionary(
+            element => element.Name,
+            element => BsonTypeMapper.MapToDotNetValue(element.Value)
+        )).ToList();
+
+        return new JsonResult(formattedResult);
     }
     catch (Exception ex)
     {
@@ -799,10 +807,10 @@ Parametry:
 
 Opis:
 - Tworzy pipeline agregacyjny, który grupuje dane według identyfikatora klienta, sumuje przejechane mile i sortuje wyniki w kolejności malejącej.
-- Zwraca wynik w postaci dokumentu JSON.
+- Zwraca wynik w postaci _Task < IActionResult >_
 
 ```csharp
-public async Task<JsonDocument> TopNClientsPerMileage(int n)
+public async Task<IActionResult> TopNClientsPerMileage(int n)
 {
     try
     {
@@ -816,20 +824,24 @@ public async Task<JsonDocument> TopNClientsPerMileage(int n)
             .Sort(new BsonDocument("sum", -1))
             .Project(new BsonDocument
             {
-                { "_id", 0 },
+                { "_id", 0 }, 
                 { "customer", 1 },
                 { "sum", 1 }
             })
             .Limit(n);
 
         var result = await pipeline.ToListAsync();
-        var json = result.ToJson();
-        var jsonDocument = JsonDocument.Parse(json);
-        return jsonDocument;
+
+        var formattedResult = result.Select(doc => doc.ToDictionary(
+            element => element.Name,
+            element => BsonTypeMapper.MapToDotNetValue(element.Value)
+        )).ToList();
+
+        return new JsonResult(formattedResult);
     }
     catch (Exception ex)
     {
-        _logger.LogError($"An error occurred while retrieving top cars: {ex.Message}");
+        _logger.LogError($"An error occurred while retrieving top clients per mileage: {ex.Message}");
         throw;
     }
 }
@@ -840,10 +852,10 @@ Metoda asynchroniczna służąca do pobierania ulubionego samochodu każdego kli
 
 Opis:
 - Tworzy pipeline agregacyjny, który łączy kolekcje klientów i wypożyczeń, grupuje dane według identyfikatora klienta i identyfikatora samochodu, liczy wypożyczenia każdego samochodu i sortuje je w kolejności malejącej.
-- Zwraca wynik w postaci dokumentu JSON.
+- Zwraca wynik w postaci _Task < IActionResult >_
 
 ```csharp
-public async Task<JsonDocument> FavCarPerClient()
+public async Task<IActionResult> FavCarPerClient()
 {
     try
     {
@@ -852,7 +864,7 @@ public async Task<JsonDocument> FavCarPerClient()
             .Unwind("rental")
             .Group(new BsonDocument
             {
-                { "_id", new BsonDocument { { "clients_id" ,"$_id"}, { "car_id" ,"$rental.rental_car.carId" }}},
+                { "_id", new BsonDocument{ {"clients_id" ,"$_id"}, {"car_id" ,"$rental.rental_car.carId"}}},
                 { "sum", new BsonDocument("$sum", 1) },
             })
             .Group(new BsonDocument
@@ -884,13 +896,16 @@ public async Task<JsonDocument> FavCarPerClient()
             });
 
         var result = await pipeline.ToListAsync();
-        var json = result.ToJson();
-        var jsonDocument = JsonDocument.Parse(json);
-        return jsonDocument;
+        var formattedResult = result.Select(doc => doc.ToDictionary(
+            element => element.Name,
+            element => BsonTypeMapper.MapToDotNetValue(element.Value)
+        )).ToList();
+
+        return new JsonResult(formattedResult);
     }
     catch (Exception ex)
     {
-        _logger.LogError($"An error occurred while retrieving top cars: {ex.Message}");
+        _logger.LogError($"An error occurred while retrieving favorite car per customer: {ex.Message}");
         throw;
     }
 }
@@ -946,13 +961,16 @@ Metoda `UpdateCar` służy do asynchronicznego aktualizowania istniejącego samo
 
 ```csharp
 [HttpPut("{id}")]
-public async Task<IActionResult> UpdateCar(int id, [FromBody] Car car)
+public async Task<IActionResult> UpdateCar(string id, [FromBody] Car car)
 {
     Console.WriteLine("Received JSON body:");
     Console.WriteLine(JsonConvert.SerializeObject(car, Formatting.Indented));
 
     try
-    {
+    {   if (!ObjectId.TryParse(id, out ObjectId objectId))
+        {
+            return BadRequest("Invalid ObjectId format.");
+        }
         var success = await _carService.UpdateCarAsync(id, car);
         if (success)
         {
@@ -986,10 +1004,13 @@ Metoda `DeleteCar` służy do asynchronicznego usuwania istniejącego samochodu.
 
 ```csharp
 [HttpDelete("{id}")]
-public async Task<IActionResult> DeleteCar(int id)
+public async Task<IActionResult> DeleteCar(string id)
 {
     try
-    {
+    {   if (!ObjectId.TryParse(id, out ObjectId objectId))
+        {
+            return BadRequest("Invalid ObjectId format.");
+        }
         var success = await _carService.DeleteCarAsync(id);
         if (success)
         {
@@ -1023,7 +1044,7 @@ Metoda `GetCarsPerFilterAsync` służy do asynchronicznego pobierania samochodó
 
 ```csharp
 [HttpGet("Cars")]
-public async Task<IActionResult> GetCarsPerFilterAsync(int? modelId = null, int? seats = null, string? type = null, string? color = null, 
+public async Task<IActionResult> GetCarsPerFilterAsync(string? modelId = null, int? seats = null, string? type = null, string? color = null, 
 int? minPower = null, int? maxPower = null, int? minCurrMileage = null, int? maxCurrMileage = null,
 double? minPricePerDay = null, double? maxPricePerDay = null, bool? isAvailable = null, int? minProductionYear = null, int? maxProductionYear = null)
 {
@@ -1032,8 +1053,17 @@ double? minPricePerDay = null, double? maxPricePerDay = null, bool? isAvailable 
         var filterDefinitioinBuilder = Builders<Car>.Filter;
         var filter = Builders<Car>.Filter.Empty;
 
-        if(modelId.HasValue){
-            filter &= filterDefinitioinBuilder.Eq(car => car._CarModelId, modelId.Value);
+        if (!string.IsNullOrEmpty(modelId))
+        {
+            if (!ObjectId.TryParse(modelId, out ObjectId objectModelId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            else
+            {
+                    filter &= filterDefinitioinBuilder.Eq("_CarModelId", objectModelId);
+            }
+           
         }
         if(seats.HasValue){
             filter &= filterDefinitioinBuilder.Eq(car => car.Seats, seats.Value);
@@ -1089,10 +1119,14 @@ Metoda `GetCarByIdAsync` służy do asynchronicznego pobierania pojedynczego sam
 
 ```csharp
 [HttpGet("Cars/{id}")]
-public async Task<IActionResult> GetCarByIdAsync(int id)
+public async Task<IActionResult> GetCarByIdAsync(string id)
 {
     try
     {
+        if (!ObjectId.TryParse(id, out ObjectId objectId))
+        {
+            return BadRequest("Invalid ObjectId format.");
+        }
         var car = await _carService.GetCarByIdAsync(id);
         if (car != null)
         {
@@ -1157,10 +1191,13 @@ Metoda `UpdateCarModel` służy do asynchronicznego aktualizowania istniejącego
 
 ```csharp
 [HttpPut("{id}")]
-public async Task<IActionResult> UpdateCarModel(int id, [FromBody] CarModel carModel)
+public async Task<IActionResult> UpdateCarModel(string id, [FromBody] CarModel carModel)
 {
     try
-    {
+    {   if (!ObjectId.TryParse(id, out ObjectId objectId))
+        {
+            return BadRequest("Invalid ObjectId format.");
+        }
         var success = await _carsModelsService.UpdateCarModelAsync(id, carModel);
         if (success)
         {
@@ -1194,10 +1231,13 @@ Metoda `DeleteCarModel` służy do asynchronicznego usuwania istniejącego model
 
 ```csharp
 [HttpDelete("{id}")]
-public async Task<IActionResult> DeleteCarModel(int id)
+public async Task<IActionResult> DeleteCarModel(string id)
 {
     try
-    {
+    {   if (!ObjectId.TryParse(id, out ObjectId objectId))
+        {
+            return BadRequest("Invalid ObjectId format.");
+        }
         var success = await _carsModelsService.DeleteCarModelAsync(id);
         if (success)
         {
@@ -1255,7 +1295,7 @@ public async Task<IActionResult> GetCarsModelsPerFilterAsync(string? mark = null
     }
     catch (Exception ex)
     {
-        return StatusCode(500, $"An error occurred while retrieving cars models:: {ex.Message}");
+        return StatusCode(500, $"An error occurred while retrieving cars models: {ex.Message}");
     }
 }
 ```
@@ -1275,10 +1315,13 @@ Metoda `GetCarModelByIdAsync` służy do asynchronicznego pobierania pojedynczeg
 
 ```csharp
 [HttpGet("{id}")]
-public async Task<IActionResult> GetCarByIdAsync(int id)
+public async Task<IActionResult> GetCarByIdAsync(string id)
 {
     try
-    {
+    {   if (!ObjectId.TryParse(id, out ObjectId objectId))
+        {
+            return BadRequest("Invalid ObjectId format.");
+        }
         var carModel = await _carsModelsService.GetCarModelByIdAsync(id);
         if (carModel != null)
         {
@@ -1317,7 +1360,7 @@ Metoda `CreateClient` służy do asynchronicznego tworzenia nowego klienta.
 public async Task<IActionResult> CreateClient([FromBody] Client client)
 {
     try
-    {
+    {   
         await _clientService.CreateClientAsync(client);
         return Ok("Client created successfully.");
     }
@@ -1343,10 +1386,13 @@ Metoda `UpdateClient` służy do asynchronicznego aktualizowania istniejącego k
 
 ```csharp
 [HttpPut("{id}")]
-public async Task<IActionResult> UpdateClient(int id, [FromBody] Client client)
+public async Task<IActionResult> UpdateClient(string id, [FromBody] Client client)
 {
     try
-    {
+    {   if (!ObjectId.TryParse(id, out ObjectId objectId))
+        {
+            return BadRequest("Invalid ObjectId format.");
+        }
         var success = await _clientService.UpdateClientAsync(id, client);
         if (success)
         {
@@ -1380,10 +1426,14 @@ Metoda `DeleteClient` służy do asynchronicznego usuwania istniejącego klienta
 
 ```csharp
 [HttpDelete("{id}")]
-public async Task<IActionResult> DeleteClient(int id)
+public async Task<IActionResult> DeleteClient(string id)
 {
     try
-    {
+    {   
+        if (!ObjectId.TryParse(id, out ObjectId objectId))
+        {
+            return BadRequest("Invalid ObjectId format.");
+        }
         var success = await _clientService.DeleteClientAsync(id);
         if (success)
         {
@@ -1417,7 +1467,7 @@ Metoda `GetClientsPerFilterAsync` służy do asynchronicznego pobierania klient�
 
 ```csharp
 [HttpGet("Clients")]
-public async Task<IActionResult> GetClientsPerFilterAsync(int? id = null, string? first_name = null, string? last_name = null, string? phone_number = null,
+public async Task<IActionResult> GetClientsPerFilterAsync(string? id = null, string? first_name = null, string? last_name = null, string? phone_number = null,
 string? gender = null, string? pesel = null, string? address = null, string? city = null, string? country = null, int? minTotal_rental_days = null, 
 int? maxTotal_rental_days = null, DateTime? minCustomerSince = null, DateTime? maxCustomerSince = null, DateTime? minBirthday = null, DateTime? maxBirthday = null)
 {
@@ -1426,8 +1476,16 @@ int? maxTotal_rental_days = null, DateTime? minCustomerSince = null, DateTime? m
         var filterDefinitioinBuilder = Builders<Client>.Filter;
         var filter = Builders<Client>.Filter.Empty;
 
-        if(id.HasValue){
-            filter &= filterDefinitioinBuilder.Eq(client => client._id, id.Value);
+        if (!string.IsNullOrEmpty(id))
+        {
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            else
+            {
+            filter &= filterDefinitioinBuilder.Eq("_id", objectId);
+            } 
         }
         if(!string.IsNullOrWhiteSpace(first_name)){
             filter &= filterDefinitioinBuilder.Eq(client => client.First_Name, first_name);
@@ -1473,6 +1531,38 @@ int? maxTotal_rental_days = null, DateTime? minCustomerSince = null, DateTime? m
         return StatusCode(500, $"An error occurred while retrieving clients: {ex.Message}");
     }
 }
+```
+
+##### Funkcja `AddDateRangeFilter`
+
+Funkcja `AddDateRangeFilter` dodaje do filtru odpowiedni zakres dat z zapytania
+
+- **Parametry wejściowe**:
+  - `FilterDefinition<T> filter`: Obiekt reprezentujący klienta.
+  - `FilterDefinitionBuilder<T> filterBuilder`: Obiekt reprezentujący klienta.
+  - `Expression<Func<T, DateTime?>> field`: Obiekt reprezentujący pole po którym filtrujemy.
+  - `DateTime? minValue`: Obiekt DataTime reprezentujący początek przedziału.
+  - `DateTime? maxValue`: Obiekt DataTime reprezentujący koniec przedziału.
+- **Zwracana wartość**: Zaktualizowany o podany zakres dat filter
+
+```csharp
+private static FilterDefinition<T> AddDateRangeFilter<T>(
+    FilterDefinition<T> filter,
+    FilterDefinitionBuilder<T> filterBuilder,
+    Expression<Func<T, DateTime?>> field,
+    DateTime? minValue,
+    DateTime? maxValue)
+    {
+        if (minValue.HasValue)
+        {
+            filter &= filterBuilder.Gte(field, minValue.Value);
+        }
+        if (maxValue.HasValue)
+        {
+            filter &= filterBuilder.Lte(field, maxValue.Value);
+        }
+        return filter;
+    }
 ```
 
 ##### 3.3.5 Register Client
@@ -1641,7 +1731,7 @@ public async Task<IActionResult> CreateNewRental([FromBody] Rental rental)
     }
     catch (Exception ex)
     {
-        return StatusCode(500, $"An error occurred while creating the car: {ex.Message}");
+        return StatusCode(500, $"An error occurred while creating the new rental: {ex.Message}");
     }
 }
 ```
@@ -1661,10 +1751,14 @@ Aktualizuje istniejące wypożyczenie na podstawie podanego identyfikatora.
 
 ```csharp
 [HttpPost("FinishRental/{id}")]
-public async Task<IActionResult> UpdateRental(int id, [FromBody] Rental rental)
+public async Task<IActionResult> UpdateRental(string id, [FromBody] Rental rental)
 {
     if(!CheckRental(rental)){
         return StatusCode(401, "Some value are invalid");
+    }
+    if (!ObjectId.TryParse(id, out ObjectId objectId))
+    {
+        return BadRequest("Invalid ObjectId format.");
     }
     try
     {
@@ -1673,7 +1767,7 @@ public async Task<IActionResult> UpdateRental(int id, [FromBody] Rental rental)
     }
     catch (Exception ex)
     {
-        return StatusCode(500, $"An error occurred while finishing the car: {ex.Message}");
+        return StatusCode(500, $"An error occurred while finishing the rental: {ex.Message}");
     }
 }
 ```
@@ -1726,7 +1820,7 @@ Pobiera wypożyczenia na podstawie określonych filtrów.
 
 ```csharp
 [HttpGet("Rentals")]
-public async Task<IActionResult> GetRentalsPerFilterAsync(int? clientId = null, int? carId = null, string? make = null, string? model = null, 
+public async Task<IActionResult> GetRentalsPerFilterAsync(string? clientId = null, string? carId = null, string? make = null, string? model = null, 
 double? minPricePerDay = null, double? maxPricePerDay = null, DateTime? minStartDate = null, DateTime? maxStartDate = null, DateTime? minExpectedEndDate = null, 
 DateTime? maxExpectedEndDate = null, DateTime? minEndDate = null, DateTime? maxEndDate = null, string? rentalStatus = null, string? insuranceType = null,
 double? minExtraInsuranceAmount = null, double? maxExtraInsuranceAmount = null, int? minDays = null, int? maxDays = null, double? minExtraDaysAmount = null, 
@@ -1739,12 +1833,28 @@ double? minDiscount = null, double? maxDiscount = null, double? minExtraAmount =
         var filterDefinitioinBuilder = Builders<Rental>.Filter;
         var filter = Builders<Rental>.Filter.Empty;
 
-        if(clientId.HasValue){
-            filter &= filterDefinitioinBuilder.Eq(rental => rental.Customer.ClientId, clientId.Value);
+        if (!string.IsNullOrEmpty(clientId))
+        {
+            if (!ObjectId.TryParse(clientId, out ObjectId objectClientId))
+            {
+                return BadRequest("Invalid objectClientId format.");
+            }
+            else
+            {
+                filter &= filterDefinitioinBuilder.Eq("Customer.ClientId", objectClientId);
+            } 
         }
-        if(carId.HasValue){
-            filter &= filterDefinitioinBuilder.Eq(rental => rental.Rental_Car.carId, carId.Value);
-        }
+        if (!string.IsNullOrEmpty(carId))
+        {
+            if (!ObjectId.TryParse(carId, out ObjectId objectCarId))
+            {
+                return BadRequest("Invalid objectCarId format.");
+            }
+            else
+            {
+                filter &= filterDefinitioinBuilder.Eq("Rental_Car.carId", objectCarId);
+            } 
+       }
         if(!string.IsNullOrWhiteSpace(make)){
             filter &= filterDefinitioinBuilder.Eq(rental => rental.Rental_Car.Make, make);
         }if(!string.IsNullOrWhiteSpace(model)){
@@ -1794,6 +1904,61 @@ double? minDiscount = null, double? maxDiscount = null, double? minExtraAmount =
 }
 ```
 
+##### Funkcje `AddRangeFilter`, `AddDateRangeFilter`
+
+Funkcje `AddRangeFilter`, `AddDateRangeFilter` dodają do filtru odpowiedni zakres danego parametru z zapytania
+
+- **Parametry wejściowe**:
+  - `FilterDefinition<T> filter`: Obiekt reprezentujący klienta.
+  - `FilterDefinitionBuilder<T> filterBuilder`: Obiekt reprezentujący klienta.
+  - `Expression<Func<T, _?>> field`: Obiekt reprezentujący pole po którym filtrujemy.
+  - `_? minValue`: Obiekt _ reprezentujący początek przedziału.
+  - `_? maxValue`: Obiekt _ reprezentujący koniec przedziału.
+- **Zwracana wartość**: Zaktualizowany o podany zakres dat filter
+
+```csharp
+private static FilterDefinition<T> AddRangeFilter<T>(
+    FilterDefinition<T> filter,
+    FilterDefinitionBuilder<T> filterBuilder,
+    Expression<Func<T, double?>> field,
+    double? minValue,
+    double? maxValue)
+    {
+        filter &= filterBuilder.Gte(field, minValue ?? 0);
+        filter &= filterBuilder.Lte(field, maxValue ?? double.MaxValue);
+        return filter;
+    }
+
+private static FilterDefinition<T> AddRangeFilter<T>(
+    FilterDefinition<T> filter,
+    FilterDefinitionBuilder<T> filterBuilder,
+    Expression<Func<T, int?>> field,
+    int? minValue,
+    int? maxValue)
+    {
+        filter &= filterBuilder.Gte(field, minValue ?? 0);
+        filter &= filterBuilder.Lte(field, maxValue ?? int.MaxValue);
+        return filter;
+    }
+private static FilterDefinition<T> AddDateRangeFilter<T>(
+    FilterDefinition<T> filter,
+    FilterDefinitionBuilder<T> filterBuilder,
+    Expression<Func<T, DateTime?>> field,
+    DateTime? minValue,
+    DateTime? maxValue)
+    {
+        if (minValue.HasValue)
+        {
+            filter &= filterBuilder.Gte(field, minValue.Value);
+        }
+        if (maxValue.HasValue)
+        {
+            filter &= filterBuilder.Lte(field, maxValue.Value);
+        }
+        return filter;
+    }
+```
+
 #### 3.5 Statistics Controller
 
 Kontroler `StatisticsController` zarządza zapytaniami dotyczącymi statystyk.
@@ -1820,7 +1985,7 @@ public async Task<IActionResult>  GetTopNCarsAsync(int n){
     }
     catch (Exception ex)
     {
-        return StatusCode(500, $"An error occurred while finishing the top n car: {ex.Message}");
+        return StatusCode(500, $"An error occurred while getting the top n car: {ex.Message}");
     }
 }
 ```
@@ -1847,7 +2012,7 @@ public async Task<IActionResult> GetTopNCustomersPerMileageAsync(int n){
     }
     catch (Exception ex)
     {
-        return StatusCode(500, $"An error occurred while finishing the top n car: {ex.Message}");
+        return StatusCode(500, $"An error occurred while getting the top n customers per mileage: {ex.Message}");
     }
 }
 ```
@@ -1873,12 +2038,12 @@ public async Task<IActionResult> GetFavCarPerClient(){
     }
     catch (Exception ex)
     {
-        return StatusCode(500, $"An error occurred while finishing the top n car: {ex.Message}");
+        return StatusCode(500, $"An error occurred while getting favorite car per customer {ex.Message}");
     }
 }
 ```
 
-### Transakcje
+### 4 Transakcje
 Aby móc korzystać z transakcji musieliśmy odpowiednio skonfugurować nasz serwer bazodanywo.
  
 W pliku konfiguracyjnym _mongo.cfg_ dodaliśmy zależnoć, która pozwala korzystać z __replication set__
@@ -1897,7 +2062,7 @@ oraz kontrolnie
 > rs.status()
 ```
 
-```json
+```sql
 rs0 [direct: primary] test> rs.status()
 {
   set: 'rs0',
@@ -1968,42 +2133,58 @@ rs0 [direct: primary] test> rs.status()
 }
 ```
 
-### Testy
+### 5 Testy
 
-```sql
-http://localhost:5000/api/Rental/Rentals/?maxExpectedEndDate=2024-05-21&maxExtraAmount=0
-```
-
-za dużo tekstu aby mi się na ss zmieściło xD
+#### 5.1 Kontroler Car
+##### 5.1.1 Wyszukiwanie aut pasujących do filtru
 
 ```sql
 http://localhost:5000/api/Car/Cars?seats=5&color=black&minPower=200&maxPower=300&maxProductionYear= 2022
 ```
-![alt text](Images/image.png)
+![alt text](Images/image-6.png)
+
+##### 5.1.2 Wyszukiwanie aut pasujących z danym ID
 
 ```sql
-http://localhost:5000/api/Statistics/Rentals/10
+http://localhost:5000/api/CarModel/000000000000000000000000
 ```
 
-![alt text](Images/image-1.png)
+![alt text](Images/image-18.png)
 
-```sql
-http://localhost:5000/api/Statistics/Customers/10
-```
-
-![alt text](Images/image-2.png)
-
-```sql
-http://localhost:5000/api/Statistics/Customers/Cars
-```
-
-![alt text](Images/image-3.png)
+#### 5.2 Kontroler Client
+##### 5.2.1 Wyszukiwanie clientów pasujących do filtru
 
 ```sql
 http://localhost:5000/api/Client/Clients?minTotal_rental_days=30&minCustomerSince=2021-01-01&maxCustomerSince=2023-12-31
 ```
 
-to też mi się nie zmieści xd
+![alt text](Images/image-11.png)
+
+##### 5.2.2 Wyszukiwanie wszystkich clientów
+
+```sql
+http://localhost:5000/api/Client/Clients
+```
+
+![alt text](Images/image-12.png)
+
+#### 5.3 Kontroler Rental
+##### 5.3.1 Wyszukiwanie wypożyczeń pasujących do filtru
+
+```sql
+http://localhost:5000/api/Rental/Rentals/?maxExpectedEndDate=2024-05-21&maxExtraAmount=0
+```
+
+![alt text](Images/image-5.png)
+
+##### 5.3.1 Wyszukiwanie wszystkich wypożyczeń
+
+```sql
+http://localhost:5000/api/Rental/Rentals
+```
+![alt text](Images/image-10.png)
+
+##### 5.3.2 Tworzenie nowego wypożyczeni
 
 ```sql
 http://localhost:5000/api/Rental/NewRental
@@ -2013,16 +2194,15 @@ BODY:
 
 ```json
 {
-  "_id": 5,
   "customer": {
-    "clientId": 2,
+    "clientId": "000000000000000000000002",
     "first_name": "Michael",
     "last_name": "Smith"
   },
   "rental_car": {
     "make": "Audi",
     "model": "Q5",
-    "carId": 35,
+    "carId": "000000000000000000000023",
     "price_per_day": 200
   },
   "rental_details": {
@@ -2047,50 +2227,81 @@ BODY:
 ```
 ![alt text](Images/image-4.png)
 
-![alt text](Images/image-5.png)
+![alt text](Images/image-19.png)
+
+##### 5.3.3 Zakończenie danego wypożyczenia o danym ID
 
 ```sql
-http://localhost:5000/api/Rental/FinishRental/5
+http://localhost:5000/api/Rental/FinishRental/665e201b13635eefe1b66587
 ```
 
 BODY response
 
 ```JSON
 {
-    "_id": 5,
+    "_id": "665e201b13635eefe1b66587",
     "rental_Car": {
-        "carId": 35,
+        "carId": "000000000000000000000023",
         "make": "Audi",
         "model": "Q5",
         "price_Per_Day": 200
     },
     "customer": {
-        "clientId": 2,
+        "clientId": "000000000000000000000002",
         "first_Name": "Michael",
         "last_Name": "Smith"
     },
     "rental_Details": {
         "start_Date": "2024-05-22T12:00:00Z",
         "expected_End_Date": "2024-05-30T12:00:00Z",
-        "end_Date": "2024-06-02T19:52:14.0237776Z",
+        "end_Date": "2024-06-03T19:58:21.9528212Z",
         "rental_Status": "finished",
         "insurance_Type": "basic",
         "extra_Insurance_Amount": 50,
-        "days": 12,
-        "extra_Days_Amount": 400,
+        "days": 13,
+        "extra_Days_Amount": 500,
         "mileage": 1200,
         "extra_Mileage_Amount": 0,
         "extra_Fuel": 0,
         "extra_Fuel_Amount": 0,
         "price": 1600,
         "discount": 0,
-        "extra_Amount": 450,
-        "final_Amount": 2050
+        "extra_Amount": 550,
+        "final_Amount": 2150
     }
 }
 ```
 
-![alt text](Images/image-6.png)
+![alt text](Images/image-16.png)
+
+Oczywiście na czas wypożyczenia status auta zminił się na _niedostepny_ a po zakończeniu danego wypozyczenia pownie auto była do dyspozycji wypożyczalni. Dodatkowo został zaktualizowany przebieg auta oraz sumaryczna liczba dni wypozyczeń przez danego kliena.
+
+#### 5.4 Kontroler Statistics
+##### 5.4.1 Zwracanie najchętniej wypożyczanych aut
+
+```sql
+http://localhost:5000/api/Statistics/Rentals/10
+```
+
+![alt text](Images/image-7.png)
+
+##### 5.4.2 Zwracanie klientów z największą liczbą wypożyczeń
+
+```sql
+http://localhost:5000/api/Statistics/Customers/10
+```
+
+![alt text](Images/image-8.png)
+
+##### 5.4.2 Zwracanie najchętniej wypożyczanego auta przez dla każdego klienta
+
+```sql
+http://localhost:5000/api/Statistics/Customers/Cars
+```
+
+![alt text](Images/image-9 .png)
+
+
 
 ### FrontEnd
 Frontend został napisany w Blazerze, który jest frameworkiem do budowania aplikacji internetowych w języku C#. Blazer umożliwia pisanie kodu aplikacji webowej w języku C# i wykorzystanie go do renderowania interfejsu użytkownika w przeglądarce. W naszym przypadku, frontend pomaga w wyświetlaniu wszystkich modeli i aut, a także w prezentowaniu statystyk.
