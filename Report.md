@@ -1,7 +1,8 @@
-#v Projekt systemu do wypożyczania aut
+# Projekt systemu do wypożyczania aut
+
 ## Kluza Łukasz i Mateusz Sacha
 
-### 1. Schemat Bazy Danych
+### 1. Schemat Bazy Danych i konfiguracja aplikacji
 
 #### 1.1 CarsModels
 
@@ -19,6 +20,129 @@
 
 ![alt text](Images/image-3.png)
 ![alt text](Images/image-17.png)
+
+#### 1.5 Startup.cs
+
+```csharp
+public class Startup
+{
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {   
+
+        services.AddControllersWithViews()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new ObjectIdJsonConverter());
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
+
+        var jwtSettings = Configuration.GetSection("Jwt");
+        var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings["Issuer"],
+                ValidAudience = jwtSettings["Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+        });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AuthenticatedUser", policy =>
+                policy.RequireAuthenticatedUser());
+        });
+
+        services.AddControllersWithViews();
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAllOrigins",
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+        });
+        services.AddControllers();
+
+        services.AddSingleton<MongoDbContext>();
+
+        services.AddScoped<ICarService, CarService>();
+        services.AddScoped<ICarsModelsService, CarsModelsService>();
+        services.AddScoped<IRentalService, RentalService>();
+        services.AddScoped<IClientService, ClientService>();
+        services.AddScoped<IStatisticsService, StatisticsService>();
+
+        services.AddScoped<IMongoCollection<Car>>(provider =>
+        {
+            var dbContext = provider.GetRequiredService<MongoDbContext>();
+            return dbContext.GetCollection<Car>("Cars");
+        });
+        services.AddScoped<IMongoCollection<CarModel>>(provider =>
+        {
+            var dbContext = provider.GetRequiredService<MongoDbContext>();
+            return dbContext.GetCollection<CarModel>("CarsModels");
+        });
+        services.AddScoped<IMongoCollection<Rental>>(provider =>
+        {
+            var dbContext = provider.GetRequiredService<MongoDbContext>();
+            return dbContext.GetCollection<Rental>("Rentals");
+        });
+        services.AddScoped<IMongoCollection<Client>>(provider =>
+        {
+            var dbContext = provider.GetRequiredService<MongoDbContext>();
+            return dbContext.GetCollection<Client>("Clients");
+        });
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+        }
+        
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+
+        app.UseCors("AllowAllOrigins");
+
+        app.UseRouting();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
+    }
+}
+```
 
 ### 2. Opis Serwisów
 Serwisy w C# to klasy, które wykonują różnorodne operacje na danych w aplikacji. Ich główną rolą jest oddzielenie tych operacji od pozostałych części aplikacji, co przynosi korzyści w zarządzaniu, testowaniu i ponownym wykorzystaniu kodu.
@@ -57,7 +181,7 @@ public async Task CreateCarAsync(Car car)
 Metoda asynchroniczna służąca do aktualizacji istniejących samochodów w bazie danych. Sprawdza, czy dany samochód istnieje, a następnie dokonuje aktualizacji.
 
 Parametry:
-- int id - identyfikator samochodu do zaktualizowania.
+- ObjectId id - identyfikator samochodu do zaktualizowania.
 - Car car - obiekt typu Car z nowymi danymi.
 
 ```csharp
@@ -102,7 +226,7 @@ public async Task<bool> UpdateCarAsync(ObjectId id, Car car)
 Metoda asynchroniczna służąca do usuwania samochodów z bazy danych na podstawie ich identyfikatora.
 
 Parametry:
-- int id - identyfikator samochodu do usunięcia.
+- ObjectId id - identyfikator samochodu do usunięcia.
 
 ```csharp
 public async Task<bool> DeleteCarAsync(ObjectId id)
@@ -158,7 +282,7 @@ public async Task<IEnumerable<Car>> GetCarsPerFilterAsync(FilterDefinition<Car> 
 Metoda asynchroniczna służąca do pobierania samochodu na podstawie jego identyfikatora.
 
 Parametry:
-- int id - identyfikator samochodu do pobrania.
+- ObjectId id - identyfikator samochodu do pobrania.
 
 ```csharp
 public async Task<Car> GetCarByIdAsync(ObjectId id)
@@ -173,7 +297,7 @@ public async Task<Car> GetCarByIdAsync(ObjectId id)
 Metoda asynchroniczna służąca do aktualizacji statusu dostępności samochodu.
 
 Parametry:
-- int id - identyfikator samochodu do zaktualizowania.
+- ObjectId id - identyfikator samochodu do zaktualizowania.
 - bool availability - nowy status dostępności samochodu.
 
 ```csharp
@@ -206,7 +330,7 @@ public async Task<bool> UpdateCarAvailabilityByIdAsync(ObjectId id, bool availab
 Metoda asynchroniczna służąca do aktualizacji przebiegu samochodu.
 
 Parametry:
-- int id - identyfikator samochodu do zaktualizowania.
+- ObjectId id - identyfikator samochodu do zaktualizowania.
 - int mileage - nowy przebieg samochodu.
 
 ```csharp
@@ -269,7 +393,7 @@ public async Task CreateCarModelAsync(CarModel carModel)
 Metoda asynchroniczna służąca do aktualizacji istniejących modeli samochodów w bazie danych. Sprawdza, czy dany model samochodu istnieje, a następnie dokonuje aktualizacji.
 
 Parametry:
-- int id - identyfikator modelu samochodu do zaktualizowania.
+- ObjectId id - identyfikator modelu samochodu do zaktualizowania.
 - CarModel carModel - obiekt typu CarModel z nowymi danymi.
 
 ```csharp
@@ -314,7 +438,7 @@ public async Task<bool> UpdateCarModelAsync(ObjectId id, CarModel carModel)
 Metoda asynchroniczna służąca do usuwania modeli samochodów z bazy danych na podstawie ich identyfikatora.
 
 Parametry:
-- int id - identyfikator modelu samochodu do usunięcia.
+- ObjectId id - identyfikator modelu samochodu do usunięcia.
 
 ```csharp
 public async Task<bool> DeleteCarModelAsync(ObjectId id)
@@ -368,7 +492,7 @@ public async Task<IEnumerable<CarModel>> GetCarsModelsPerFilterAsync(FilterDefin
 Metoda asynchroniczna służąca do pobierania modelu samochodu na podstawie jego identyfikatora.
 
 Parametry:
-- int id - identyfikator modelu samochodu do pobrania.
+- ObjectId id - identyfikator modelu samochodu do pobrania.
 
 ```csharp
 public async Task<CarModel> GetCarModelByIdAsync(ObjectId id)
@@ -413,7 +537,7 @@ public async Task CreateClientAsync(Client client)
 Metoda asynchroniczna służąca do usuwania klientów z bazy danych na podstawie ich identyfikatora.
 
 Parametry:
-- int id - identyfikator klienta do usunięcia.
+- ObjectId id - identyfikator klienta do usunięcia.
 
 ```csharp
 public async Task<bool> DeleteClientAsync(ObjectId id)
@@ -491,7 +615,7 @@ public async Task<Client> GetUserByEmailAsync(string email)
 Metoda asynchroniczna służąca do aktualizacji istniejących klientów w bazie danych. Sprawdza, czy dany klient istnieje, a następnie dokonuje aktualizacji.
 
 Parametry:
-- int id - identyfikator klienta do zaktualizowania.
+- ObjectId id - identyfikator klienta do zaktualizowania.
 Client client - obiekt typu Client z nowymi danymi.
 
 ```csharp
@@ -536,7 +660,7 @@ public async Task<bool> UpdateClientAsync(ObjectId id, Client client)
 Metoda asynchroniczna służąca do aktualizacji liczby dni wypożyczeń klienta w bazie danych. Pobiera aktualną liczbę dni wypożyczeń i dodaje nowe dni.
 
 Parametry:
-- int id - identyfikator klienta.
+- ObjectId id - identyfikator klienta.
 - int rental_days - liczba dni wypożyczeń do dodania.
 
 ```csharp
@@ -1641,63 +1765,25 @@ public async Task<IActionResult> Login([FromBody] Login login_model)
         return Unauthorized();
     }
 
-    var token = GenerateJwtToken(client);
-    return Ok(new { Token = token });
-}
-```
+    var jwtSettings = _config.GetSection("Jwt");
+    var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
-##### Funkcja `GenerateJwtToken`
-
-Funkcja `GenerateJwtToken` generuje token JWT dla klienta na podstawie jego danych.
-
-- **Parametry wejściowe**:
-  - `Client client`: Obiekt reprezentujący klienta.
-- **Zwracana wartość**: Token JWT jako ciąg znaków.
-
-```csharp
-private string GenerateJwtToken(Client client)
-{
-    var secretKey = Convert.ToBase64String(CreateRandomKey(32));
-    var issuer = "your_issuer";
-    var audience = "your_audience";
-
-    var claims = new[]
+    var tokenDescriptor = new SecurityTokenDescriptor
     {
-        new Claim(ClaimTypes.Email, client.Email),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        Subject = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, client._id.ToString())
+        }),
+        Expires = DateTime.UtcNow.AddMinutes(double.Parse(jwtSettings["ExpiresInMinutes"])),
+        Issuer = jwtSettings["Issuer"],
+        Audience = jwtSettings["Audience"],
+        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
     };
 
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-    var token = new JwtSecurityToken(
-        issuer: issuer,
-        audience: audience,
-        claims: claims,
-        expires: DateTime.Now.AddMinutes(30),
-        signingCredentials: creds);
-
-    return new JwtSecurityTokenHandler().WriteToken(token);
-}
-```
-
-##### Funkcja `CreateRandomKey`
-
-Funkcja `CreateRandomKey` generuje losowy klucz o określonej długości w bajtach.
-
-- **Parametry wejściowe**:
-  - `int bytes`: Liczba bajtów, z których ma składać się klucz.
-- **Zwracana wartość**: Losowy klucz jako tablica bajtów.
-
-```csharp
-private byte[] CreateRandomKey(int bytes)
-{
-    using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
-    {
-        var key = new byte[bytes];
-        rng.GetBytes(key);
-        return key;
-    }
+    var tokenHandler = new JwtSecurityTokenHandler();
+    var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+    var token =  tokenHandler.WriteToken(securityToken);
+    return Ok(token);
 }
 ```
 
@@ -2304,7 +2390,11 @@ http://localhost:5000/api/Statistics/Customers/Cars
 
 
 ### FrontEnd
-Frontend został napisany w Blazerze, który jest frameworkiem do budowania aplikacji internetowych w języku C#. Blazer umożliwia pisanie kodu aplikacji webowej w języku C# i wykorzystanie go do renderowania interfejsu użytkownika w przeglądarce. W naszym przypadku, frontend pomaga w wyświetlaniu wszystkich modeli i aut, a także w prezentowaniu statystyk.
+Frontend został napisany w Blazerze, który jest frameworkiem do budowania aplikacji internetowych w języku C#. Blazer umożliwia pisanie kodu aplikacji webowej w języku C# i wykorzystanie go do renderowania interfejsu użytkownika w przeglądarce. W naszym przypadku, frontend polega na systemie logowania użytkowników, wyświetlaniu wszystkich modeli i aut, a także w prezentowaniu statystyk.
+
+![alt text](/Images/image-20.png)
+
+![alt text](/Images/image-21.png)
 
 ![alt text](Images/image-13.png)
 
