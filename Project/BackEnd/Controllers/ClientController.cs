@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Authorization;
 using MongoDB.Bson;
+using Microsoft.Extensions.Configuration;
 
 
 [Route("api/[controller]")]
@@ -237,8 +238,11 @@ public class ClientController : ControllerBase
                 return Unauthorized("User ID claim not found in token.");
             }
 
-            var userId = userIdClaim.Value; 
-            filter &= filterDefinitioinBuilder.Eq(client => client._id, userId);
+            var userId = userIdClaim.Value;
+            if(!ObjectId.TryParse(userId, out ObjectId objectId)) {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            filter &= filterDefinitioinBuilder.Eq(client => client._id, objectId);
             
             var clients = await _clientService.GetClientsPerFilterAsync(filter);
             var client = clients.SingleOrDefault();
