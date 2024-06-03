@@ -7,6 +7,9 @@ using MongoDB.Driver;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 
 public class Startup
@@ -20,32 +23,43 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {   
-        services.AddControllersWithViews();
 
-        var jwtTokenSettings = new JwtTokenModel
-        {
-            Issuer = "your_issuer",
-            Audience = "your_audience",
-            SecretKey = Convert.ToBase64String(Encoding.UTF8.GetBytes("Twój sekretny klucz")),
-            ExpiryTime = TimeSpan.FromMinutes(15)
-        };
-
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
+        services.AddControllersWithViews()
+            .AddJsonOptions(options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtTokenSettings.Issuer,
-                    ValidAudience = jwtTokenSettings.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtTokenSettings.SecretKey))
-                };
+                options.JsonSerializerOptions.Converters.Add(new ObjectIdJsonConverter());
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
-        services.AddAuthorization();
 
+        var jwtSettings = Configuration.GetSection("Jwt");
+        var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings["Issuer"],
+                ValidAudience = jwtSettings["Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+        });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AuthenticatedUser", policy =>
+                policy.RequireAuthenticatedUser());
+        });
+
+        services.AddControllersWithViews();
         services.AddCors(options =>
         {
             options.AddPolicy("AllowAllOrigins",
@@ -107,6 +121,7 @@ public class Startup
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

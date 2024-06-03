@@ -59,8 +59,7 @@
         }
         else
         {
-            ErrorMessage = "Wystąpił błąd podczas rejestracji.";
+            ErrorMessage = await response.Content.ReadAsStringAsync();
         }
     }
-
 }

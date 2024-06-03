@@ -1,6 +1,6 @@
 public class CarModel
 {
-    public int _id { get; set; }
+    public string _id { get; set; }
 
     public string Mark { get; set; }
 

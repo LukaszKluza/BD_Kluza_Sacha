@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 
@@ -27,24 +28,28 @@ public class RentalController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while creating the car: {ex.Message}");
+            return StatusCode(500, $"An error occurred while creating the new rental: {ex.Message}");
         }
     }
 
     [HttpPost("FinishRental/{id}")]
-    public async Task<IActionResult> UpdateRental(int id, [FromBody] Rental rental)
+    public async Task<IActionResult> UpdateRental(string id, [FromBody] Rental rental)
     {
         if(!CheckRental(rental)){
             return StatusCode(401, "Some value are invalid");
         }
+        if (!ObjectId.TryParse(id, out ObjectId objectId))
+        {
+            return BadRequest("Invalid ObjectId format.");
+        }
         try
         {
-            Rental finished_rental = await _rentalService.FinishRentalAsync(id, rental);
+            Rental finished_rental = await _rentalService.FinishRentalAsync(objectId, rental);
             return Ok(finished_rental);
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while finishing the car: {ex.Message}");
+            return StatusCode(500, $"An error occurred while finishing the rental: {ex.Message}");
         }
     }
 
@@ -69,7 +74,8 @@ public class RentalController : ControllerBase
         return true;
     }
     [HttpGet("Rentals")]
-    public async Task<IActionResult> GetRentalsPerFilterAsync(int? clientId = null, int? carId = null, string? make = null, string? model = null, 
+    public async Task<IActionResult> GetRentalsPerFilterAsync(string? clientId = null, string? carId = null, string? make = null, string? model = null, 
+
     double? minPricePerDay = null, double? maxPricePerDay = null, DateTime? minStartDate = null, DateTime? maxStartDate = null, DateTime? minExpectedEndDate = null, 
     DateTime? maxExpectedEndDate = null, DateTime? minEndDate = null, DateTime? maxEndDate = null, string? rentalStatus = null, string? insuranceType = null,
     double? minExtraInsuranceAmount = null, double? maxExtraInsuranceAmount = null, int? minDays = null, int? maxDays = null, double? minExtraDaysAmount = null, 
@@ -82,11 +88,27 @@ public class RentalController : ControllerBase
             var filterDefinitioinBuilder = Builders<Rental>.Filter;
             var filter = Builders<Rental>.Filter.Empty;
 
-            if(clientId.HasValue){
-                filter &= filterDefinitioinBuilder.Eq(rental => rental.Customer.ClientId, clientId.Value);
+            if (!string.IsNullOrEmpty(clientId))
+            {
+                if (!ObjectId.TryParse(clientId, out ObjectId objectClientId))
+                {
+                    return BadRequest("Invalid objectClientId format.");
+                }
+                else
+                {
+                    filter &= filterDefinitioinBuilder.Eq("Customer.ClientId", objectClientId);
+                } 
             }
-            if(carId.HasValue){
-                filter &= filterDefinitioinBuilder.Eq(rental => rental.Rental_Car.carId, carId.Value);
+            if (!string.IsNullOrEmpty(carId))
+            {
+                if (!ObjectId.TryParse(carId, out ObjectId objectCarId))
+                {
+                    return BadRequest("Invalid objectCarId format.");
+                }
+                else
+                {
+                    filter &= filterDefinitioinBuilder.Eq("Rental_Car.carId", objectCarId);
+                } 
             }
             if(!string.IsNullOrWhiteSpace(make)){
                 filter &= filterDefinitioinBuilder.Eq(rental => rental.Rental_Car.Make, make);

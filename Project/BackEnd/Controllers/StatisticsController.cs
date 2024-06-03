@@ -20,9 +20,10 @@ public class StatisticsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while finishing the top n car: {ex.Message}");
+            return StatusCode(500, $"An error occurred while getting the top n car: {ex.Message}");
         }
     }
+
     [HttpGet("Customers/{n}")]
     public async Task<IActionResult> GetTopNCustomersPerMileageAsync(int n){
         try
@@ -32,9 +33,10 @@ public class StatisticsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while finishing the top n car: {ex.Message}");
+            return StatusCode(500, $"An error occurred while getting the top n customers per mileage: {ex.Message}");
         }
     }
+    
     [HttpGet("Customers/Cars")]
     public async Task<IActionResult> GetFavCarPerClient(){
         try
@@ -44,7 +46,7 @@ public class StatisticsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while finishing the top n car: {ex.Message}");
+            return StatusCode(500, $"An error occurred while retrieving favorite car per customer {ex.Message}");
         }
     }
 

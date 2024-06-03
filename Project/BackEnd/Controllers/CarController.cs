@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using MongoDB.Driver;
+using MongoDB.Bson;
 
 
 [Route("api/[controller]")]
@@ -29,14 +30,15 @@ public class CarController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateCar(int id, [FromBody] Car car)
+    public async Task<IActionResult> UpdateCar(string id, [FromBody] Car car)
     {
-        Console.WriteLine("Received JSON body:");
-        Console.WriteLine(JsonConvert.SerializeObject(car, Formatting.Indented));
-
         try
         {
-            var success = await _carService.UpdateCarAsync(id, car);
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            var success = await _carService.UpdateCarAsync(objectId, car);
             if (success)
             {
                 return Ok($"Car with ID '{id}' updated successfully.");
@@ -54,11 +56,15 @@ public class CarController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCar(int id)
+    public async Task<IActionResult> DeleteCar(string id)
     {
         try
         {
-            var success = await _carService.DeleteCarAsync(id);
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            var success = await _carService.DeleteCarAsync(objectId);
             if (success)
             {
                 return Ok("Car deleted successfully.");
@@ -75,7 +81,7 @@ public class CarController : ControllerBase
     }
     
     [HttpGet("Cars")]
-    public async Task<IActionResult> GetCarsPerFilterAsync(int? modelId = null, int? seats = null, string? type = null, string? color = null, 
+    public async Task<IActionResult> GetCarsPerFilterAsync(string? modelId = null, int? seats = null, string? type = null, string? color = null, 
     int? minPower = null, int? maxPower = null, int? minCurrMileage = null, int? maxCurrMileage = null,
     double? minPricePerDay = null, double? maxPricePerDay = null, bool? isAvailable = null, int? minProductionYear = null, int? maxProductionYear = null)
     {
@@ -84,8 +90,17 @@ public class CarController : ControllerBase
             var filterDefinitioinBuilder = Builders<Car>.Filter;
             var filter = Builders<Car>.Filter.Empty;
 
-            if(modelId.HasValue){
-                filter &= filterDefinitioinBuilder.Eq(car => car._CarModelId, modelId.Value);
+            if (!string.IsNullOrEmpty(modelId))
+            {
+                if (!ObjectId.TryParse(modelId, out ObjectId objectModelId))
+                {
+                    return BadRequest("Invalid ObjectId format.");
+                }
+                else
+                {
+                    filter &= filterDefinitioinBuilder.Eq("_CarModelId", objectModelId);
+                }
+               
             }
             if(seats.HasValue){
                 filter &= filterDefinitioinBuilder.Eq(car => car.Seats, seats.Value);
@@ -126,11 +141,15 @@ public class CarController : ControllerBase
     }
 
     [HttpGet("Cars/{id}")]
-    public async Task<IActionResult> GetCarByIdAsync(int id)
+    public async Task<IActionResult> GetCarByIdAsync(string id)
     {
         try
         {
-            var car = await _carService.GetCarByIdAsync(id);
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+            var car = await _carService.GetCarByIdAsync(objectId);
             if (car != null)
             {
                 return Ok(car);
@@ -145,6 +164,4 @@ public class CarController : ControllerBase
             return StatusCode(500, $"An error occurred while retrieving the car: {ex.Message}");
         }
     }
-
-
 }

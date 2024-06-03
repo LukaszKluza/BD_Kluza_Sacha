@@ -1,9 +1,9 @@
-using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 
 public interface IStatisticsService
 {
-    Task<JsonDocument> TopNCars(int n);
-    Task<JsonDocument> TopNClientsPerMileage(int n);
-    Task<JsonDocument> FavCarPerClient();
+    Task<IActionResult> TopNCars(int n);
+    Task<IActionResult> TopNClientsPerMileage(int n);
+    Task<IActionResult> FavCarPerClient();
 
 }

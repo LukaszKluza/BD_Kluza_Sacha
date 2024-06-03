@@ -20,6 +20,8 @@
     <button type="submit">Log in</button>
 </form>
 
+<p>If you don't have an account, <button @onclick="GoToRegister">register here</button>.</p>
+
 @code {
     private LoginModel LoginModel = new LoginModel();
     private string ErrorMessage;
@@ -35,7 +37,21 @@
         }
         else
         {
-            ErrorMessage = "Uncorrect email or password.";
+            ErrorMessage = "Incorrect email or password.";
+        }
+    }
+
+    private void GoToRegister()
+    {
+        NavigationManager.NavigateTo("/register");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "token");
+        if (!string.IsNullOrWhiteSpace(token))
+        {
+            NavigationManager.NavigateTo("/profile");
         }
     }
 }

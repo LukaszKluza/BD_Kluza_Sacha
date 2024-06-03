@@ -5,21 +5,21 @@
 
 <PageTitle>Statistics</PageTitle>
 
-<h1>This is list of top 10 car models.</h1>
+<h1>This is a list of top 10 car models.</h1>
 
-@if (topCarModels == null)
+@if (topCarModels.ValueKind == JsonValueKind.Null || topCarModels.ValueKind == JsonValueKind.Undefined)
 {
     <p>Loading...</p>
 }
 else
 {
     <ul class="model-list">
-        @foreach (var car in topCarModels.RootElement.EnumerateArray())
+        @foreach (var car in topCarModels.EnumerateArray())
         {
-            var model_id = @car.GetProperty("_id").GetInt32();
-            var make = @car.GetProperty("make").GetString();
-            var model = @car.GetProperty("model").GetString();
-            var count = @car.GetProperty("count").GetInt32();
+            var model_id = car.GetProperty("_id").GetString();
+            var make = car.GetProperty("make").GetString();
+            var model = car.GetProperty("model").GetString();
+            var count = car.GetProperty("count").GetInt32();
             <li>
                 <a href="models/@model_id">@make @model - @count</a>
             </li>
@@ -28,15 +28,16 @@ else
 }
 
 @code {
-    private JsonDocument topCarModels;
+    private JsonElement topCarModels;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             var response = await HttpClient.GetAsync("http://localhost:5000/api/Statistics/Rentals/10");
+            response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
-            topCarModels = JsonDocument.Parse(json);
+            topCarModels = JsonDocument.Parse(json).RootElement.GetProperty("value");
         }
         catch (Exception ex)
         {
