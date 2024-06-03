@@ -16,7 +16,7 @@ else
     <ul class="model-list">
         @foreach (var car in topCarModels.RootElement.EnumerateArray())
         {
-            var model_id = @car.GetProperty("_id").GetInt32();
+            var model_id = @car.GetProperty("_id").GetString();
             var make = @car.GetProperty("make").GetString();
             var model = @car.GetProperty("model").GetString();
             var count = @car.GetProperty("count").GetInt32();
@@ -36,7 +36,8 @@ else
         {
             var response = await HttpClient.GetAsync("http://localhost:5000/api/Statistics/Rentals/10");
             var json = await response.Content.ReadAsStringAsync();
-            topCarModels = JsonDocument.Parse(json);
+            topCarModels = JsonDocument.Parse(json.value);
+            Console.WriteLine(json);
         }
         catch (Exception ex)
         {

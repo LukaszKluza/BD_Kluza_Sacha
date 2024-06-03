@@ -121,6 +121,7 @@ public class CarModelController : ControllerBase
             var carModel = await _carsModelsService.GetCarModelByIdAsync(objectId);
             if (carModel != null)
             {
+                Console.WriteLine(carModel._id);
                 return Ok(carModel);
             }
             else
