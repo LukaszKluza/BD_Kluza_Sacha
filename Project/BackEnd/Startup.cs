@@ -20,32 +20,35 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {   
-        services.AddControllersWithViews();
+         var jwtSettings = Configuration.GetSection("Jwt");
+        var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
-        var jwtTokenSettings = new JwtTokenModel
+        services.AddAuthentication(options =>
         {
-            Issuer = "your_issuer",
-            Audience = "your_audience",
-            SecretKey = Convert.ToBase64String(Encoding.UTF8.GetBytes("Twój sekretny klucz")),
-            ExpiryTime = TimeSpan.FromMinutes(15)
-        };
-
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtTokenSettings.Issuer,
-                    ValidAudience = jwtTokenSettings.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtTokenSettings.SecretKey))
-                };
-            });
-        services.AddAuthorization();
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings["Issuer"],
+                ValidAudience = jwtSettings["Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+        });
 
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AuthenticatedUser", policy =>
+                policy.RequireAuthenticatedUser());
+        });
+
+        services.AddControllersWithViews();
         services.AddCors(options =>
         {
             options.AddPolicy("AllowAllOrigins",
@@ -107,6 +110,7 @@ public class Startup
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

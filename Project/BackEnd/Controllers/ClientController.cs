@@ -7,16 +7,20 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using MongoDB.Driver;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
 [ApiController]
 public class ClientController : ControllerBase
 {
     private readonly IClientService _clientService;
+    private IConfiguration _config { get; }
 
-    public ClientController(IClientService clientService)
+    public ClientController(IClientService clientService, IConfiguration config)
     {
         _clientService = clientService;
+        _config = config;
     }
     
     [HttpPost]
@@ -180,43 +184,52 @@ public class ClientController : ControllerBase
             return Unauthorized();
         }
 
-        var token = GenerateJwtToken(client);
-        return Ok(new { Token = token });
-    }
+        var jwtSettings = _config.GetSection("Jwt");
+        var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
-    private string GenerateJwtToken(Client client)
-    {
-        var secretKey = Convert.ToBase64String(CreateRandomKey(32));
-        var issuer = "your_issuer";
-        var audience = "your_audience";
-
-        var claims = new[]
+        var tokenDescriptor = new SecurityTokenDescriptor
         {
-            new Claim(ClaimTypes.Email, client.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            Subject = new ClaimsIdentity(new[]
+            {
+               new Claim(ClaimTypes.NameIdentifier, client._id.ToString())
+            }),
+            Expires = DateTime.UtcNow.AddMinutes(double.Parse(jwtSettings["ExpiresInMinutes"])),
+            Issuer = jwtSettings["Issuer"],
+            Audience = jwtSettings["Audience"],
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            issuer: issuer,
-            audience: audience,
-            claims: claims,
-            expires: DateTime.Now.AddMinutes(30),
-            signingCredentials: creds);
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+        var token =  tokenHandler.WriteToken(securityToken);
+        return Ok(token);
     }
 
-    
-    private byte[] CreateRandomKey(int bytes)
+    [Authorize]
+    [HttpGet("profile")]
+    public async Task<IActionResult> GetUserProfile()
     {
-        using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
+        try
         {
-            var key = new byte[bytes];
-            rng.GetBytes(key);
-            return key;
+            var filterDefinitioinBuilder = Builders<Client>.Filter;
+            var filter = Builders<Client>.Filter.Empty;
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized("User ID claim not found in token.");
+            }
+
+            var userId = Int32.Parse(userIdClaim.Value); 
+            filter &= filterDefinitioinBuilder.Eq(client => client._id, userId);
+            
+            var clients = await _clientService.GetClientsPerFilterAsync(filter);
+            var client = clients.SingleOrDefault();
+            return Ok(client);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving user profile: {ex.Message}");
         }
     }
 
