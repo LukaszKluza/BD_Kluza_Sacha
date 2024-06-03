@@ -112,7 +112,7 @@ public class CarService : ICarService
 
     public async Task<Car> GetCarByIdAsync(ObjectId id)
     {
-        var filter = Builders<Car>.Filter.Eq("_id", id);
+        var filter = Builders<Car>.Filter.Eq(car => car._id, id);
         var car = await _carCollection.Find(filter).FirstOrDefaultAsync();
         return car;
     }

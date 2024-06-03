@@ -138,7 +138,6 @@ public class ClientService : IClientService
             }
 
             client.Total_Rental_Days += rental_days;
-            Console.WriteLine(client.Total_Rental_Days);
             var result = await UpdateClientAsync(id, client);
             return result;
         }

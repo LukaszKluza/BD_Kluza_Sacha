@@ -28,7 +28,7 @@ public class RentalController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while creating the car: {ex.Message}");
+            return StatusCode(500, $"An error occurred while creating the new rental: {ex.Message}");
         }
     }
 
@@ -49,7 +49,7 @@ public class RentalController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while finishing the car: {ex.Message}");
+            return StatusCode(500, $"An error occurred while finishing the rental: {ex.Message}");
         }
     }
 
@@ -91,7 +91,7 @@ public class RentalController : ControllerBase
             {
                 if (!ObjectId.TryParse(clientId, out ObjectId objectClientId))
                 {
-                    return BadRequest("Invalid ObjectId format.");
+                    return BadRequest("Invalid objectClientId format.");
                 }
                 else
                 {
@@ -102,7 +102,7 @@ public class RentalController : ControllerBase
             {
                 if (!ObjectId.TryParse(carId, out ObjectId objectCarId))
                 {
-                    return BadRequest("Invalid ObjectId format.");
+                    return BadRequest("Invalid objectCarId format.");
                 }
                 else
                 {

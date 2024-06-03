@@ -20,7 +20,7 @@ public class StatisticsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while finishing the top n car: {ex.Message}");
+            return StatusCode(500, $"An error occurred while getting the top n car: {ex.Message}");
         }
     }
 
@@ -33,7 +33,7 @@ public class StatisticsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while finishing the top n customers per mileage: {ex.Message}");
+            return StatusCode(500, $"An error occurred while getting the top n customers per mileage: {ex.Message}");
         }
     }
     

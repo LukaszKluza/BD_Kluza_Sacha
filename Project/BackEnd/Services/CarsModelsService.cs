@@ -111,7 +111,6 @@ public class CarsModelsService : ICarsModelsService
     {
         var filter = Builders<CarModel>.Filter.Eq(carModel => carModel._id, id);
         var carModel = await _carModelCollection.Find(filter).FirstOrDefaultAsync();
-        Console.WriteLine(carModel._id);
         return carModel;
     }
 }
