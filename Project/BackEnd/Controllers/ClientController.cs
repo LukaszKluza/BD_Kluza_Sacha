@@ -38,7 +38,7 @@ public class ClientController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateClient(int id, [FromBody] Client client)
+    public async Task<IActionResult> UpdateClient(string id, [FromBody] Client client)
     {
         try
         {
@@ -60,7 +60,7 @@ public class ClientController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteClient(int id)
+    public async Task<IActionResult> DeleteClient(string id)
     {
         try
         {
@@ -81,7 +81,7 @@ public class ClientController : ControllerBase
     }
     
     [HttpGet("Clients")]
-    public async Task<IActionResult> GetClientsPerFilterAsync(int? id = null, string? first_name = null, string? last_name = null, string? phone_number = null,
+    public async Task<IActionResult> GetClientsPerFilterAsync(string? id = null, string? first_name = null, string? last_name = null, string? phone_number = null,
     string? gender = null, string? pesel = null, string? address = null, string? city = null, string? country = null, int? minTotal_rental_days = null, 
     int? maxTotal_rental_days = null, DateTime? minCustomerSince = null, DateTime? maxCustomerSince = null, DateTime? minBirthday = null, DateTime? maxBirthday = null)
     {
@@ -90,8 +90,8 @@ public class ClientController : ControllerBase
             var filterDefinitioinBuilder = Builders<Client>.Filter;
             var filter = Builders<Client>.Filter.Empty;
 
-            if(id.HasValue){
-                filter &= filterDefinitioinBuilder.Eq(client => client._id, id.Value);
+            if(!string.IsNullOrWhiteSpace(id)){
+                filter &= filterDefinitioinBuilder.Eq(client => client._id, id);
             }
             if(!string.IsNullOrWhiteSpace(first_name)){
                 filter &= filterDefinitioinBuilder.Eq(client => client.First_Name, first_name);
@@ -220,7 +220,7 @@ public class ClientController : ControllerBase
                 return Unauthorized("User ID claim not found in token.");
             }
 
-            var userId = Int32.Parse(userIdClaim.Value); 
+            var userId = userIdClaim.Value; 
             filter &= filterDefinitioinBuilder.Eq(client => client._id, userId);
             
             var clients = await _clientService.GetClientsPerFilterAsync(filter);

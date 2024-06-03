@@ -20,7 +20,7 @@ public class Rental_Car
 public class Customer
 {
     [BsonElement("clientId")]
-    public int ClientId { get; set; }
+    public string ClientId { get; set; }
 
     [BsonElement("first_name")]
     public string First_Name { get; set; }

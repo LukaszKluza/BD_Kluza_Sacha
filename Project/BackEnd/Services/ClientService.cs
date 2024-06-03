@@ -34,7 +34,7 @@ public class ClientService : IClientService
         }
     }
 
-    public async Task<bool> DeleteClientAsync(int id)
+    public async Task<bool> DeleteClientAsync(string id)
     {
         try
         {
@@ -87,7 +87,7 @@ public class ClientService : IClientService
         }
     }
 
-    public async Task<bool> UpdateClientAsync(int id, Client client)
+    public async Task<bool> UpdateClientAsync(string id, Client client)
     {
         try
         {
@@ -122,7 +122,7 @@ public class ClientService : IClientService
             throw;
         }
     }
-    public async Task<bool> UpdateRentalDaysAsync(int id, int rental_days)
+    public async Task<bool> UpdateRentalDaysAsync(string id, int rental_days)
     {
         try
         {

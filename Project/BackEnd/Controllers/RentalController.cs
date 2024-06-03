@@ -69,7 +69,7 @@ public class RentalController : ControllerBase
         return true;
     }
     [HttpGet("Rentals")]
-    public async Task<IActionResult> GetRentalsPerFilterAsync(int? clientId = null, int? carId = null, string? make = null, string? model = null, 
+    public async Task<IActionResult> GetRentalsPerFilterAsync(string? clientId = null, int? carId = null, string? make = null, string? model = null, 
     double? minPricePerDay = null, double? maxPricePerDay = null, DateTime? minStartDate = null, DateTime? maxStartDate = null, DateTime? minExpectedEndDate = null, 
     DateTime? maxExpectedEndDate = null, DateTime? minEndDate = null, DateTime? maxEndDate = null, string? rentalStatus = null, string? insuranceType = null,
     double? minExtraInsuranceAmount = null, double? maxExtraInsuranceAmount = null, int? minDays = null, int? maxDays = null, double? minExtraDaysAmount = null, 
@@ -82,8 +82,8 @@ public class RentalController : ControllerBase
             var filterDefinitioinBuilder = Builders<Rental>.Filter;
             var filter = Builders<Rental>.Filter.Empty;
 
-            if(clientId.HasValue){
-                filter &= filterDefinitioinBuilder.Eq(rental => rental.Customer.ClientId, clientId.Value);
+            if(!string.IsNullOrWhiteSpace(clientId)){
+                filter &= filterDefinitioinBuilder.Eq(rental => rental.Customer.ClientId, clientId);
             }
             if(carId.HasValue){
                 filter &= filterDefinitioinBuilder.Eq(rental => rental.Rental_Car.carId, carId.Value);
