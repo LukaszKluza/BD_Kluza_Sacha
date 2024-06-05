@@ -13,5 +13,5 @@ Projekt polegał na skonstruowaniu systemu wypożyczania aut.
 - **Blazor**: framework frontendowy, który pozwala na budowanie interaktywnych interfejsów użytkownika przy użyciu C# i HTML.
 
 ## Raport
-Raport z całości rozwiązania znajduje się w pliku Sacha_Mateusz-Kluza_Łukasz_Raport-Projekt.pdf. Znajduje się tu także ten sam ramort w formacie markdown w pliku Raport.md
+Raport z całości rozwiązania znajduje się w pliku Sacha_Mateusz-Kluza_Łukasz_Raport-Projekt.pdf. Znajduje się tu także ten sam raport w formacie markdown w pliku Raport.md
 Całość rozwiązania jeśli chodzi o kod znajduje się w folderze projekt.
