@@ -1,3 +1,12 @@
+<style>
+code {
+    font-size: 1em; /* Ustawienie rozmiaru czcionki */
+}
+pre code {
+    font-size: 0.65em; /* Ustawienie rozmiaru czcionki w blokach kodu */
+}
+</style>
+
 # Projekt systemu do wypożyczania aut
 
 ## Kluza Łukasz i Mateusz Sacha
@@ -1168,9 +1177,11 @@ Metoda `GetCarsPerFilterAsync` służy do asynchronicznego pobierania samochodó
 
 ```csharp
 [HttpGet("Cars")]
-public async Task<IActionResult> GetCarsPerFilterAsync(string? modelId = null, int? seats = null, string? type = null, string? color = null, 
-int? minPower = null, int? maxPower = null, int? minCurrMileage = null, int? maxCurrMileage = null,
-double? minPricePerDay = null, double? maxPricePerDay = null, bool? isAvailable = null, int? minProductionYear = null, int? maxProductionYear = null)
+public async Task<IActionResult> GetCarsPerFilterAsync(string? modelId = null, int? seats = null, 
+    string? type = null, string? color = null, int? minPower = null, int? maxPower = null, 
+    int? minCurrMileage = null, int? maxCurrMileage = null, double? minPricePerDay = null, 
+    double? maxPricePerDay = null, bool? isAvailable = null, int? minProductionYear = null, 
+    int? maxProductionYear = null)
 {
     try
     {
@@ -1190,27 +1201,39 @@ double? minPricePerDay = null, double? maxPricePerDay = null, bool? isAvailable 
            
         }
         if(seats.HasValue){
-            filter &= filterDefinitioinBuilder.Eq(car => car.Seats, seats.Value);
+            filter &= filterDefinitioinBuilder
+                .Eq(car => car.Seats, seats.Value);
         }
         if(!string.IsNullOrWhiteSpace(type)){
-            filter &= filterDefinitioinBuilder.Eq(car => car.Type, type);
+            filter &= filterDefinitioinBuilder
+                .Eq(car => car.Type, type);
         }if(!string.IsNullOrWhiteSpace(color)){
-            filter &= filterDefinitioinBuilder.Eq(car => car.Color, color);
+            filter &= filterDefinitioinBuilder
+                .Eq(car => car.Color, color);
         }
         if(isAvailable.HasValue){
-            filter &= filterDefinitioinBuilder.Eq(car => car.IsAvailable, isAvailable.Value);
+            filter &= filterDefinitioinBuilder
+                .Eq(car => car.IsAvailable, isAvailable.Value);
         }
-        filter &= filterDefinitioinBuilder.Gte(car => car.Power, minPower ?? 0);
-        filter &= filterDefinitioinBuilder.Lte(car => car.Power, maxPower ?? int.MaxValue);
+        filter &= filterDefinitioinBuilder
+            .Gte(car => car.Power, minPower ?? 0);
+        filter &= filterDefinitioinBuilder
+            .Lte(car => car.Power, maxPower ?? int.MaxValue);
 
-        filter &= filterDefinitioinBuilder.Gte(car => car.Price_per_day, minPricePerDay ?? 0);
-        filter &= filterDefinitioinBuilder.Lte(car => car.Price_per_day, maxPricePerDay ?? int.MaxValue);
+        filter &= filterDefinitioinBuilder
+            .Gte(car => car.Price_per_day, minPricePerDay ?? 0);
+        filter &= filterDefinitioinBuilder
+            .Lte(car => car.Price_per_day, maxPricePerDay ?? int.MaxValue);
 
-        filter &= filterDefinitioinBuilder.Gte(car => car.Curr_mileage, minCurrMileage ?? 0);
-        filter &= filterDefinitioinBuilder.Lte(car => car.Curr_mileage, maxCurrMileage ?? int.MaxValue);
+        filter &= filterDefinitioinBuilder
+            .Gte(car => car.Curr_mileage, minCurrMileage ?? 0);
+        filter &= filterDefinitioinBuilder
+            .Lte(car => car.Curr_mileage, maxCurrMileage ?? int.MaxValue);
 
-        filter &= filterDefinitioinBuilder.Gte(car => car.Production_year, minProductionYear ?? 1900);
-        filter &= filterDefinitioinBuilder.Lte(car => car.Production_year, maxProductionYear ?? 2100);
+        filter &= filterDefinitioinBuilder
+            .Gte(car => car.Production_year, minProductionYear ?? 1900);
+        filter &= filterDefinitioinBuilder
+            .Lte(car => car.Production_year, maxProductionYear ?? 2100);
         
         var result = await _carService.GetCarsPerFilterAsync(filter);
         if (result.Any())
@@ -1591,9 +1614,11 @@ Metoda `GetClientsPerFilterAsync` służy do asynchronicznego pobierania klient�
 
 ```csharp
 [HttpGet("Clients")]
-public async Task<IActionResult> GetClientsPerFilterAsync(string? id = null, string? first_name = null, string? last_name = null, string? phone_number = null,
-string? gender = null, string? pesel = null, string? address = null, string? city = null, string? country = null, int? minTotal_rental_days = null, 
-int? maxTotal_rental_days = null, DateTime? minCustomerSince = null, DateTime? maxCustomerSince = null, DateTime? minBirthday = null, DateTime? maxBirthday = null)
+public async Task<IActionResult> GetClientsPerFilterAsync(string? id = null, string? first_name = null, 
+    string? last_name = null, string? phone_number = null, string? gender = null, string? pesel = null, 
+    string? address = null, string? city = null, string? country = null, int? minTotal_rental_days = null, 
+    int? maxTotal_rental_days = null, DateTime? minCustomerSince = null, DateTime? maxCustomerSince = null, 
+    DateTime? minBirthday = null, DateTime? maxBirthday = null)
 {
     try
     {
@@ -1612,34 +1637,46 @@ int? maxTotal_rental_days = null, DateTime? minCustomerSince = null, DateTime? m
             } 
         }
         if(!string.IsNullOrWhiteSpace(first_name)){
-            filter &= filterDefinitioinBuilder.Eq(client => client.First_Name, first_name);
+            filter &= filterDefinitioinBuilder
+                .Eq(client => client.First_Name, first_name);
         }
         if(!string.IsNullOrWhiteSpace(last_name)){
-            filter &= filterDefinitioinBuilder.Eq(client => client.Last_Name, last_name);
+            filter &= filterDefinitioinBuilder
+                .Eq(client => client.Last_Name, last_name);
         }
         if(!string.IsNullOrWhiteSpace(phone_number)){
-            filter &= filterDefinitioinBuilder.Eq(client => client.Phone_Number, phone_number);
+            filter &= filterDefinitioinBuilder
+                .Eq(client => client.Phone_Number, phone_number);
         }
         if(!string.IsNullOrWhiteSpace(gender)){
-            filter &= filterDefinitioinBuilder.Eq(client => client.Gender, gender);
+            filter &= filterDefinitioinBuilder
+                .Eq(client => client.Gender, gender);
         }
         if(!string.IsNullOrWhiteSpace(pesel)){
-            filter &= filterDefinitioinBuilder.Eq(client => client.Pesel, pesel);
+            filter &= filterDefinitioinBuilder
+                .Eq(client => client.Pesel, pesel);
         }
         if(!string.IsNullOrWhiteSpace(address)){
-            filter &= filterDefinitioinBuilder.Eq(client => client.Address, address);
+            filter &= filterDefinitioinBuilder
+                .Eq(client => client.Address, address);
         }
         if(!string.IsNullOrWhiteSpace(city)){
-            filter &= filterDefinitioinBuilder.Eq(client => client.City, city);
+            filter &= filterDefinitioinBuilder
+                .Eq(client => client.City, city);
         }
         if(!string.IsNullOrWhiteSpace(country)){
-            filter &= filterDefinitioinBuilder.Eq(client => client.Country, country);
+            filter &= filterDefinitioinBuilder
+                .Eq(client => client.Country, country);
         }
-        filter &= filterDefinitioinBuilder.Gte(client => client.Total_Rental_Days, minTotal_rental_days ?? 0);
-        filter &= filterDefinitioinBuilder.Lte(client => client.Total_Rental_Days, maxTotal_rental_days ?? int.MaxValue);
+        filter &= filterDefinitioinBuilder
+            Gte(client => client.Total_Rental_Days,minTotal_rental_days ?? 0);
+        filter &= filterDefinitioinBuilder
+            .Lte(client => client.Total_Rental_Days, maxTotal_rental_days ?? int.MaxValue);
 
-        filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, client => client.Customer_Since, minCustomerSince, maxCustomerSince);
-        filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, Client => Client.Birth_Day, minBirthday, maxBirthday);
+        filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, 
+            client => client.Customer_Since, minCustomerSince, maxCustomerSince);
+        filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, 
+            client => client.Birth_Day, minBirthday, maxBirthday);
         
         var result = await _clientService.GetClientsPerFilterAsync(filter);
         if (result.Any())
@@ -1880,9 +1917,10 @@ private bool CheckRental(Rental rental)
     {
         return false;
     }
-    if (rental_Details.Discount >= 1 || rental_Details.Discount < 0 || rental_Details.Price < 0 || rental_Details.Extra_Amount < 0
-    || rental_Details.Extra_Fuel_Amount < 0 || rental_Details.Extra_Days_Amount < 0 || rental_Details.Extra_Insurance_Amount < 0
-    || rental_Details.Final_Amount < 0 || rental_Details.Extra_Mileage_Amount < 0 || rental_Details.Mileage < 0 || rental_Details.Extra_Fuel <0)
+    if (rental_Details.Discount >= 1 || rental_Details.Discount < 0 || rental_Details.Price < 0 
+        || rental_Details.Extra_Amount < 0 || rental_Details.Extra_Fuel_Amount < 0 || rental_Details.Extra_Days_Amount < 0 
+        || rental_Details.Extra_Insurance_Amount < 0 || rental_Details.Final_Amount < 0 
+        || rental_Details.Extra_Mileage_Amount < 0 || rental_Details.Mileage < 0 || rental_Details.Extra_Fuel <0)
     {
         return false;
     }
@@ -1906,13 +1944,18 @@ Pobiera wypożyczenia na podstawie określonych filtrów.
 
 ```csharp
 [HttpGet("Rentals")]
-public async Task<IActionResult> GetRentalsPerFilterAsync(string? clientId = null, string? carId = null, string? make = null, string? model = null, 
-double? minPricePerDay = null, double? maxPricePerDay = null, DateTime? minStartDate = null, DateTime? maxStartDate = null, DateTime? minExpectedEndDate = null, 
-DateTime? maxExpectedEndDate = null, DateTime? minEndDate = null, DateTime? maxEndDate = null, string? rentalStatus = null, string? insuranceType = null,
-double? minExtraInsuranceAmount = null, double? maxExtraInsuranceAmount = null, int? minDays = null, int? maxDays = null, double? minExtraDaysAmount = null, 
-double? maxExtraDaysAmount = null, int? minMileage = null, int? maxMileage = null, double? minExtraMileageAmount = null, double? maxExtraMileageAmount = null,
-int? minExtraFuel = null, int? maxExtraFuel = null, double? minExtraFuelAmount = null, double? maxExtraFuelAmount = null, double? minPrice = null, double? maxPrice = null,
-double? minDiscount = null, double? maxDiscount = null, double? minExtraAmount = null, double? maxExtraAmount = null, double? minFinalAmount = null, double? maxFinalAmount = null)
+public async Task<IActionResult> GetRentalsPerFilterAsync(string? clientId = null, string? carId = null, 
+    string? make = null, string? model = null, double? minPricePerDay = null, double? maxPricePerDay = null, 
+    DateTime? minStartDate = null, DateTime? maxStartDate = null, DateTime? minExpectedEndDate = null, 
+    DateTime? maxExpectedEndDate = null, DateTime? minEndDate = null, DateTime? maxEndDate = null, 
+    string? rentalStatus = null, string? insuranceType = null, double? minExtraInsuranceAmount = null, 
+    double? maxExtraInsuranceAmount = null, int? minDays = null, int? maxDays = null, 
+    double? minExtraDaysAmount = null, double? maxExtraDaysAmount = null, int? minMileage = null, 
+    int? maxMileage = null, double? minExtraMileageAmount = null, double? maxExtraMileageAmount = null,
+    int? minExtraFuel = null, int? maxExtraFuel = null, double? minExtraFuelAmount = null, 
+    double? maxExtraFuelAmount = null, double? minPrice = null, double? maxPrice = null,
+    double? minDiscount = null, double? maxDiscount = null, double? minExtraAmount = null,
+    double? maxExtraAmount = null, double? minFinalAmount = null, double? maxFinalAmount = null)
 {
     try
     {
@@ -1942,37 +1985,57 @@ double? minDiscount = null, double? maxDiscount = null, double? minExtraAmount =
             } 
        }
         if(!string.IsNullOrWhiteSpace(make)){
-            filter &= filterDefinitioinBuilder.Eq(rental => rental.Rental_Car.Make, make);
+            filter &= filterDefinitioinBuilder
+                .Eq(rental => rental.Rental_Car.Make, make);
         }if(!string.IsNullOrWhiteSpace(model)){
-            filter &= filterDefinitioinBuilder.Eq(rental => rental.Rental_Car.Model, model);
+            filter &= filterDefinitioinBuilder
+                .Eq(rental => rental.Rental_Car.Model, model);
         }
         if(!string.IsNullOrWhiteSpace(rentalStatus)){
-            filter &= filterDefinitioinBuilder.Eq(rental => rental.Rental_Details.Rental_Status, rentalStatus);
+            filter &= filterDefinitioinBuilder
+                .Eq(rental => rental.Rental_Details.Rental_Status, rentalStatus);
         }
         if(!string.IsNullOrWhiteSpace(insuranceType)){
-            filter &= filterDefinitioinBuilder.Eq(rental => rental.Rental_Details.Insurance_Type, insuranceType);
+            filter &= filterDefinitioinBuilder
+                .Eq(rental => rental.Rental_Details.Insurance_Type, insuranceType);
         }
         
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Car.Price_Per_Day, minPricePerDay, maxPricePerDay);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Car.Price_Per_Day, minPricePerDay, maxPricePerDay);
 
-        filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Start_Date, minStartDate, maxStartDate);
-        filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Expected_End_Date, minExpectedEndDate, maxExpectedEndDate);
-        filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.End_Date, minEndDate, maxEndDate);
+        filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Start_Date, minStartDate, maxStartDate);
+        filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Expected_End_Date, minExpectedEndDate, maxExpectedEndDate);
+        filter &= AddDateRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.End_Date, minEndDate, maxEndDate);
 
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Extra_Mileage_Amount, minExtraInsuranceAmount, maxExtraInsuranceAmount);
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Days, minDays, maxDays);
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Extra_Days_Amount, minExtraDaysAmount, maxExtraDaysAmount);
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Mileage, minMileage, maxMileage);
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Extra_Mileage_Amount, minExtraMileageAmount, maxExtraMileageAmount);
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Extra_Fuel, minExtraFuel, maxExtraFuel);
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Extra_Fuel_Amount, minExtraFuelAmount, maxExtraFuelAmount);
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Price, minPrice, maxPrice);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Extra_Mileage_Amount, minExtraInsuranceAmount, maxExtraInsuranceAmount);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Days, minDays, maxDays);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Extra_Days_Amount, minExtraDaysAmount, maxExtraDaysAmount);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Mileage, minMileage, maxMileage);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Extra_Mileage_Amount, minExtraMileageAmount, maxExtraMileageAmount);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Extra_Fuel, minExtraFuel, maxExtraFuel);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Extra_Fuel_Amount, minExtraFuelAmount, maxExtraFuelAmount);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Price, minPrice, maxPrice);
 
-        filter &= filterDefinitioinBuilder.Gte(rental => rental.Rental_Details.Discount, minDiscount ?? 0);
-        filter &= filterDefinitioinBuilder.Lte(rental => rental.Rental_Details.Discount, maxDiscount ?? 1);
+        filter &= filterDefinitioinBuilder
+            .Gte(rental => rental.Rental_Details.Discount, minDiscount ?? 0);
+        filter &= filterDefinitioinBuilder
+            .Lte(rental => rental.Rental_Details.Discount, maxDiscount ?? 1);
 
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Extra_Amount, minExtraAmount, maxExtraAmount);
-        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, rental => rental.Rental_Details.Final_Amount, minFinalAmount, maxFinalAmount);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Extra_Amount, minExtraAmount, maxExtraAmount);
+        filter &= AddRangeFilter(filter, filterDefinitioinBuilder, 
+            rental => rental.Rental_Details.Final_Amount, minFinalAmount, maxFinalAmount);
 
         var result = await _rentalService.GetRentalsPerFilterAsync(filter);
         if (result.Any())
